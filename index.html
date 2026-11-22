@@ -38,6 +38,9 @@ button.card{display:block;width:100%}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
 .btn.gold{background:var(--gold);border-color:var(--gold);color:#3a2a00}
 .btn.red{border-color:#F1B5B5;color:var(--up)}
+.btn.acct{min-height:56px;font-size:20px;width:100%;max-width:520px}.btn.acct.on{background:#E8F7EE;border-color:#9ED5B3;color:#1E6B3C}
+.ptag{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:999px;background:#FFF1D6;border:1px solid #F2C46D;color:#8A5A00;font-size:14px;font-weight:700;white-space:nowrap}
+.card.pend{border-color:#F2C46D;background:#FFFBF2}
 .chip{padding:8px 18px;font-size:18px;font-weight:600;border-radius:999px;border:2px solid var(--line);background:var(--card)}
 .chip.on{border-color:var(--accent);background:var(--accentSoft)}
 @media (hover:hover){.btn:not(:disabled):hover,.chip:not(:disabled):hover,button.card:not(:disabled):hover,.opt:not(:disabled):hover,.nav button:hover{border-color:var(--accent);filter:brightness(1.03);box-shadow:0 2px 8px rgba(47,128,237,.15)}.btn.pri:not(:disabled):hover{filter:brightness(1.08)}}
@@ -324,9 +327,10 @@ function topBar(p){
 }
 function viewHome(){
   var h='<header><h1>🧋 小小投资家 · 经营闯关版</h1><p class="muted">先开一家奶茶店当小老板，再一关一关学投资知识。'+TAG+'</p></header>';
+  if(cloudOn()){var ct=cTok();h+='<div class="row">'+(ct?'<button class="btn acct on" data-a="go" data-v="acct">☁️ 已登录：家庭账号'+(cTime()?'（同步 '+cTime()+'）':'（还没同步）')+'</button>':'<button class="btn pri acct" data-a="go" data-v="acct">👨‍👩‍👧 家长注册 / 登录家庭账号</button>')+'</div>'}
   if(DB.profiles.length){
     h+='<h2>谁来玩？点自己的头像</h2><div class="grid">';
-    DB.profiles.forEach(function(p){h+='<button class="card" data-a="pick" data-v="'+p.id+'"><div class="big">'+p.av+'</div><div style="font-size:22px;font-weight:700">'+esc(p.name)+'</div><div class="small muted">'+GNAME[p.grade]+' · 过关 '+clearedN(p)+' / '+levels(p).length+'</div><div class="tiny">⭐ '+starsOf(p)+'　💰 '+p.coins+'　🏅 '+p.badges.length+'</div></button>'});
+    DB.profiles.forEach(function(p){h+='<button class="card" data-a="pick" data-v="'+p.id+'"><div class="big">'+p.av+'</div><div style="font-size:22px;font-weight:700">'+esc(p.name)+'</div><div class="small muted">'+GNAME[p.grade]+' · 过关 '+clearedN(p)+' / '+levels(p).length+'</div><div class="tiny">⭐ '+starsOf(p)+'　💰 '+p.coins+'　🏅 '+p.badges.length+'</div>'+(p.pend?'<div class="ptag">⏳ 等家长确认</div>':'')+'</button>'});
     h+='</div>';
   }
   var f=DB.form;
@@ -336,8 +340,8 @@ function viewHome(){
   h+='<div class="small muted">选你的年级（关卡数量和难度不一样）</div><div class="grid" style="margin-top:8px">';
   GRADES.forEach(function(g){h+='<button class="card'+(f.grade===g.id?' on':'')+'" data-a="gr" data-v="'+g.id+'"><div style="font-size:36px;line-height:44px">'+g.icon+'</div><b>'+g.name+'</b><div class="small muted">'+GL[g.id].length+' 关 · '+(g.id==="g4"?"认识股份、涨跌、分散":g.id==="g5"?"算涨跌幅、分红、复利、指数":"看财报、市盈率、K 线")+'</div></button>'});
   h+='</div><div class="row">'+btn("开始当老板 🚀","create","","pri")+'</div>'+(DB.msg?'<div class="msg">'+esc(DB.msg)+'</div>':'')+'</div>';
-  h+='<div class="row">'+btn(cloudOn()?"💾 换了设备？用家庭云账号或进度码取回存档":"💾 换了设备？用进度码取回存档","go","parent")+'</div>';
-  h+='<p class="tiny">'+(cloudOn()?'进度保存在这台设备上；登录家庭云账号后，会把昵称和游戏进度同步到云端。':'进度保存在这台设备的浏览器里，不联网、不上传。')+'几个兄弟姐妹可以各建一个档案，在排行榜上比一比。</p>';
+  h+='<div class="row">'+btn(cloudOn()?"💾 换了设备？用进度码或家庭账号取回存档":"💾 换了设备？用进度码取回存档","go","parent")+'</div>';
+  h+='<p class="tiny">'+(cloudOn()?'进度保存在这台设备上；家长登录家庭账号后，会把昵称和游戏进度同步到云端。每个家庭用自己的账号，各家看不到彼此的孩子。':'进度保存在这台设备的浏览器里，不联网、不上传。')+'几个兄弟姐妹可以各建一个档案，在排行榜上比一比。</p>';
   return h;
 }
 function viewMap(p){
@@ -450,14 +454,15 @@ function viewWords(p){
 }
 function rankList(){return DB.profiles.slice().sort(function(a,b){return starsOf(b)-starsOf(a)||b.badges.length-a.badges.length||b.earned-a.earned})}
 function viewRank(){
-  var medal=["🥇","🥈","🥉"],h='<h2 style="margin-top:8px">🏆 家庭排行榜（只在这台设备上）</h2><p class="small muted">先比⭐星星，再比🏅徽章，最后比💰累计赚到的金币。不同年级关卡数不一样，进步最重要！</p>';
-  h+='<div class="tablewrap"><table><tr><th>名次</th><th>小老板</th><th>年级</th><th>⭐</th><th>🏅</th><th>💰 累计</th><th>过关</th></tr>'+rankList().map(function(p,i){return '<tr'+(p.id===DB.cur?' style="background:#E3EEFF"':'')+'><td>'+(medal[i]||(i+1))+'</td><td>'+p.av+' '+esc(p.name)+'</td><td>'+GNAME[p.grade]+'</td><td>'+starsOf(p)+'</td><td>'+p.badges.length+'</td><td>'+p.earned+'</td><td>'+clearedN(p)+' / '+levels(p).length+'</td></tr>'}).join('')+'</table></div>';
+  var medal=["🥇","🥈","🥉"],h='<h2 style="margin-top:8px">🏆 家庭排行榜</h2><p class="small muted">先比⭐星星，再比🏅徽章，最后比💰累计赚到的金币。标着「⏳ 等家长确认」的档案，家长确认后才会同步到家里其他设备。不同年级关卡数不一样，进步最重要！</p>';
+  h+='<div class="tablewrap"><table><tr><th>名次</th><th>小老板</th><th>年级</th><th>⭐</th><th>🏅</th><th>💰 累计</th><th>过关</th></tr>'+rankList().map(function(p,i){return '<tr'+(p.id===DB.cur?' style="background:#E3EEFF"':'')+'><td>'+(medal[i]||(i+1))+'</td><td>'+p.av+' '+esc(p.name)+(p.pend?' <span class="ptag">⏳ 等家长确认</span>':'')+'</td><td>'+GNAME[p.grade]+'</td><td>'+starsOf(p)+'</td><td>'+p.badges.length+'</td><td>'+p.earned+'</td><td>'+clearedN(p)+' / '+levels(p).length+'</td></tr>'}).join('')+'</table></div>';
   return h+contestBoard()+'<div class="row">'+btn("➕ 添加兄弟姐妹的档案","go","home")+'</div>';
 }
 function viewParent(){
   var h='<h2 style="margin-top:8px">👪 家长区</h2>';
   if(!DB.gate){var opts=[146,156,166];return h+'<div class="card"><p>请家长回答：<b>12 × 13 = ?</b></p><div class="row">'+opts.map(function(o){return btn(String(o),"gate",o)}).join('')+'</div>'+(DB.msg?'<div class="msg">'+esc(DB.msg)+'</div>':'')+'</div>'}
   h+='<div class="warn"><b>重要：</b>这个游戏只教概念，用的全是虚构公司和模拟数据，不推荐任何真实股票。真实的开户、买卖和金额，都由家长决定和操作。孩子不应自己开户，也不应使用家长账户下单。交易规则以交易所最新规定为准。</div>';
+  var pl=pendList();if(pl.length||cLoggedIn()){h+='<h2 id="pending">🙋 待确认的孩子</h2>';if(!pl.length)h+='<p class="small muted">现在没有等确认的档案。登录家庭账号后，孩子在这台设备上新建的档案会先出现在这里。</p>';else{h+='<p class="small muted">这些档案是在这台设备上新建的，还<b>没有上传</b>云端，也不会和其他设备同步。是自家孩子就点「确认加入家庭」；不认识的直接删除，云端不会留下任何记录。</p>';pl.forEach(function(p){h+='<div class="card pend" style="margin:10px 0"><b>'+p.av+' '+esc(p.name)+'</b> <span class="small muted">'+GNAME[p.grade]+' · 建于 '+new Date(p.created||Date.now()).toLocaleString("zh-CN",{month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit"})+' · 过关 '+clearedN(p)+'/'+levels(p).length+' · ⭐'+starsOf(p)+'</span><div class="row">'+btn("✅ 确认加入家庭","pok",p.id,"pri")+btn("不认识，删除","prej",p.id,"red")+'</div></div>'})}if(DB.msg)h+='<div class="msg">'+esc(DB.msg)+'</div>'}
   h+='<h2>孩子们的闯关表现</h2>';
   if(!DB.profiles.length)h+='<p class="muted">还没有档案。</p>';
   DB.profiles.forEach(function(p){
@@ -468,7 +473,7 @@ function viewParent(){
   h+='<h2>陪玩建议</h2><div class="steps"><div class="s"><b>每次 15 到 20 分钟</b>一次闯一到两关，答完再聊一聊。</div><div class="s"><b>让孩子说出理由</b>奶茶店为什么这样定价？为什么这样分金蛋？说出「为什么」比赚多少更重要。</div><div class="s"><b>把亏钱当作好机会</b>小店亏了、模拟交易亏了，正好聊成本、风险、分散和情绪。</div><div class="s"><b>用生活里的例子</b>楼下的奶茶店、超市里的品牌，都可以聊「它怎么赚钱」，只讲概念，不谈买卖。</div><div class="s"><b>保持一致的规矩</b>不借钱投资、不赌博、不懂不碰，这三条家里统一说法。</div></div>';
   h+='<h2>可以一起讨论的问题</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"><div class="card"><b>四年级</b><ol class="list"><li>如果你开一家店，会想找人一起出钱吗？为什么？</li><li>限量玩具为什么会变贵？</li><li>零花钱里，哪些要马上用，哪些可以存起来？</li></ol></div><div class="card"><b>五年级</b><ol class="list"><li>涨 10% 再跌 10%，为什么回不到原价？</li><li>复利计算器里，把年数改长，结果有什么变化？</li><li>如果一家公司不分红，它可能把钱用在哪里？</li></ol></div><div class="card"><b>初二</b><ol class="list"><li>股价高的公司，就一定是大公司吗？</li><li>游戏里有没有追涨杀跌的时候？当时怎么想的？</li><li>A 股的 T+1 和涨跌停，你觉得有什么好处和坏处？</li></ol></div></div>';
   h+=viewData();
-  h+='<h2>关于进度和数据</h2><p>所有档案、金币和进度都保存在这台设备的浏览器里。'+(cloudOn()?'只有登录了家庭云账号，才会把昵称和游戏进度同步到云端。':'不联网、不上传。')+''+(canSave?'':'<b class="up">当前浏览器不允许保存（可能是无痕模式），关掉后进度会丢失。</b>')+'清除浏览器的网站数据会清空进度。游戏里没有充值、抽奖、盲盒或转盘。</p>';
+  h+='<h2>关于进度和数据</h2><p>所有档案、金币和进度都保存在这台设备的浏览器里。'+(cloudOn()?'只有登录了家庭云账号，才会把昵称和游戏进度同步到云端。':'不联网、不上传。')+''+(canSave?'':'<b class="up">当前浏览器不允许保存（可能是无痕模式），关掉后进度会丢失。</b>')+'清除浏览器的网站数据会清空进度。游戏里没有充值、抽奖、盲盒或转盘。</p><p class="tiny">版本 v2.4.0</p>';
   return h+'<div class="row">'+btn("退出家长区","gateoff","")+'</div>';
 }
 /* ---------- 模拟交易（原版保留） ---------- */
@@ -642,7 +647,7 @@ function makeCode(list){var body=b64e(JSON.stringify({v:2,t:Date.now(),profiles:
 function readCode(code){code=String(code||"").replace(/\s+/g,"");var m=/^XXTZ2-([0-9a-f]{8})-(.+)$/.exec(code);if(!m)throw new Error("这不是小小投资家的进度码（应以 XXTZ2- 开头）。");if(sum8(m[2])!==m[1])throw new Error("进度码不完整或被改动了，请重新复制一遍。");var o=JSON.parse(b64d(m[2]));if(!o||!Array.isArray(o.profiles))throw new Error("进度码里没有档案。");return o.profiles.filter(function(p){return p&&p.id&&p.name&&GL[p.grade]})}
 function normP(p){var d=newProfile(p.name,p.av||"🐼",p.grade);for(var k in d)if(p[k]===undefined)p[k]=d[k];var s=newShop();for(var k2 in s)if(p.shop[k2]===undefined)p.shop[k2]=s[k2];fx(p);return p}
 /* 合并：同一档案取进度更多的；进度一样取更新的。返回提示文字 */
-function mergeIn(list,src){var msgs=[];list.forEach(function(r){r=normP(r);var i=-1;DB.profiles.forEach(function(p,k){if(p.id===r.id)i=k});
+function mergeIn(list,src){var msgs=[];list.forEach(function(r){r=normP(r);delete r.pend;/* 云端或家长区导入的档案 = 已确认 */var i=-1;DB.profiles.forEach(function(p,k){if(p.id===r.id)i=k});
   if(i<0){DB.profiles.push(r);msgs.push("新增档案「"+r.name+"」")}
   else{var l=DB.profiles[i],pl=progOf(l),pr=progOf(r),ul=l.upd||0,ur=r.upd||0;
     if((r.rst||0)>(l.rst||0)){r.run=null;DB.profiles[i]=r;if(DB.cur===r.id&&DB.scr==="level")DB.scr="map";msgs.push("「"+r.name+"」在其他设备上被重置了，这里也已重置")}
@@ -663,11 +668,12 @@ function cEnsure(){var t=cTok();if(!t)return Promise.reject(new Error("还没有
 function cSync(manual){if(!cloudOn()||!cTok()||CS.busy)return Promise.resolve();if(navigator.onLine===false){CS.msg="现在没联网，先在本机玩，联网后会自动同步。";return Promise.resolve()}
   CS.busy=true;var tk;return cEnsure().then(function(t){tk=t;var dels=(DB.cdel||[]).slice();return Promise.all(dels.map(function(id){return cFetch("/rest/v1/kids_saves?profile_id=eq."+encodeURIComponent(id),{m:"DELETE"})})).then(function(){DB.cdel=[]})})
   .then(function(){return cFetch("/rest/v1/kids_saves?select=profile_id,data,progress,updated_at")})
-  .then(function(rows){var ids={},gone=[];(rows||[]).forEach(function(r){ids[r.profile_id]=1});DB.profiles=DB.profiles.filter(function(p){if(p.csu===tk.uid&&!ids[p.id]){gone.push(p.name);return false}return true});if(DB.cur&&!P()){DB.cur=null;DB.scr="home"}
+  .then(function(rows){var ids={},gone=[];(rows||[]).forEach(function(r){ids[r.profile_id]=1});DB.profiles=DB.profiles.filter(function(p){if(p.csu===tk.uid&&!ids[p.id]&&!p.pend){gone.push(p.name);return false}return true});
+    /* 这台设备上以前属于别的家庭账号的档案：换了账号后先等家长确认，不直接上传 */DB.profiles.forEach(function(p){if(p.csu&&p.csu!==tk.uid&&!ids[p.id]){p.pend=true;delete p.csu}});if(DB.cur&&!P()){DB.cur=null;DB.scr="home"}
     var msgs=gone.map(function(n){return"「"+n+"」已在其他设备上删除"}).concat(mergeIn((rows||[]).map(function(r){var d=r.data||{};d.upd=d.upd||Date.parse(r.updated_at)||0;return d}),"云端"));
-    var body=DB.profiles.map(function(p){var s=slim(p);return{owner:tk.uid,profile_id:p.id,nickname:p.name,grade:p.grade,progress:progOf(p),data:s,updated_at:new Date(p.upd||Date.now()).toISOString()}});
-    return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){DB.profiles.forEach(function(p){p.csu=tk.uid});return msgs})})
-  .then(function(msgs){CS.last=Date.now();CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");CS.chg=msgs.length>0;if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw();sigAll()})
+    var body=DB.profiles.filter(function(p){return !p.pend}).map(function(p){var s=slim(p);return{owner:tk.uid,profile_id:p.id,nickname:p.name,grade:p.grade,progress:progOf(p),data:s,updated_at:new Date(p.upd||Date.now()).toISOString()}});
+    return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){DB.profiles.forEach(function(p){if(!p.pend)p.csu=tk.uid});return msgs})})
+  .then(function(msgs){CS.last=Date.now();var t2=cTok();if(t2){t2.ls=CS.last;cSetTok(t2)}CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");CS.chg=msgs.length>0;if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw();sigAll()})
   .catch(function(e){CS.msg="同步没成功："+e.message+(e.status===401?"（请重新登录）":"")+"。本机进度不受影响。";if(e.status===401)cSetTok(null)})
   .then(function(){CS.busy=false;var p=P();/* 云端带来新进度时刷新画面；孩子正在答题时不打断 */if(manual||DB.scr==="parent"||(CS.chg&&(DB.scr!=="level"||!p||!p.run))){CS.chg=false;render();flushFx()}})}
 var cTimer=null;function cSoon(){if(!cloudOn()||!cTok())return;clearTimeout(cTimer);cTimer=setTimeout(function(){cSync(false)},Date.now()-CS.last>60000?3000:30000)}
@@ -675,10 +681,28 @@ window.addEventListener("online",function(){cSync(false)});
 function viewData(){var h='<h2>💾 换设备也能接着玩</h2><div class="card"><b>方法一：进度码（不用联网、不用账号）</b><p class="small muted">点「生成进度码」，复制这一串文字，用微信/备忘录发到另一台设备，在那边的家长区粘贴、点「导入」。同一个孩子的档案会保留进度更多的那份。</p><div class="row">'+btn("生成全部孩子的进度码","pcode","","pri")+'</div>';
   if(DB.pcode)h+='<textarea id="pcode" class="txt code" readonly aria-label="进度码">'+esc(DB.pcode)+'</textarea><div class="row">'+btn("📋 复制进度码","pcopy","")+'</div>';
   h+='<div class="small muted" style="margin-top:8px">在这里粘贴别处的进度码：</div><textarea id="pin" class="txt code" data-pin="1" aria-label="粘贴进度码" placeholder="XXTZ2-……">'+esc(DB.pin||"")+'</textarea><div class="row">'+btn("导入进度码","pimport","")+'</div>'+(DB.pmsg?'<div class="msg">'+esc(DB.pmsg)+'</div>':'')+'</div>';
-  if(cloudOn()){var t=cTok();h+='<div class="card" style="margin-top:12px"><b>方法二：家庭云账号（自动同步）</b><p class="small muted">一个家庭账号下可以放几个孩子的档案。云端只保存昵称和游戏进度。没网时照常在本机玩，联网后自动合并；两边冲突时保留进度更多的，并提示。</p>';
-    if(t)h+='<p>已登录：<b>'+esc(String(t.who||"").replace(/^family-(.*)@kids-tycoon\.example$/,"家庭号 $1"))+'</b></p><div class="row">'+btn(CS.busy?"同步中…":"☁️ 立即同步","csync","","pri",CS.busy)+btn("退出云账号","cout","")+'</div>';
-    else h+='<input class="txt" id="cid" data-cf="id" placeholder="家庭号（如 my-family）或邮箱" autocomplete="username" value="'+esc(DB.cid||"")+'"><input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="current-password" style="margin-top:8px"><div class="row">'+btn("登录","cin","","pri")+btn("第一次用：注册家庭账号","cup","")+'</div>';
-    h+=(CS.msg?'<div class="msg">'+esc(CS.msg)+'</div>':'')+'</div>'}
+  if(cloudOn())h+='<div class="card" style="margin-top:12px"><b>方法二：家庭云账号（自动同步）</b>'+cloudForm()+'</div>';
+  return h}
+function cLoggedIn(){return cloudOn()&&!!cTok()}
+function pendList(){return DB.profiles.filter(function(p){return p.pend})}
+function cWho(t){return String(t.who||"").replace(/^family-(.*)@kids-tycoon\.example$/,"家庭号 $1")}
+function cTime(){var t=cTok(),x=CS.last||(t&&t.ls);return x?new Date(x).toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"}):""}
+/* 登录 / 注册表单：首页「家长注册 / 登录」页和家长区共用 */
+function cloudForm(){var t=cTok(),h='';
+  if(t){h+='<p>已登录：<b>'+esc(cWho(t))+'</b>'+(cTime()?'<span class="small muted">（上次同步 '+cTime()+'）</span>':'')+'</p><div class="row">'+btn(CS.busy?"同步中…":"☁️ 立即同步","csync","","pri",CS.busy)+btn("退出家庭账号","cout","")+'</div>';
+    var pl=pendList();if(pl.length)h+='<div class="msg">有 '+pl.length+' 个孩子档案在等家长确认，确认之前不会上传。请到「家长区 → 待确认的孩子」处理。</div>'}
+  else{var up=DB.cmode!=="in";
+    h+='<div class="row">'+chip("我是新家庭：注册",up,"cmode","up")+chip("已有账号：登录",!up,"cmode","in")+'</div>';
+    h+='<input class="txt" id="cid" data-cf="id" type="'+(up?'email':'text')+'" inputmode="email" placeholder="'+(up?'家长的邮箱':'家长邮箱（老用户也可以填家庭号）')+'" autocomplete="username" autocapitalize="off" spellcheck="false" value="'+esc(DB.cid||"")+'" aria-label="家长邮箱">';
+    h+='<input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="'+(up?'new-password':'current-password')+'" style="margin-top:8px" aria-label="密码">';
+    if(up)h+='<input class="txt" id="cpw2" type="password" placeholder="再输一遍密码" autocomplete="new-password" style="margin-top:8px" aria-label="再输一遍密码">';
+    h+='<div class="row">'+(up?btn("注册家庭账号","cup","","pri",CS.busy):btn("登录","cin","","pri",CS.busy))+'</div>'}
+  return h+(CS.msg?'<div class="msg">'+esc(CS.msg)+'</div>':'')}
+function viewAcct(){var h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div><h2>👨‍👩‍👧 家长注册 / 登录家庭账号</h2>';
+  h+='<div class="card"><ul class="list small"><li><b>一个家庭一个账号，由家长注册</b>。家里几个孩子都放在这个账号下，各自建档案。</li><li><b>各家的数据互相看不到</b>。朋友家用他们自己的账号，看不到你家的孩子，你也看不到他们的。</li><li>云端<b>只存昵称和游戏进度</b>（金币、星星、关卡），不存真实姓名、照片、位置。</li><li>孩子的昵称请用小名，<b>别用真实全名</b>。</li><li>登录后，孩子在这台设备上新建的档案要<b>家长在「家长区」确认</b>后才会同步。</li></ul></div>';
+  h+='<div class="card" style="margin-top:12px">'+cloudForm()+'</div>';
+  if(cTok())h+='<div class="row">'+btn("👪 去家长区确认孩子","go","parent")+'</div>';
+  h+='<p class="tiny">不注册也能玩：进度只存在这台设备上。注册是为了换设备时接着玩。忘记密码暂时没法自己找回，请记好密码。</p>';
   return h}
 /* ---------- v2.2 股票乐园：每个小游戏都接在关卡里 ---------- */
 function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -849,10 +873,11 @@ function finishLevel(p){
 /* ---------- 渲染 ---------- */
 function render(){
   var p=P(),h='';
-  if(!p&&DB.scr!=="home"&&DB.scr!=="parent")DB.scr="home";
+  if(DB.scr==="acct"&&!cloudOn())DB.scr="home";if(!p&&DB.scr!=="home"&&DB.scr!=="parent"&&DB.scr!=="acct")DB.scr="home";
   if(DB.scr==="level"&&(!p||!p.run))DB.scr="map";
   if(DB.scr==="sim"&&p&&!allClear(p))DB.scr="map";
-  if(!p&&DB.scr==="parent"){h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div>'+viewParent()}
+  if(DB.scr==="acct"){h=viewAcct()}
+  else if(!p&&DB.scr==="parent"){h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div>'+viewParent()}
   else if(DB.scr==="home"||!p){h=viewHome()}
   else{h=topBar(p);var s=DB.scr;h+=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):s==="ach"?viewAch(p):viewMap(p)}
   h+=disc();
@@ -866,7 +891,7 @@ document.addEventListener("click",function(e){
   else if(a==="pick"){DB.cur=v;var q=P();go(q.shop.days===0?"shop":"map")}
   else if(a==="av"){DB.form.av=v}
   else if(a==="gr"){DB.form.grade=v}
-  else if(a==="create"){var f=DB.form,nm=(f.name||"").trim();if(!nm){DB.msg="请先写上你的名字。"}else if(!f.grade){DB.msg="请选你的年级。"}else{var np=newProfile(nm.slice(0,10),f.av,f.grade);DB.profiles.push(np);DB.cur=np.id;DB.form={name:"",av:"🐼",grade:""};go("shop")}}
+  else if(a==="create"){var f=DB.form,nm=(f.name||"").trim();if(!nm){DB.msg="请先写上你的名字。"}else if(!f.grade){DB.msg="请选你的年级。"}else{var np=newProfile(nm.slice(0,10),f.av,f.grade);if(cLoggedIn()){np.pend=true;toast("📝 档案建好啦！可以先玩。等爸爸妈妈在「家长区」确认后，进度才会同步到云端。")}DB.profiles.push(np);DB.cur=np.id;DB.form={name:"",av:"🐼",grade:""};go("shop")}}
   else if(a==="step"){var s=v.split("|"),k=s[0];setK(k,clampN((Number(getK(k))||0)+Number(s[1]),Number(s[2]),Number(s[3])))}
   else if(a==="open"){var d0=p.shop.days;openShop(p);if(p.shop.days>d0){DB.justOpen=true;snd(p.shop.last.profit>0?"coin":"no")}top=true}
   else if(a==="mute"){DB.mute=!DB.mute;if(!DB.mute)snd("ok")}
@@ -879,9 +904,12 @@ document.addEventListener("click",function(e){
   else if(a==="pcode"){DB.pcode=makeCode(DB.profiles);DB.pmsg="进度码已生成（"+DB.profiles.length+" 个档案）。"}
   else if(a==="pcopy"){DB.pmsg=copyText(DB.pcode||"")?"已复制。如果没复制上，请长按上面的文字全选复制。":"请长按上面的文字全选复制。"}
   else if(a==="pimport"){try{var lst=readCode(DB.pin);var ms=mergeIn(lst,"进度码");sigAll();DB.pmsg="导入完成："+(ms.length?ms.join("；"):"本机进度已经是最新的，没有变化。");DB.pin=""}catch(err){DB.pmsg=err.message}}
-  else if(a==="cin"||a==="cup"){var cid=(document.getElementById("cid")||{}).value,cpw=(document.getElementById("cpw")||{}).value;DB.cid=cid;if(!cid||!cpw||cpw.length<6){CS.msg="请填写家庭号（或邮箱）和至少 6 位密码。"}else{CS.busy=true;CS.msg="正在连接云端…";try{cLogin(cid,cpw,a==="cup").then(function(){CS.busy=false;CS.msg="登录成功，正在同步…";return cSync(true)}).catch(function(e){CS.busy=false;CS.msg="没成功："+e.message;render()})}catch(e){CS.busy=false;CS.msg=e.message}}}
+  else if(a==="cmode"){DB.cmode=v;CS.msg=""}
+  else if(a==="pok"){var tp=DB.profiles.filter(function(x){return x.id===v})[0];if(tp&&tp.pend&&DB.gate){delete tp.pend;tp.upd=Date.now();DB.msg="已确认「"+tp.name+"」加入家庭，正在同步…";saveRaw();setTimeout(function(){cSync(true)},0)}}
+  else if(a==="prej"){var tr=DB.profiles.filter(function(x){return x.id===v})[0];if(tr&&tr.pend&&DB.gate&&confirm("确定删除「"+tr.name+"」吗？这个档案没有上传过云端，删除后不能恢复。")){DB.profiles.splice(DB.profiles.indexOf(tr),1);if(DB.cur===v)DB.cur=null;DB.msg="已删除「"+tr.name+"」。"}}
+  else if(a==="cin"||a==="cup"){var cid=((document.getElementById("cid")||{}).value||"").trim(),cpw=(document.getElementById("cpw")||{}).value,cpw2=(document.getElementById("cpw2")||{}).value;DB.cid=cid;if(!cid||!cpw||cpw.length<6){CS.msg=a==="cup"?"请填写家长邮箱和至少 6 位密码。":"请填写家长邮箱（或家庭号）和至少 6 位密码。"}else if(a==="cup"&&cid.indexOf("@")<0&&!/^[a-z0-9_-]{4,30}$/i.test(cid)){CS.msg="请填写正确的家长邮箱。"}else if(a==="cup"&&cpw!==cpw2){CS.msg="两次输入的密码不一样，请再输一遍。"}else{CS.busy=true;CS.msg="正在连接云端…";try{cLogin(cid,cpw,a==="cup").then(function(){CS.busy=false;CS.msg=(a==="cup"?"注册成功，已登录":"登录成功")+"，正在同步…";return cSync(true)}).catch(function(e){CS.busy=false;CS.msg="没成功："+e.message;render()})}catch(e){CS.busy=false;CS.msg=e.message}}}
   else if(a==="csync"){cSync(true)}
-  else if(a==="cout"){cSetTok(null);CS.msg="已退出云账号。本机进度还在。"}
+  else if(a==="cout"){if(confirm("确定退出家庭账号吗？本机的进度会留在这台设备上。")){cSetTok(null);CS.last=0;CS.msg="已退出家庭账号。本机进度还在。"}}
   else if(a==="up"){var lv=p.shop.up[v],cost=UPCOST[lv];if(lv<3&&p.coins>=cost){p.coins-=cost;p.shop.up[v]=lv+1;snd("up");toast("🔧 升级成功！花金币升级，是为了以后赚更多——这就是<b>投资</b>。")}}
   else if(a==="lv"){var i=levels(p).indexOf(v);if(i>=0&&unlocked(p,i)){startLevel(p,v);top=true}}
   else if(a==="nx"){p.run.step++;top=true}
@@ -898,8 +926,8 @@ document.addEventListener("click",function(e){
   else if(a==="wl"){DB.wl=v}
   else if(a==="gate"){if(v==="156"){DB.gate=true;DB.msg=""}else DB.msg="再算一算哦～（这里是给家长看的）"}
   else if(a==="gateoff"){DB.gate=false;go("map")}
-  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;fresh.rst=Date.now();if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(t.id)}DB.profiles[DB.profiles.indexOf(t)]=fresh}}
-  else if(a==="del"){var t2=DB.profiles.filter(function(x){return x.id===v})[0];if(t2&&confirm("确定删除「"+t2.name+"」的档案吗？删除后不能恢复。")){if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(v)}DB.profiles.splice(DB.profiles.indexOf(t2),1);if(DB.cur===v){DB.cur=null;DB.gate=false;DB.scr="home"}}}
+  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;fresh.rst=Date.now();if(t.pend)fresh.pend=true;if(cloudOn()&&cTok()&&!t.pend){DB.cdel=DB.cdel||[];DB.cdel.push(t.id)}DB.profiles[DB.profiles.indexOf(t)]=fresh}}
+  else if(a==="del"){var t2=DB.profiles.filter(function(x){return x.id===v})[0];if(t2&&confirm("确定删除「"+t2.name+"」的档案吗？删除后不能恢复。")){if(cloudOn()&&cTok()&&!t2.pend){DB.cdel=DB.cdel||[];DB.cdel.push(v)}DB.profiles.splice(DB.profiles.indexOf(t2),1);if(DB.cur===v){DB.cur=null;DB.gate=false;DB.scr="home"}}}
   else if(a==="snext"){simNext(p.sim)}
   else if(a==="sreset"){if(confirm("确定重新开始吗？会回到 10000 元。"))p.sim=newSim()}
   else if(a==="ssel"){p.sim.sel=v}
