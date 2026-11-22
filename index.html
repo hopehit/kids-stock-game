@@ -627,7 +627,7 @@ function viewAch(p){var f=fx(p),n=Object.keys(f.ach).length,h='<h2 style="margin
   h+='<h2>👑 称号怎么升级</h2><div class="tablewrap"><table><tr><th>称号</th><th>星星 + 成就 达到</th></tr>'+TITLES.map(function(t){return '<tr><td>'+t[1]+'</td><td>'+t[0]+'</td></tr>'}).join('')+'</table></div>';
   return h+'<div class="row">'+btn("回地图","go","map","pri")+'</div>'}
 /* ---------- 进度码 + 云同步 ---------- */
-var CLOUD={"url": "", "key": ""};/* build.py 从 cloud/config.json 注入；url/key 为空时隐藏云登录 */
+var CLOUD={"url": "https://hpjmvunjigyncfchgnsm.supabase.co", "key": "sb_publishable_2KPdMiXlb_QALA8-MpEI1w_Qf21MIG-"};/* build.py 从 cloud/config.json 注入；url/key 为空时隐藏云登录 */
 function cloudOn(){return !!(CLOUD&&CLOUD.url&&CLOUD.key)}
 function progOf(p){var f=fx(p);return starsOf(p)*100+p.badges.length*40+Object.keys(f.ach).length*30+p.shop.days*5+Object.keys(p.done).length*10+Object.keys(p.ans).length*5+Math.floor((p.earned||0)/10)}
 /* 进度码：去掉临时状态 → JSON → UTF-8 → base64，带校验 */
@@ -642,7 +642,9 @@ function normP(p){var d=newProfile(p.name,p.av||"🐼",p.grade);for(var k in d)i
 function mergeIn(list,src){var msgs=[];list.forEach(function(r){r=normP(r);var i=-1;DB.profiles.forEach(function(p,k){if(p.id===r.id)i=k});
   if(i<0){DB.profiles.push(r);msgs.push("新增档案「"+r.name+"」")}
   else{var l=DB.profiles[i],pl=progOf(l),pr=progOf(r),ul=l.upd||0,ur=r.upd||0;
-    if(pr>pl||(pr===pl&&ur>ul)){if(ul>ur&&pr>pl)msgs.push("「"+r.name+"」两边都有改动，已保留进度更多的"+src+"版本");else msgs.push("「"+r.name+"」已更新为"+src+"的进度");r.run=null;DB.profiles[i]=r}
+    if((r.rst||0)>(l.rst||0)){r.run=null;DB.profiles[i]=r;msgs.push("「"+r.name+"」在其他设备上被重置了，这里也已重置")}
+    else if((l.rst||0)>(r.rst||0)){}
+    else if(pr>pl||(pr===pl&&ur>ul)){if(ul>ur&&pr>pl)msgs.push("「"+r.name+"」两边都有改动，已保留进度更多的"+src+"版本");else msgs.push("「"+r.name+"」已更新为"+src+"的进度");r.run=null;DB.profiles[i]=r}
     else if(ur>ul&&pl>pr)msgs.push("「"+l.name+"」"+src+"的版本更新但进度更少，已保留本机进度更多的版本")}});return msgs}
 function copyText(t){try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t);return true}}catch(e){}var a=document.getElementById("pcode");if(a){a.removeAttribute("readonly");a.select();try{document.execCommand("copy")}catch(e){}a.setAttribute("readonly","");return true}return false}
 /* ---------- 云同步（Supabase Auth + REST，用 fetch 手写） ---------- */
@@ -650,7 +652,7 @@ var CKEY="kid-tycoon-cloud",CS={busy:false,msg:"",last:0};
 function cTok(){try{return JSON.parse(localStorage.getItem(CKEY)||"null")}catch(e){return null}}
 function cSetTok(t){try{if(t)localStorage.setItem(CKEY,JSON.stringify(t));else localStorage.removeItem(CKEY)}catch(e){}}
 function famEmail(id){id=String(id||"").trim().toLowerCase();if(id.indexOf("@")>0)return id;if(!/^[a-z0-9_-]{4,30}$/.test(id))throw new Error("家庭号只能用 4～30 位英文字母、数字、- 或 _，或者直接填邮箱。");return "family-"+id+"@kids-tycoon.example"}
-function cFetch(path,opt){opt=opt||{};var h={"apikey":CLOUD.key,"Content-Type":"application/json"};var t=cTok();if(opt.auth!==false&&t&&t.access_token)h["Authorization"]="Bearer "+t.access_token;else h["Authorization"]="Bearer "+CLOUD.key;for(var k in(opt.h||{}))h[k]=opt.h[k];
+function cFetch(path,opt){opt=opt||{};var h={"apikey":CLOUD.key,"Content-Type":"application/json"};var t=cTok();if(opt.auth!==false&&t&&t.access_token)h["Authorization"]="Bearer "+t.access_token;/* 新版 publishable key 不是 JWT，未登录时不带 Authorization */for(var k in(opt.h||{}))h[k]=opt.h[k];
   return fetch(CLOUD.url.replace(/\/+$/,"")+path,{method:opt.m||"GET",headers:h,body:opt.b?JSON.stringify(opt.b):undefined}).then(function(r){return r.text().then(function(x){var j=null;try{j=x?JSON.parse(x):null}catch(e){}if(!r.ok){var e=new Error((j&&(j.error_description||j.msg||j.message||j.error))||("HTTP "+r.status));e.status=r.status;throw e}return j})})}
 function cSaveSession(j){if(!j||!j.access_token)throw new Error("登录没有成功，请检查账号设置（是否需要先确认邮箱）。");cSetTok({access_token:j.access_token,refresh_token:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000-60000,uid:j.user&&j.user.id,who:j.user&&j.user.email})}
 function cLogin(id,pw,signup){var em=famEmail(id);return cFetch(signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password",{m:"POST",auth:false,b:{email:em,password:pw}}).then(function(j){if(signup&&!j.access_token)throw new Error("注册成功，但需要先到邮箱点确认链接，再回来登录。（用家庭号的话，请家长在 Supabase 里关闭邮箱确认）");cSaveSession(j)})}
@@ -658,9 +660,10 @@ function cEnsure(){var t=cTok();if(!t)return Promise.reject(new Error("还没有
 function cSync(manual){if(!cloudOn()||!cTok()||CS.busy)return Promise.resolve();if(navigator.onLine===false){CS.msg="现在没联网，先在本机玩，联网后会自动同步。";return Promise.resolve()}
   CS.busy=true;var tk;return cEnsure().then(function(t){tk=t;var dels=(DB.cdel||[]).slice();return Promise.all(dels.map(function(id){return cFetch("/rest/v1/kids_saves?profile_id=eq."+encodeURIComponent(id),{m:"DELETE"})})).then(function(){DB.cdel=[]})})
   .then(function(){return cFetch("/rest/v1/kids_saves?select=profile_id,data,progress,updated_at")})
-  .then(function(rows){var msgs=mergeIn((rows||[]).map(function(r){var d=r.data||{};d.upd=d.upd||Date.parse(r.updated_at)||0;return d}),"云端");
+  .then(function(rows){var ids={},gone=[];(rows||[]).forEach(function(r){ids[r.profile_id]=1});DB.profiles=DB.profiles.filter(function(p){if(p.csu===tk.uid&&!ids[p.id]){gone.push(p.name);return false}return true});if(DB.cur&&!P()){DB.cur=null;DB.scr="home"}
+    var msgs=gone.map(function(n){return"「"+n+"」已在其他设备上删除"}).concat(mergeIn((rows||[]).map(function(r){var d=r.data||{};d.upd=d.upd||Date.parse(r.updated_at)||0;return d}),"云端"));
     var body=DB.profiles.map(function(p){var s=slim(p);return{owner:tk.uid,profile_id:p.id,nickname:p.name,grade:p.grade,progress:progOf(p),data:s,updated_at:new Date(p.upd||Date.now()).toISOString()}});
-    return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){return msgs})})
+    return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){DB.profiles.forEach(function(p){p.csu=tk.uid});return msgs})})
   .then(function(msgs){CS.last=Date.now();CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw()})
   .catch(function(e){CS.msg="同步没成功："+e.message+(e.status===401?"（请重新登录）":"")+"。本机进度不受影响。";if(e.status===401)cSetTok(null)})
   .then(function(){CS.busy=false;if(manual||DB.scr==="parent"){render();flushFx()}})}
@@ -671,7 +674,7 @@ function viewData(){var h='<h2>💾 换设备也能接着玩</h2><div class="car
   h+='<div class="small muted" style="margin-top:8px">在这里粘贴别处的进度码：</div><textarea id="pin" class="txt code" data-pin="1" aria-label="粘贴进度码" placeholder="XXTZ2-……">'+esc(DB.pin||"")+'</textarea><div class="row">'+btn("导入进度码","pimport","")+'</div>'+(DB.pmsg?'<div class="msg">'+esc(DB.pmsg)+'</div>':'')+'</div>';
   if(cloudOn()){var t=cTok();h+='<div class="card" style="margin-top:12px"><b>方法二：家庭云账号（自动同步）</b><p class="small muted">一个家庭账号下可以放几个孩子的档案。云端只保存昵称和游戏进度。没网时照常在本机玩，联网后自动合并；两边冲突时保留进度更多的，并提示。</p>';
     if(t)h+='<p>已登录：<b>'+esc(String(t.who||"").replace(/^family-(.*)@kids-tycoon\.example$/,"家庭号 $1"))+'</b></p><div class="row">'+btn(CS.busy?"同步中…":"☁️ 立即同步","csync","","pri",CS.busy)+btn("退出云账号","cout","")+'</div>';
-    else h+='<input class="txt" id="cid" data-cf="id" placeholder="家庭号（如 qiu-home）或邮箱" autocomplete="username" value="'+esc(DB.cid||"")+'"><input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="current-password" style="margin-top:8px"><div class="row">'+btn("登录","cin","","pri")+btn("第一次用：注册家庭账号","cup","")+'</div>';
+    else h+='<input class="txt" id="cid" data-cf="id" placeholder="家庭号（如 my-family）或邮箱" autocomplete="username" value="'+esc(DB.cid||"")+'"><input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="current-password" style="margin-top:8px"><div class="row">'+btn("登录","cin","","pri")+btn("第一次用：注册家庭账号","cup","")+'</div>';
     h+=(CS.msg?'<div class="msg">'+esc(CS.msg)+'</div>':'')+'</div>'}
   return h}
 /* ---------- v2.2 股票乐园：每个小游戏都接在关卡里 ---------- */
@@ -892,7 +895,7 @@ document.addEventListener("click",function(e){
   else if(a==="wl"){DB.wl=v}
   else if(a==="gate"){if(v==="156"){DB.gate=true;DB.msg=""}else DB.msg="再算一算哦～（这里是给家长看的）"}
   else if(a==="gateoff"){DB.gate=false;go("map")}
-  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(t.id)}DB.profiles[DB.profiles.indexOf(t)]=fresh}}
+  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;fresh.rst=Date.now();if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(t.id)}DB.profiles[DB.profiles.indexOf(t)]=fresh}}
   else if(a==="del"){var t2=DB.profiles.filter(function(x){return x.id===v})[0];if(t2&&confirm("确定删除「"+t2.name+"」的档案吗？删除后不能恢复。")){if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(v)}DB.profiles.splice(DB.profiles.indexOf(t2),1);if(DB.cur===v){DB.cur=null;DB.gate=false;DB.scr="home"}}}
   else if(a==="snext"){simNext(p.sim)}
   else if(a==="sreset"){if(confirm("确定重新开始吗？会回到 10000 元。"))p.sim=newSim()}
