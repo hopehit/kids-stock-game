@@ -293,7 +293,10 @@ try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);if(o&&o.v===
 DB.gate=false;if(!DB.form)DB.form={name:"",av:"🐼",grade:""};
 var TRANSIENT={pcode:1,pin:1,pmsg:1,justOpen:1};
 function saveRaw(){try{localStorage.setItem(KEY,JSON.stringify(DB,function(k,v){return this===DB&&TRANSIENT[k]?undefined:v}));canSave=true}catch(e){canSave=false}}
-function save(){var p=P();if(p)p.upd=Date.now();saveRaw();if(typeof cSoon==='function')cSoon()}
+var SIG={};function sigOf(p){return JSON.stringify(p,function(k,v){return(k==="upd"||k==="csu"||k==="run"||k==="mini")&&this===p?undefined:v})}
+function sigAll(){SIG={};DB.profiles.forEach(function(p){SIG[p.id]=sigOf(p)})}
+/* 只有档案内容真的变了才更新时间戳，避免"只是点了点页面"被当成新改动 */
+function save(){var p=P();if(p){var g=sigOf(p);if(g!==SIG[p.id]){p.upd=Date.now();SIG[p.id]=g}}saveRaw();if(typeof cSoon==='function')cSoon()}
 function P(){for(var i=0;i<DB.profiles.length;i++)if(DB.profiles[i].id===DB.cur)return DB.profiles[i];return null}
 function newShop(){return{days:0,avail:1,price:"10",cups:"60",up:{sign:0,ice:0,shade:0,recipe:0},last:null,hist:[]}}
 function newProfile(name,av,grade){return{id:"p"+Date.now().toString(36)+Math.floor(Math.random()*1000),name:name,av:av,grade:grade,coins:0,earned:0,badges:[],lv:{},ans:{},done:{},shop:newShop(),run:null,sim:null,created:Date.now()}}
@@ -642,9 +645,9 @@ function normP(p){var d=newProfile(p.name,p.av||"🐼",p.grade);for(var k in d)i
 function mergeIn(list,src){var msgs=[];list.forEach(function(r){r=normP(r);var i=-1;DB.profiles.forEach(function(p,k){if(p.id===r.id)i=k});
   if(i<0){DB.profiles.push(r);msgs.push("新增档案「"+r.name+"」")}
   else{var l=DB.profiles[i],pl=progOf(l),pr=progOf(r),ul=l.upd||0,ur=r.upd||0;
-    if((r.rst||0)>(l.rst||0)){r.run=null;DB.profiles[i]=r;msgs.push("「"+r.name+"」在其他设备上被重置了，这里也已重置")}
+    if((r.rst||0)>(l.rst||0)){r.run=null;DB.profiles[i]=r;if(DB.cur===r.id&&DB.scr==="level")DB.scr="map";msgs.push("「"+r.name+"」在其他设备上被重置了，这里也已重置")}
     else if((l.rst||0)>(r.rst||0)){}
-    else if(pr>pl||(pr===pl&&ur>ul)){if(ul>ur&&pr>pl)msgs.push("「"+r.name+"」两边都有改动，已保留进度更多的"+src+"版本");else msgs.push("「"+r.name+"」已更新为"+src+"的进度");r.run=null;DB.profiles[i]=r}
+    else if(pr>pl||(pr===pl&&ur>ul)){if(ul>ur&&pr>pl)msgs.push("「"+r.name+"」两边都有改动，已保留进度更多的"+src+"版本");else msgs.push("「"+r.name+"」已更新为"+src+"的进度");r.run=(DB.cur===r.id&&DB.scr==="level")?l.run:null;DB.profiles[i]=r}
     else if(ur>ul&&pl>pr)msgs.push("「"+l.name+"」"+src+"的版本更新但进度更少，已保留本机进度更多的版本")}});return msgs}
 function copyText(t){try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t);return true}}catch(e){}var a=document.getElementById("pcode");if(a){a.removeAttribute("readonly");a.select();try{document.execCommand("copy")}catch(e){}a.setAttribute("readonly","");return true}return false}
 /* ---------- 云同步（Supabase Auth + REST，用 fetch 手写） ---------- */
@@ -664,9 +667,9 @@ function cSync(manual){if(!cloudOn()||!cTok()||CS.busy)return Promise.resolve();
     var msgs=gone.map(function(n){return"「"+n+"」已在其他设备上删除"}).concat(mergeIn((rows||[]).map(function(r){var d=r.data||{};d.upd=d.upd||Date.parse(r.updated_at)||0;return d}),"云端"));
     var body=DB.profiles.map(function(p){var s=slim(p);return{owner:tk.uid,profile_id:p.id,nickname:p.name,grade:p.grade,progress:progOf(p),data:s,updated_at:new Date(p.upd||Date.now()).toISOString()}});
     return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){DB.profiles.forEach(function(p){p.csu=tk.uid});return msgs})})
-  .then(function(msgs){CS.last=Date.now();CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw()})
+  .then(function(msgs){CS.last=Date.now();CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");CS.chg=msgs.length>0;if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw();sigAll()})
   .catch(function(e){CS.msg="同步没成功："+e.message+(e.status===401?"（请重新登录）":"")+"。本机进度不受影响。";if(e.status===401)cSetTok(null)})
-  .then(function(){CS.busy=false;if(manual||DB.scr==="parent"){render();flushFx()}})}
+  .then(function(){CS.busy=false;var p=P();/* 云端带来新进度时刷新画面；孩子正在答题时不打断 */if(manual||DB.scr==="parent"||(CS.chg&&(DB.scr!=="level"||!p||!p.run))){CS.chg=false;render();flushFx()}})}
 var cTimer=null;function cSoon(){if(!cloudOn()||!cTok())return;clearTimeout(cTimer);cTimer=setTimeout(function(){cSync(false)},Date.now()-CS.last>60000?3000:30000)}
 window.addEventListener("online",function(){cSync(false)});
 function viewData(){var h='<h2>💾 换设备也能接着玩</h2><div class="card"><b>方法一：进度码（不用联网、不用账号）</b><p class="small muted">点「生成进度码」，复制这一串文字，用微信/备忘录发到另一台设备，在那边的家长区粘贴、点「导入」。同一个孩子的档案会保留进度更多的那份。</p><div class="row">'+btn("生成全部孩子的进度码","pcode","","pri")+'</div>';
@@ -875,7 +878,7 @@ document.addEventListener("click",function(e){
   else if(a==="evans"){var r0=p.run,ev=r0&&r0.ev&&evById(r0.ev.id);if(ev&&r0.ev.pick==null){r0.ev.pick=Number(v);var oke=r0.ev.pick===ev.a,f0=fx(p);if(oke){f0.evOk++;if(!f0.evDone[ev.id]){f0.evDone[ev.id]=1;p.coins+=3;p.earned+=3;r0.ev.coin=true}}knowAns(p,oke,true)}}
   else if(a==="pcode"){DB.pcode=makeCode(DB.profiles);DB.pmsg="进度码已生成（"+DB.profiles.length+" 个档案）。"}
   else if(a==="pcopy"){DB.pmsg=copyText(DB.pcode||"")?"已复制。如果没复制上，请长按上面的文字全选复制。":"请长按上面的文字全选复制。"}
-  else if(a==="pimport"){try{var lst=readCode(DB.pin);var ms=mergeIn(lst,"进度码");DB.pmsg="导入完成："+(ms.length?ms.join("；"):"本机进度已经是最新的，没有变化。");DB.pin=""}catch(err){DB.pmsg=err.message}}
+  else if(a==="pimport"){try{var lst=readCode(DB.pin);var ms=mergeIn(lst,"进度码");sigAll();DB.pmsg="导入完成："+(ms.length?ms.join("；"):"本机进度已经是最新的，没有变化。");DB.pin=""}catch(err){DB.pmsg=err.message}}
   else if(a==="cin"||a==="cup"){var cid=(document.getElementById("cid")||{}).value,cpw=(document.getElementById("cpw")||{}).value;DB.cid=cid;if(!cid||!cpw||cpw.length<6){CS.msg="请填写家庭号（或邮箱）和至少 6 位密码。"}else{CS.busy=true;CS.msg="正在连接云端…";try{cLogin(cid,cpw,a==="cup").then(function(){CS.busy=false;CS.msg="登录成功，正在同步…";return cSync(true)}).catch(function(e){CS.busy=false;CS.msg="没成功："+e.message;render()})}catch(e){CS.busy=false;CS.msg=e.message}}}
   else if(a==="csync"){cSync(true)}
   else if(a==="cout"){cSetTok(null);CS.msg="已退出云账号。本机进度还在。"}
@@ -911,7 +914,7 @@ document.addEventListener("input",function(e){var t=e.target;if(!t||!t.getAttrib
   var k=t.getAttribute("data-k");if(k){var clean=t.value.replace(/[^0-9.]/g,"");if(clean!==t.value)t.value=clean;setK(k,clean);save()}});
 document.addEventListener("change",function(e){var t=e.target;if(t&&t.getAttribute&&t.getAttribute("data-k")){var k=t.getAttribute("data-k");setK(k,clampN(t.value,Number(t.getAttribute("data-min")),Number(t.getAttribute("data-max"))));save();render()}});
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.tagName==="INPUT"){e.target.blur()}});
-render();
+sigAll();render();
 setTimeout(function(){cSync(false)},1500);
 /* 网页版离线缓存：只在 http(s) 网址下注册；file://、exe、apk 里自动跳过 */
 (function(){try{if((location.protocol==="https:"||location.protocol==="http:")&&"serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}}catch(e){}})();
