@@ -351,6 +351,33 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline-color:#FF
 .tabbar .dot{background:#D6007A}
 .fin{color:var(--lt)}.fin .tablewrap{color:var(--ink)}
 .stepper .lab{color:var(--lt2)}.card .stepper .lab,.q .stepper .lab,.lesson .stepper .lab,.mini .stepper .lab{color:var(--ink2)}
+/* ===== v2.6.1 反馈 ===== */
+.fbform{margin-top:8px}
+.fbstep{display:block;font-weight:900;font-size:20px;color:var(--ink);margin:10px 0 8px}
+.fbkinds,.fbrates{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:520px){.fbkinds{grid-template-columns:repeat(2,1fr)}}
+.fbk,.fbr{min-height:64px;border-radius:18px;border:3px solid rgba(166,107,255,.6);background:var(--glass);color:var(--ink);font-weight:800;font-size:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px;box-shadow:0 0 10px rgba(166,107,255,.3);transition:transform .08s}
+.fbk i,.fbr i{font-style:normal;font-size:28px;line-height:32px}
+.fbk:active,.fbr:active{transform:translateY(3px)}
+.fbk.on{border-color:var(--neoC);background:#E3FBFF;box-shadow:0 0 0 3px rgba(0,229,255,.35),0 0 20px rgba(0,229,255,.6)}
+.fbtext{display:block;width:100%;box-sizing:border-box;min-height:150px;font-size:21px;line-height:1.5;padding:12px 14px;border-radius:18px;border:3px solid rgba(0,229,255,.7);background:#fff;color:var(--ink);resize:vertical;font-family:inherit}
+.fbtext:focus{outline:3px solid var(--neoP);outline-offset:2px}
+.fbcount{text-align:right;color:var(--ink2);margin-top:4px}
+.fbsafe{margin:10px 0;padding:10px 14px;border-radius:14px;background:#FFF4D6;border:2px solid #F2B705;color:#5A4200;font-size:17px;line-height:1.5}
+.fbnick{display:block;width:100%;min-height:52px;margin:6px 0;padding:8px 14px;text-align:left;border-radius:16px;border:3px solid rgba(166,107,255,.55);background:var(--glass);color:var(--ink);font-size:18px;font-weight:700}
+.fbnick.on{border-color:var(--neoC);background:#E3FBFF}
+.fbauto{margin:8px 0;color:var(--ink2)}.fbauto summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:700;color:var(--ink2)}
+.fbauto ul{margin:4px 0 0;padding-left:22px;color:var(--ink2)}
+.fbwarn{margin:10px 0;padding:10px 14px;border-radius:14px;background:#FFE3E3;border:2px solid #E5383B;color:#8A1414;font-weight:800}
+.fbrate{margin-top:14px}.fbrate .fbstep{margin-top:0}
+.fbok{color:#1B6B3A;font-weight:800;font-size:18px}
+.fbthx{text-align:center;margin-top:10px}.fbthx h2{color:var(--ink);margin:4px 0}.fbthx .say{text-align:left}
+.fbheart{font-size:72px;line-height:1;margin:6px auto;filter:drop-shadow(0 0 14px rgba(255,79,216,.8));animation:fbpop .9s cubic-bezier(.2,1.6,.4,1) both,fbfly 2.4s ease-in-out .9s infinite}
+@keyframes fbpop{0%{transform:scale(.2) rotate(-20deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes fbfly{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@media (prefers-reduced-motion:reduce){.fbheart{animation:none}}
+.tabbar button span{white-space:nowrap}
+@media (max-width:400px){.tabbar{gap:2px;padding:5px}.tabbar button{font-size:13px;padding:4px 0}.tabbar i{font-size:24px}}
 
 </style>
 </head>
@@ -2673,8 +2700,81 @@ GAMES.dca={
   h+='<div class="warn">🎯 <b>如果第 1 个月一次投 '+tot+' 元</b>：只能买 '+r2(lump)+' 份，现在值 <b class="down">'+r2(lump*last)+' 元</b>。</div>';
   h+='<div class="tip">💡 定投不保证赚钱：如果价格一直跌，也会亏。这里是模拟数据，只为看懂「平均成本」。</div>';
   return h+gq(this.q(p.grade),m.ans,"d")}};
+/* ---------- v2.6.1 游戏内反馈：💬 提意见 + 每关「这关怎么样」 ----------
+   只写入 Supabase 表 kids_feedback（只能插入，前端读不到）。
+   没联网 / 表还没建：先放本机队列，联网后自动重发。同设备 1 分钟只能提 1 条。不给金币。 */
+var FBKEY="kid-tycoon-fb",FBGAP=60000,FBMAX=30,FBS={busy:false};
+var FBKIND=[["fun","😕","哪里不好玩"],["confuse","🤔","看不懂"],["bug","🐞","出错了"],["idea","💡","我的建议"]];
+var FBRATE=[["hard","😣","太难"],["ok","😊","刚好"],["easy","😎","太简单"],["confuse","🤔","看不懂"]];
+var FBBADGE="💬 小建议家";TRANSIENT.fbmsg=1;TRANSIENT.fbDone=1;TRANSIENT.fbThx=1;TRANSIENT.fbFrom=1;TRANSIENT.fbLv=1;
+function fbLoad(){var o=null;try{o=JSON.parse(localStorage.getItem(FBKEY)||"null")}catch(e){}if(!o||typeof o!=="object")o={};if(!Array.isArray(o.q))o.q=[];o.last=Number(o.last)||0;o.sent=Number(o.sent)||0;return o}
+function fbStore(o){try{localStorage.setItem(FBKEY,JSON.stringify(o))}catch(e){}}
+function fbWait(){var l=fbLoad().last,d=Date.now()-l;return d>=0&&d<FBGAP?Math.ceil((FBGAP-d)/1000):0}
+function fbDev(){var u=navigator.userAgent||"",d;
+  if(/iPad/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1))d="iPad";else if(/iPhone|iPod/.test(u))d="iPhone";else if(/HarmonyOS|OpenHarmony/i.test(u))d="HarmonyOS";else if(/Android/.test(u))d="Android";else if(/Windows/.test(u))d="Windows";else if(/Macintosh/.test(u))d="Mac";else d="其他";
+  if(d==="Android"&&/; wv\)/.test(u))d+=" App";else if(location.protocol==="file:")d+=" 单文件";return d}
+function fbScreen(){var s=window.screen||{};return (s.width||0)+"x"+(s.height||0)+" 窗口"+(window.innerWidth||0)+"x"+(window.innerHeight||0)}
+/* 看起来像电话、邮箱、身份证号的，不让发 */
+function fbPII(t){return /\S+@\S+\.\S+/.test(t)||/(^|\D)1[3-9]\d{9}(\D|$)/.test(t)||/(^|\D)\d{17}[\dXx](\D|$)/.test(t)||/(^|\D)0\d{2,3}[- ]?\d{7,8}(\D|$)/.test(t)}
+function fbLevel(p){if(DB.fbLv)return DB.fbLv;if(p&&p.run&&DB.scr==="level")return p.run.id;return "@"+(DB.scr||"home")}
+function fbRow(p,kind,rating,msg,lv,withNick){return {kind:kind,rating:rating||null,message:String(msg||"").slice(0,1000),level_id:String(lv||"").slice(0,40)||null,grade:p?p.grade:null,app_version:APPVER,device:fbDev().slice(0,30),screen:fbScreen().slice(0,40),nickname:withNick&&p?String(p.name).slice(0,20):null}}
+/* 放进队列；返回 "" 表示成功，否则是提示文字 */
+function fbQueue(p,row){var o=fbLoad(),w=fbWait();if(w)return "1 分钟内只能提 1 条意见，再等 "+w+" 秒哦～";
+  o.q.push(row);if(o.q.length>FBMAX)o.q=o.q.slice(-FBMAX);o.last=Date.now();fbStore(o);
+  if(p&&p.badges.indexOf(FBBADGE)<0){p.badges.push(FBBADGE);toast("🏅 新徽章：<b>"+FBBADGE+"</b><br>谢谢你帮游戏变得更好！")}
+  setTimeout(fbFlush,0);return ""}
+function fbPost(row,useAuth){var t=cTok(),r={};for(var k in row)if(k!=="n")r[k]=row[k];var au=!!(useAuth&&t&&t.access_token&&t.uid&&Date.now()<t.exp);r.owner=au?t.uid:null;
+  return cFetch("/rest/v1/kids_feedback",{m:"POST",auth:au,b:r,h:{"Prefer":"return=minimal"}})}
+function fbFlush(){if(FBS.busy||!cloudOn()||navigator.onLine===false)return Promise.resolve();var o=fbLoad();if(!o.q.length)return Promise.resolve();FBS.busy=true;
+  function next(){var o2=fbLoad();if(!o2.q.length)return Promise.resolve();var row=o2.q[0];
+    return fbPost(row,true).catch(function(e){if(e.status===401||e.status===403)return fbPost(row,false);throw e})
+      .then(function(){var o3=fbLoad();o3.q.shift();o3.sent++;fbStore(o3);FBS.err="";return next()},
+        function(e){var s=e.status||0,o4=fbLoad();FBS.err=e.message;if(!o4.q.length)return;
+          if(s===400||s===409||s===422){/* 数据本身不合格：丢掉这条，别卡住后面的 */o4.q.shift();o4.bad=(o4.bad||0)+1;fbStore(o4);return next()}
+          if(s===401||s===403){/* 没权限（多半是 SQL 还没执行完整）：试 8 次后丢掉 */o4.q[0].n=(o4.q[0].n||0)+1;if(o4.q[0].n>=8){o4.q.shift();o4.bad=(o4.bad||0)+1}fbStore(o4);return}
+          /* 没网、表还没建(404)、服务器忙：留着下次再发 */})}
+  return next().catch(function(){}).then(function(){FBS.busy=false;if(DB.scr==="fb")render()})}
+window.addEventListener("online",function(){fbFlush()});
+document.addEventListener("visibilitychange",function(){if(!document.hidden)fbFlush()});
+setTimeout(fbFlush,2500);setInterval(function(){if(fbLoad().q.length)fbFlush()},60000);
+/* 打开反馈页：记下从哪一关 / 哪个页面来的 */
+function fbOpen(p){DB.fbLv=(DB.scr==="level"&&p&&p.run)?p.run.id:(DB.scr==="fb"?DB.fbLv:"@"+(DB.scr||"home"));DB.fbFrom=DB.scr==="fb"?DB.fbFrom:DB.scr;DB.fbk=DB.fbk||"";DB.fbmsg="";DB.fbDone=false;go("fb")}
+function fbAct(p,a,v){
+  if(a==="fb_open")fbOpen(p);
+  else if(a==="fb_kind"){DB.fbk=v;DB.fbmsg=""}
+  else if(a==="fb_nick"){DB.fbn=!DB.fbn}
+  else if(a==="fb_back"){var f=DB.fbFrom;DB.fbDone=false;go(f&&f!=="fb"?f:(p?"map":"home"))}
+  else if(a==="fb_send"){var ta=document.getElementById("fbtext"),t=String(ta?ta.value:(DB.fbt||"")).trim();DB.fbt=t;
+    if(!DB.fbk)DB.fbmsg="先选一下是哪种意见哦。";else if(!t)DB.fbmsg="写几句话再发送吧。";else if(t.length>1000)DB.fbmsg="太长啦，最多 1000 个字。";
+    else if(fbPII(t))DB.fbmsg="里面好像有电话、邮箱或身份证号。请删掉再发，个人信息要保护好！";
+    else{var m=fbQueue(p,fbRow(p,DB.fbk,null,t,DB.fbLv,DB.fbn));if(m)DB.fbmsg=m;else{DB.fbt="";DB.fbk="";DB.fbmsg="";DB.fbDone=true;DB.fbThx=true;snd("win")}}}
+  else if(a==="fb_rate"){var r=p&&p.run;if(r&&r.res&&!r.rated){var m2=fbQueue(p,fbRow(p,"rate",v,"",r.id,false));if(m2)r.rmsg=m2;else{r.rated=v;r.rmsg="";snd("ok")}}}
+}
+function fbStatus(){var o=fbLoad();if(!cloudOn())return o.q.length?"📦 有 "+o.q.length+" 条意见存在这台设备上。":"";
+  if(o.q.length)return "📦 还有 "+o.q.length+" 条意见在等联网，联网后会自动发出。";return o.sent?"✅ 你的意见都已经送到啦。":""}
+function viewFb(p){var h='<div class="row">'+btn("⬅ 返回","fb_back","")+'</div>';
+  if(DB.fbDone){h+='<div class="card fbthx" role="status"><div class="fbheart" aria-hidden="true">💌</div><h2>谢谢你的意见！</h2>'+say("我会认真看的！<br>有不好的地方，直接说出来，游戏才会越来越好～","happy")+'<p class="small">'+esc(fbStatus())+'</p><div class="row c">'+btn("再提一条","fb_open","","")+btn(p?"🗺️ 回地图":"🏠 回首页","go",p?"map":"home","go")+'</div></div>';return h}
+  h+='<h2>💬 提意见</h2>'+say("哪里不好玩、看不懂、出错了，<b>直接告诉我</b>！<br>好的坏的都可以说。");
+  h+='<div class="card fbform"><div class="fbstep">① 是哪种意见？</div><div class="fbkinds">'+FBKIND.map(function(k){return '<button class="fbk'+(DB.fbk===k[0]?' on':'')+'" data-a="fb_kind" data-v="'+k[0]+'"'+(DB.fbk===k[0]?' aria-pressed="true"':' aria-pressed="false"')+'><i aria-hidden="true">'+k[1]+'</i><span>'+k[2]+'</span></button>'}).join('')+'</div>';
+  h+='<label class="fbstep" for="fbtext">② 说说看（最多 1000 字）</label><textarea id="fbtext" class="fbtext" data-fbt="1" maxlength="1000" rows="5" placeholder="比如：第 3 关的题目看不懂……">'+esc(DB.fbt||"")+'</textarea><div class="tiny fbcount" id="fbcount">'+(DB.fbt||"").length+' / 1000</div>';
+  h+='<div class="fbsafe">🔒 <b>不要写真名、学校、家庭住址和电话。</b>游戏不会收集你的邮箱和电话。</div>';
+  h+='<button class="fbnick'+(DB.fbn?' on':'')+'" data-a="fb_nick" aria-pressed="'+(DB.fbn?'true':'false')+'">'+(DB.fbn?'☑️':'⬜')+' 附上我的游戏昵称'+(p?'「'+esc(p.name)+'」':'')+'（可不选）</button>';
+  var lv=DB.fbLv||"",lvn=lv&&lv.charAt(0)!=="@"&&LV[lv]?LV[lv].title:lv?"页面："+lv.slice(1):"";
+  h+='<details class="fbauto"><summary>会自动附上这些（点开看）</summary><ul class="small"><li>版本：'+APPVER+'</li>'+(p?'<li>年级：'+GNAME[p.grade]+'</li>':'')+(lvn?'<li>关卡：'+esc(lvn)+'</li>':'')+'<li>设备：'+esc(fbDev())+'</li><li>屏幕：'+esc(fbScreen())+'</li></ul></details>';
+  if(DB.fbmsg)h+='<div class="fbwarn" role="alert">'+esc(DB.fbmsg)+'</div>';
+  h+='<button class="btn go big" data-a="fb_send">📮 发送意见</button></div>';
+  var st=fbStatus();if(st)h+='<p class="small muted c">'+esc(st)+'</p>';
+  h+='<p class="tiny muted c">提意见不加金币，第一次提会得到徽章「'+FBBADGE+'」。同一台设备 1 分钟只能提 1 条。</p>';
+  return h}
+/* 关卡结束页的小问卷 */
+function fbRateBox(r){var h='<div class="card fbrate"><div class="fbstep">这关怎么样？</div>';
+  if(r.rated){var it=FBRATE.filter(function(x){return x[0]===r.rated})[0];h+='<div class="small fbok">'+(it?it[1]+' '+it[2]:'')+' · 收到啦，谢谢你！</div>'}
+  else h+='<div class="fbrates">'+FBRATE.map(function(x){return '<button class="fbr" data-a="fb_rate" data-v="'+x[0]+'"><i aria-hidden="true">'+x[1]+'</i><span>'+x[2]+'</span></button>'}).join('')+'</div>'+(r.rmsg?'<div class="tiny fbwarn">'+esc(r.rmsg)+'</div>':'');
+  return h+'</div>'}
+document.addEventListener("input",function(e){var t=e.target;if(t&&t.getAttribute&&t.getAttribute("data-fbt")){DB.fbt=t.value.slice(0,1000);var c=document.getElementById("fbcount");if(c)c.textContent=t.value.length+" / 1000"}});
+function fbFx(){if(!DB.fbThx)return;DB.fbThx=false;if(typeof confetti==="function")setTimeout(confetti,50)}
 /* ---------- v2.5 游戏化界面：启动画面、HUD、图标栏、蜿蜒地图、对话气泡、奖励动效 ---------- */
-var APPVER="2.6.0";
+var APPVER="2.6.1";
 function catSVG(m,s){s=s||64;
   var eye=m==="happy"?'<path d="M32 52q6-7 12 0M56 52q6-7 12 0" stroke="#3A2A1E" stroke-width="4.5" fill="none" stroke-linecap="round"/>':'<circle cx="38" cy="51" r="6" fill="#3A2A1E"/><circle cx="62" cy="51" r="6" fill="#3A2A1E"/><circle cx="40" cy="48.5" r="2" fill="#fff"/><circle cx="64" cy="48.5" r="2" fill="#fff"/>';
   var mo=m==="wow"?'<ellipse cx="50" cy="69" rx="5" ry="6" fill="#B5483B"/>':'<path d="M43 64q3.5 5 7 0q3.5 5 7 0" stroke="#3A2A1E" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
@@ -2687,10 +2787,10 @@ function mascot(p,scr){var w=WORDS[(p.shop.days*7+starsOf(p)*3+(scr==="shop"?1:0
 function disc(){return '<details class="disc"><summary>🧪 虚构公司 · 模拟数据 · 不推荐真实股票</summary>本游戏里的公司全部是<b>虚构公司</b>，价格、财报、K 线都是<b>模拟数据</b>，不代表任何真实公司，也不推荐任何真实股票。<b>真实的开户和交易由家长决定</b>。交易规则类内容以交易所最新规定为准。没有充值、抽奖和盲盒，金币只能靠学习和动脑筋赚。</details>'}
 /* 顶部 HUD + 底部图标栏 */
 function hud(p){return '<header class="hud"><button class="hav" data-a="go" data-v="home" aria-label="换人（回首页）">'+p.av+'</button><div class="hname"><b>'+esc(p.name)+'</b><span>'+GNAME[p.grade]+' · '+titleOf(p)+'</span></div><div class="stats"><span class="st c" title="金币"><i class="coin" aria-hidden="true"></i><b data-hud="coins">'+p.coins+'</b></span><span class="st s" title="星星"><i aria-hidden="true">⭐</i><b data-hud="stars">'+starsOf(p)+'</b></span><span class="st b" title="徽章"><i aria-hidden="true">🏅</i><b data-hud="badges">'+p.badges.length+'</b></span><button class="st m" data-a="mute" aria-label="'+(DB.mute?'打开声音':'关闭声音')+'">'+(DB.mute?'🔇':'🔊')+'</button></div></header>'}
-function tabBar(items,cur){return '<nav class="tabbar" aria-label="主菜单">'+items.map(function(it){return '<button class="'+(cur===it[0]?'on':'')+'" data-a="go" data-v="'+it[0]+'"'+(cur===it[0]?' aria-current="page"':'')+'><i aria-hidden="true">'+it[1]+'</i><span>'+it[2]+'</span>'+(it[3]?'<b class="dot">'+it[3]+'</b>':'')+'</button>'}).join('')+'</nav>'}
+function tabBar(items,cur){return '<nav class="tabbar" aria-label="主菜单">'+items.map(function(it){return '<button class="'+(cur===it[0]?'on':'')+'" data-a="'+(it[0]==="fb"?"fb_open":"go")+'" data-v="'+it[0]+'"'+(cur===it[0]?' aria-current="page"':'')+'><i aria-hidden="true">'+it[1]+'</i><span>'+it[2]+'</span>'+(it[3]?'<b class="dot">'+it[3]+'</b>':'')+'</button>'}).join('')+'</nav>'}
 function gameBar(p){var cur=DB.scr==="level"||DB.scr==="sim"?"map":DB.scr,pn=typeof pendList==="function"?pendList().length:0;
-  return tabBar([["map","🗺️","地图"],["shop","🧋","小店",p.shop.avail>0&&DB.scr!=="shop"?p.shop.avail:0],["book","📜","秘籍"],["rank","🏆","排行"],["ach","🏅","成就"],["parent","👪","家长",pn||0]],cur)}
-function homeBar(){var it=[];if(DB.profiles.length)it.push(["book","📜","秘籍"],["rank","🏆","排行"],["ach","🏅","成就"]);it.push(["parent","👪","家长"],["set","⚙️","设置"]);return tabBar(it,"")}
+  return tabBar([["map","🗺️","地图"],["shop","🧋","小店",p.shop.avail>0&&DB.scr!=="shop"?p.shop.avail:0],["book","📜","秘籍"],["rank","🏆","排行"],["ach","🏅","成就"],["fb","💬","提意见"],["parent","👪","家长",pn||0]],cur)}
+function homeBar(){var it=[];if(DB.profiles.length)it.push(["book","📜","秘籍"],["rank","🏆","排行"],["ach","🏅","成就"]);it.push(["fb","💬","提意见"],["parent","👪","家长"],["set","⚙️","设置"]);return tabBar(it,DB.scr==="fb"?"fb":"")}
 function lastP(){var l=null;DB.profiles.forEach(function(p){if(p.id===DB.last)l=p});return l||DB.profiles[0]||null}
 /* 启动画面 */
 function viewHome(){var last=lastP(),h='';
@@ -2757,6 +2857,7 @@ function viewLevel(p){
     if(res.pass){h+='<div class="win"><div class="rstars" aria-label="'+res.stars+' 颗星">'+[0,1,2].map(function(k){return '<span class="rstar'+(k<res.stars?' on':'')+'" style="animation-delay:'+(0.15+k*0.28)+'s">★</span>'}).join('')+'</div><h2>过关啦！</h2><div class="small">答对 '+res.correct+' / '+res.total+' · 🔥 连对 '+fx(p).combo+'</div><div class="rewards">'+(res.coins?'<div class="rw"><i class="coin"></i>+'+res.coins+'</div>':'')+(res.badge?'<div class="rw">🏅 '+res.badge+'</div>':'')+(res.day?'<div class="rw">🧋 +1 天</div>':'')+(res.wait?'<div class="rw">🍡 等待奖励 +'+res.wait+'</div>':'')+'</div>'+(res.coins?'':'<div class="tiny">这关拿过奖励了，星星更多才会再加金币</div>')+'</div>';
       h+=(i<levels(p).length-1?'<button class="btn go big" data-a="lv" data-v="'+levels(p)[i+1]+'">下一关 ➡</button>':'<button class="btn go big" data-a="go" data-v="sim">全部通关！去模拟交易 🎮</button>')+'<details class="more"><summary>更多 ▾</summary><div class="row c">'+btn("🔁 再玩一次","lv",r.id)+btn("🧋 去我的店","go","shop")+'</div></details>';}
     else h+='<div class="lose"><div class="big">💪</div><h2 style="margin:4px 0">还差一点点！</h2><div>答对 '+res.correct+' / '+res.total+'，答对 6 成就能过关</div></div>'+say("先翻翻秘籍，再来一次吧！")+'<div class="row c">'+btn("🔁 再试一次","lv",r.id,"go")+btn("📜 翻秘籍","book",chOf(L,g))+'</div>';
+    h+=fbRateBox(r);
   }
   return h}
 /* 奶茶店 */
@@ -2824,15 +2925,16 @@ function finishLevel(p){
 }
 /* ---------- 渲染 ---------- */
 function render(){
-  var p=P(),c='',h='',NOP={home:1,parent:1,acct:1,"new":1,set:1};
+  var p=P(),c='',h='',NOP={home:1,parent:1,acct:1,"new":1,set:1,fb:1};
   if(DB.scr==="acct"&&!cloudOn())DB.scr="home";
   if(!p&&!NOP[DB.scr])DB.scr="home";
   if(DB.scr==="level"&&(!p||!p.run))DB.scr="map";
   if(DB.scr==="sim"&&p&&!simOpen(p))DB.scr="map";
   var s=DB.scr;
   if(s==="home"){h='<main class="scr wbar">'+viewHome()+disc()+'</main>'+homeBar()}
+  else if(s==="fb"&&!p){h='<main class="scr wbar">'+viewFb(null)+disc()+'</main>'+homeBar()}
   else if(s==="acct"||s==="new"||s==="set"||(!p&&s==="parent")){c=s==="acct"?viewAcct():s==="new"?viewNew():s==="set"?viewSet():'<div class="row">'+btn("⬅ 回首页","go","home")+'</div>'+viewParent();h='<main class="scr">'+c+disc()+'</main>'}
-  else{c=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):s==="ach"?viewAch(p):viewMap(p);
+  else{c=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):s==="ach"?viewAch(p):s==="fb"?viewFb(p):viewMap(p);
     h=hud(p)+gameBar(p)+'<main class="scr wbar">'+c+disc()+'</main>'}
   document.getElementById("app").innerHTML=h;
 }
@@ -2889,8 +2991,9 @@ document.addEventListener("click",function(e){
   else if(a==="ssel"){p.sim.sel=v}
   else if(a==="sqty"){p.sim.qty=v}
   else if(a==="sbuy"){simTrade(p.sim,true,false)}else if(a==="ssell"){simTrade(p.sim,false,false)}else if(a==="ssellall"){simTrade(p.sim,false,true)}
+  if(a.indexOf("fb_")===0)fbAct(p,a,v);
   if(a.indexOf("g_")===0&&p)gameAct(p,a,v);
-  checkAch(P());save();render();flushFx();postRender();postFx(a,v);if(top)window.scrollTo(0,0);
+  checkAch(P());save();render();flushFx();postRender();postFx(a,v);fbFx();if(top)window.scrollTo(0,0);
 });
 document.addEventListener("input",function(e){var t=e.target;if(!t||!t.getAttribute)return;
   if(t.getAttribute("data-name")){DB.form.name=t.value;save();return}
