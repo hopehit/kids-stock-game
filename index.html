@@ -378,6 +378,12 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline-color:#FF
 @media (prefers-reduced-motion:reduce){.fbheart{animation:none}}
 .tabbar button span{white-space:nowrap}
 @media (max-width:400px){.tabbar{gap:2px;padding:5px}.tabbar button{font-size:13px;padding:4px 0}.tabbar i{font-size:24px}}
+/* ===== v2.6.2 忘记密码 ===== */
+.pwbox{margin-top:10px}
+.pwlink{min-height:48px;padding:6px 14px;border-radius:14px;border:2px dashed rgba(166,107,255,.7);background:transparent;color:var(--ink);font-size:18px;font-weight:800;cursor:pointer}
+.pwpanel{margin-top:10px;padding:12px 14px;border-radius:16px;background:#F3F0FF;border:2px solid rgba(166,107,255,.55);color:var(--ink)}
+.pwpanel .list{color:var(--ink2);margin:8px 0 0;padding-left:20px}
+.pwok{text-align:center}.pwok h3{color:var(--ink)}.pwok .list{text-align:left;color:var(--ink2)}
 
 </style>
 </head>
@@ -2488,7 +2494,7 @@ function cTok(){try{return JSON.parse(localStorage.getItem(CKEY)||"null")}catch(
 function cSetTok(t){try{if(t)localStorage.setItem(CKEY,JSON.stringify(t));else localStorage.removeItem(CKEY)}catch(e){}}
 function famEmail(id){id=String(id||"").trim().toLowerCase();if(id.indexOf("@")>0)return id;if(!/^[a-z0-9_-]{4,30}$/.test(id))throw new Error("家庭号只能用 4～30 位英文字母、数字、- 或 _，或者直接填邮箱。");return "family-"+id+"@kids-tycoon.example"}
 function cFetch(path,opt){opt=opt||{};var h={"apikey":CLOUD.key,"Content-Type":"application/json"};var t=cTok();if(opt.auth!==false&&t&&t.access_token)h["Authorization"]="Bearer "+t.access_token;/* 新版 publishable key 不是 JWT，未登录时不带 Authorization */for(var k in(opt.h||{}))h[k]=opt.h[k];
-  return fetch(CLOUD.url.replace(/\/+$/,"")+path,{method:opt.m||"GET",headers:h,body:opt.b?JSON.stringify(opt.b):undefined}).then(function(r){return r.text().then(function(x){var j=null;try{j=x?JSON.parse(x):null}catch(e){}if(!r.ok){var e=new Error((j&&(j.error_description||j.msg||j.message||j.error))||("HTTP "+r.status));e.status=r.status;throw e}return j})})}
+  return fetch(CLOUD.url.replace(/\/+$/,"")+path,{method:opt.m||"GET",headers:h,body:opt.b?JSON.stringify(opt.b):undefined}).then(function(r){return r.text().then(function(x){var j=null;try{j=x?JSON.parse(x):null}catch(e){}if(!r.ok){var e=new Error((j&&(j.error_description||j.msg||j.message||j.error))||("HTTP "+r.status));e.status=r.status;e.code=j&&(j.error_code||(typeof j.code==="string"?j.code:""));throw e}return j})})}
 function cSaveSession(j){if(!j||!j.access_token)throw new Error("登录没有成功，请检查账号设置（是否需要先确认邮箱）。");cSetTok({access_token:j.access_token,refresh_token:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000-60000,uid:j.user&&j.user.id,who:j.user&&j.user.email})}
 function cLogin(id,pw,signup){var em=famEmail(id);return cFetch(signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password",{m:"POST",auth:false,b:{email:em,password:pw}}).then(function(j){if(signup&&!j.access_token)throw new Error("注册成功，但需要先到邮箱点确认链接，再回来登录。（用家庭号的话，请家长在 Supabase 里关闭邮箱确认）");cSaveSession(j)})}
 function cEnsure(){var t=cTok();if(!t)return Promise.reject(new Error("还没有登录"));if(Date.now()<t.exp)return Promise.resolve(t);return cFetch("/auth/v1/token?grant_type=refresh_token",{m:"POST",auth:false,b:{refresh_token:t.refresh_token}}).then(function(j){cSaveSession(j);return cTok()})}
@@ -2523,13 +2529,13 @@ function cloudForm(){var t=cTok(),h='';
     h+='<input class="txt" id="cid" data-cf="id" type="'+(up?'email':'text')+'" inputmode="email" placeholder="'+(up?'家长的邮箱':'家长邮箱（老用户也可以填家庭号）')+'" autocomplete="username" autocapitalize="off" spellcheck="false" value="'+esc(DB.cid||"")+'" aria-label="家长邮箱">';
     h+='<input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="'+(up?'new-password':'current-password')+'" style="margin-top:8px" aria-label="密码">';
     if(up)h+='<input class="txt" id="cpw2" type="password" placeholder="再输一遍密码" autocomplete="new-password" style="margin-top:8px" aria-label="再输一遍密码">';
-    h+='<div class="row">'+(up?btn("注册家庭账号","cup","","pri",CS.busy):btn("登录","cin","","pri",CS.busy))+'</div>'}
+    h+='<div class="row">'+(up?btn("注册家庭账号","cup","","pri",CS.busy):btn("登录","cin","","pri",CS.busy))+'</div>'+(up?'':pwBox())}
   return h+(CS.msg?'<div class="msg">'+esc(CS.msg)+'</div>':'')}
 function viewAcct(){var h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div><h2>👨‍👩‍👧 家长注册 / 登录家庭账号</h2>';
   h+='<div class="card"><ul class="list small"><li><b>一个家庭一个账号，由家长注册</b>。家里几个孩子都放在这个账号下，各自建档案。</li><li><b>各家的数据互相看不到</b>。朋友家用他们自己的账号，看不到你家的孩子，你也看不到他们的。</li><li>云端<b>只存昵称和游戏进度</b>（金币、星星、关卡），不存真实姓名、照片、位置。</li><li>孩子的昵称请用小名，<b>别用真实全名</b>。</li><li>登录后，孩子在这台设备上新建的档案要<b>家长在「家长区」确认</b>后才会同步。</li></ul></div>';
   h+='<div class="card" style="margin-top:12px">'+cloudForm()+'</div>';
   if(cTok())h+='<div class="row">'+btn("👪 去家长区确认孩子","go","parent")+'</div>';
-  h+='<p class="tiny">不注册也能玩：进度只存在这台设备上。注册是为了换设备时接着玩。忘记密码暂时没法自己找回，请记好密码。</p>';
+  h+='<p class="tiny">不注册也能玩：进度只存在这台设备上。注册是为了换设备时接着玩。忘记密码：选「已有账号：登录」，点「🔑 忘记密码？」，用家长邮箱重新设置。</p>';
   return h}
 /* ---------- v2.2 股票乐园：每个小游戏都接在关卡里 ---------- */
 function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -2773,8 +2779,73 @@ function fbRateBox(r){var h='<div class="card fbrate"><div class="fbstep">这关
   return h+'</div>'}
 document.addEventListener("input",function(e){var t=e.target;if(t&&t.getAttribute&&t.getAttribute("data-fbt")){DB.fbt=t.value.slice(0,1000);var c=document.getElementById("fbcount");if(c)c.textContent=t.value.length+" / 1000"}});
 function fbFx(){if(!DB.fbThx)return;DB.fbThx=false;if(typeof confetti==="function")setTimeout(confetti,50)}
+/* ---------- v2.6.2 忘记密码：发重置邮件 + 邮件链接回到网站设新密码 ----------
+   1) 登录框下「忘记密码？」→ POST /auth/v1/recover?redirect_to=网站地址
+   2) 邮件链接打开网站：#access_token=…&type=recovery → 「设置新密码」→ PUT /auth/v1/user → 自动登录，清掉地址栏里的 token
+   3) 链接过期：#error=…&error_description=… → 提示重新发 */
+var PWSITE="https://hopehit.github.io/kids-stock-game/",PWGAP=60000,PW={};
+TRANSIENT.pwmsg=1;TRANSIENT.pwf=1;
+function pwWeb(){return /^https?:$/.test(location.protocol)}
+function pwRedirect(){return pwWeb()&&location.hostname!=="hopehit.github.io"?location.origin+location.pathname:PWSITE}
+function pwIsApp(){return !pwWeb()}
+/* 读地址栏：成功的恢复链接 / 出错的链接。读完立刻把 token 从地址栏去掉 */
+function pwParse(){var raw=(location.hash||"").replace(/^#/,""),q=(location.search||"").replace(/^\?/,"");if(!/access_token=|error=|error_description=/.test(raw+"&"+q))return;
+  var o={};(raw+"&"+q).split("&").forEach(function(kv){if(!kv)return;var i=kv.indexOf("=");var k=decodeURIComponent((i<0?kv:kv.slice(0,i)).replace(/\+/g," "));var v=i<0?"":decodeURIComponent(kv.slice(i+1).replace(/\+/g," "));o[k]=v});
+  try{history.replaceState(null,"",location.pathname)}catch(e){try{location.hash=""}catch(e2){}}
+  if(o.error||o.error_description||o.error_code){PW.err=o.error_code||o.error||"error";PW.errDesc=o.error_description||"";DB.scr="pwreset";return}
+  if(o.access_token&&o.type==="recovery"){PW.tok={access_token:o.access_token,refresh_token:o.refresh_token||"",exp:Date.now()+(Number(o.expires_in)||3600)*1000-60000};PW.err=null;PW.done=false;DB.scr="pwreset"}}
+try{pwParse()}catch(e){}
+function pwErrText(code,desc){if(/expired|otp_expired|invalid/i.test(code+" "+desc))return "这个重置链接已经过期或已经用过了。请回到登录框，再点一次「忘记密码？」发一封新邮件（链接一般 1 小时内有效，只能用一次）。";
+  if(/access_denied/.test(code))return "这个链接打不开（"+(desc||code)+"）。请重新发一封重置邮件。";return "链接有问题："+(desc||code)+"。请重新发一封重置邮件。"}
+function pwSendErr(e){var c=e.code||"",m=e.message||"";
+  if(e.status===429||/rate.?limit|over_email_send/i.test(c+" "+m))return /only request this after/i.test(m)?"刚发过一封，1 分钟后才能再发。先去邮箱（包括垃圾邮件）找一找。":"这一小时里发的邮件太多了（Supabase 免费邮件每小时只能发很少几封），请过一个小时再试。";
+  if(/email_address_not_authorized|not authorized/i.test(c+" "+m))return "这个邮箱暂时收不到系统邮件：Supabase 自带的免费邮件只发给项目成员的邮箱。请家长在 Supabase 后台设置自己的发信邮箱（SMTP），或者在后台直接改密码。";
+  if(/email_address_invalid|invalid.*email/i.test(c+" "+m))return "邮箱格式不对，请检查一下。";
+  return "没发出去："+m+(e.status?"（"+e.status+"）":"")}
+function pwAct(p,a,v){
+  if(a==="pw_forgot"){DB.pwf=!DB.pwf;DB.pwmsg=""}
+  else if(a==="pw_send"){var el=document.getElementById("pwemail"),em=String(el?el.value:"").trim().toLowerCase();DB.pwem=em;var left=PWGAP-(Date.now()-(PW.sentAt||0));
+    if(!em){DB.pwmsg="请填写注册时用的家长邮箱。"}
+    else if(em.indexOf("@")<0){DB.pwmsg="老的「家庭号」账号没有真实邮箱，收不到重置邮件。请家长在 Supabase 后台改密码，或者用邮箱重新注册一个家庭账号。"}
+    else if(/@kids-tycoon\.example$/.test(em)){DB.pwmsg="这是家庭号生成的地址，收不到邮件。请家长在 Supabase 后台改密码。"}
+    else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){DB.pwmsg="邮箱格式不对，请检查一下。"}
+    else if(left>0){DB.pwmsg="刚发过，"+Math.ceil(left/1000)+" 秒后才能再发。先去邮箱（包括垃圾邮件）找一找。"}
+    else if(!cloudOn()){DB.pwmsg="这个版本没有连接云端。"}
+    else if(navigator.onLine===false){DB.pwmsg="现在没联网，联网后再发。"}
+    else{PW.busy=true;DB.pwmsg="正在发送…";PW.sentAt=Date.now();
+      cFetch("/auth/v1/recover?redirect_to="+encodeURIComponent(pwRedirect()),{m:"POST",auth:false,b:{email:em}}).then(function(){DB.pwmsg="✅ 如果这个邮箱注册过家庭账号，几分钟内会收到一封重置密码的邮件（发件人是 Supabase，也看看垃圾邮件）。点邮件里的链接，会打开网站版小小投资家，在那里设新密码。"+(pwIsApp()?"改好后回到这个 App，用新密码登录。":"")})
+      .catch(function(e){if(!(e.status===429&&/only request this after/i.test(e.message||"")))PW.sentAt=0;DB.pwmsg=pwSendErr(e)}).then(function(){PW.busy=false;if(DB.scr==="acct")render()})}}
+  else if(a==="pw_set"){var a1=(document.getElementById("pwn1")||{}).value||"",a2=(document.getElementById("pwn2")||{}).value||"";
+    if(!PW.tok){DB.pwmsg="链接信息已经没有了，请重新发一封重置邮件。"}
+    else if(a1.length<6){DB.pwmsg="新密码至少 6 位。"}
+    else if(a1!==a2){DB.pwmsg="两次输入的新密码不一样，请再输一遍。"}
+    else if(Date.now()>PW.tok.exp){DB.pwmsg="这个链接已经超时了，请重新发一封重置邮件。"}
+    else{PW.busy=true;DB.pwmsg="正在保存新密码…";
+      fetch(CLOUD.url.replace(/\/+$/,"")+"/auth/v1/user",{method:"PUT",headers:{"apikey":CLOUD.key,"Content-Type":"application/json","Authorization":"Bearer "+PW.tok.access_token},body:JSON.stringify({password:a1})})
+      .then(function(r){return r.text().then(function(x){var j=null;try{j=x?JSON.parse(x):null}catch(e){}if(!r.ok){var e=new Error((j&&(j.error_description||j.msg||j.message||j.error))||("HTTP "+r.status));e.status=r.status;e.code=j&&(j.error_code||j.code);throw e}return j})})
+      .then(function(u){cSetTok({access_token:PW.tok.access_token,refresh_token:PW.tok.refresh_token,exp:PW.tok.exp,uid:u&&u.id,who:u&&u.email});PW.done=true;PW.who=u&&u.email;PW.tok=null;DB.pwmsg="";DB.cmode="in";CS.msg="";setTimeout(function(){cSync(true)},0)})
+      .catch(function(e){var c=(e.code||"")+" "+e.message;DB.pwmsg=/same_password|different from the old/i.test(c)?"新密码不能和旧密码一样，换一个吧。":/weak_password|at least|characters/i.test(c)?"密码太简单了，请换一个更长、更难猜的。":(e.status===401||e.status===403)?"这个链接已经失效了，请重新发一封重置邮件。":"没改成功："+e.message})
+      .then(function(){PW.busy=false;render()})}}
+  else if(a==="pw_again"){PW.err=null;DB.cmode="in";DB.pwf=true;DB.pwmsg="";go("acct")}
+}
+/* 登录框下面的「忘记密码？」 */
+function pwBox(){var h='<div class="pwbox"><button class="pwlink" data-a="pw_forgot" aria-expanded="'+(DB.pwf?'true':'false')+'">🔑 忘记密码？</button>';
+  if(DB.pwf){var em=DB.pwem!=null?DB.pwem:((DB.cid||"").indexOf("@")>0?DB.cid:"");
+    h+='<div class="pwpanel"><p class="small">填注册时用的<b>家长邮箱</b>，我们会发一封重置密码的邮件。</p><input class="txt" id="pwemail" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="家长的邮箱" aria-label="家长的邮箱" value="'+esc(em)+'"><div class="row">'+btn(PW.busy?"发送中…":"📧 发送重置邮件","pw_send","","pri",PW.busy)+'</div>';
+    h+='<ul class="list small"><li>邮件里的链接会打开<b>网站版</b>小小投资家，在网站上设新密码。</li>'+(pwIsApp()?'<li>你现在用的是 App / 电脑版：<b>在网站上改好密码后，回到这个 App，用新密码登录</b>。</li>':'<li>如果是从主屏幕图标打开的游戏：改好后回到主屏幕的游戏，用新密码登录。</li>')+'<li>链接一般 1 小时内有效，只能用一次。收不到就看看垃圾邮件。</li><li>免费的邮件服务<b>每小时只能发很少几封</b>，请不要连着点。</li></ul></div>'}
+  if(DB.pwmsg&&DB.pwf)h+='<div class="msg" role="status">'+esc(DB.pwmsg)+'</div>';
+  return h+'</div>'}
+/* 「设置新密码」页面 */
+function viewPwReset(){var h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div><h2>🔑 设置新密码</h2>';
+  if(PW.err){h+='<div class="card"><p>😿 '+esc(pwErrText(PW.err,PW.errDesc))+'</p><div class="row">'+(cloudOn()?btn("去重新发邮件","pw_again","","pri"):'')+'</div></div>';return h}
+  if(PW.done){h+='<div class="card pwok"><div class="fbheart" aria-hidden="true">🔓</div><h3>新密码设好了，已经登录！</h3><p>'+(PW.who?'账号：<b>'+esc(PW.who)+'</b><br>':'')+'正在同步孩子们的进度。</p><ul class="list small"><li>别的设备（iPad、电脑 exe、安卓 App）上，请<b>用新密码重新登录</b>。</li><li>如果你是从 App 里点「忘记密码」过来的，现在可以<b>回到 App，用新密码登录</b>了。</li></ul><div class="row">'+btn("▶ 开始玩","go","home","go")+btn("☁️ 看账号","go","acct","")+'</div></div>';return h}
+  if(!PW.tok){h+='<div class="card"><p>没有找到重置信息。请在登录框点「忘记密码？」重新发一封邮件。</p></div>';return h}
+  h+='<div class="card"><p class="small">请输入新密码（至少 6 位），输两遍。</p><input class="txt" id="pwn1" type="password" autocomplete="new-password" placeholder="新密码（至少 6 位）" aria-label="新密码"><input class="txt" id="pwn2" type="password" autocomplete="new-password" placeholder="再输一遍新密码" aria-label="再输一遍新密码" style="margin-top:8px"><div class="row">'+btn(PW.busy?"保存中…":"✅ 保存新密码","pw_set","","pri",PW.busy)+'</div>'+(DB.pwmsg?'<div class="msg" role="status">'+esc(DB.pwmsg)+'</div>':'')+'<p class="tiny">改好后会自动登录这个网站。用 App 或电脑版的，回到 App 用新密码登录。</p></div>';
+  return h}
+/* 网站已经开着时点了邮件链接（只改了 # 部分，页面不重新加载） */
+window.addEventListener("hashchange",function(){var b=DB.scr;try{pwParse()}catch(e){}if(DB.scr!==b||DB.scr==="pwreset"){DB.pwmsg="";render();window.scrollTo(0,0)}});
 /* ---------- v2.5 游戏化界面：启动画面、HUD、图标栏、蜿蜒地图、对话气泡、奖励动效 ---------- */
-var APPVER="2.6.1";
+var APPVER="2.6.2";
 function catSVG(m,s){s=s||64;
   var eye=m==="happy"?'<path d="M32 52q6-7 12 0M56 52q6-7 12 0" stroke="#3A2A1E" stroke-width="4.5" fill="none" stroke-linecap="round"/>':'<circle cx="38" cy="51" r="6" fill="#3A2A1E"/><circle cx="62" cy="51" r="6" fill="#3A2A1E"/><circle cx="40" cy="48.5" r="2" fill="#fff"/><circle cx="64" cy="48.5" r="2" fill="#fff"/>';
   var mo=m==="wow"?'<ellipse cx="50" cy="69" rx="5" ry="6" fill="#B5483B"/>':'<path d="M43 64q3.5 5 7 0q3.5 5 7 0" stroke="#3A2A1E" stroke-width="3.5" fill="none" stroke-linecap="round"/>';
@@ -2925,13 +2996,14 @@ function finishLevel(p){
 }
 /* ---------- 渲染 ---------- */
 function render(){
-  var p=P(),c='',h='',NOP={home:1,parent:1,acct:1,"new":1,set:1,fb:1};
+  var p=P(),c='',h='',NOP={home:1,parent:1,acct:1,"new":1,set:1,fb:1,pwreset:1};
   if(DB.scr==="acct"&&!cloudOn())DB.scr="home";
   if(!p&&!NOP[DB.scr])DB.scr="home";
   if(DB.scr==="level"&&(!p||!p.run))DB.scr="map";
   if(DB.scr==="sim"&&p&&!simOpen(p))DB.scr="map";
   var s=DB.scr;
   if(s==="home"){h='<main class="scr wbar">'+viewHome()+disc()+'</main>'+homeBar()}
+  else if(s==="pwreset"){h='<main class="scr">'+viewPwReset()+disc()+'</main>'}
   else if(s==="fb"&&!p){h='<main class="scr wbar">'+viewFb(null)+disc()+'</main>'+homeBar()}
   else if(s==="acct"||s==="new"||s==="set"||(!p&&s==="parent")){c=s==="acct"?viewAcct():s==="new"?viewNew():s==="set"?viewSet():'<div class="row">'+btn("⬅ 回首页","go","home")+'</div>'+viewParent();h='<main class="scr">'+c+disc()+'</main>'}
   else{c=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):s==="ach"?viewAch(p):s==="fb"?viewFb(p):viewMap(p);
@@ -2992,6 +3064,7 @@ document.addEventListener("click",function(e){
   else if(a==="sqty"){p.sim.qty=v}
   else if(a==="sbuy"){simTrade(p.sim,true,false)}else if(a==="ssell"){simTrade(p.sim,false,false)}else if(a==="ssellall"){simTrade(p.sim,false,true)}
   if(a.indexOf("fb_")===0)fbAct(p,a,v);
+  if(a.indexOf("pw_")===0)pwAct(p,a,v);
   if(a.indexOf("g_")===0&&p)gameAct(p,a,v);
   checkAch(P());save();render();flushFx();postRender();postFx(a,v);fbFx();if(top)window.scrollTo(0,0);
 });
