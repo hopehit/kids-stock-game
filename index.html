@@ -96,6 +96,33 @@ ol.list{padding-left:28px;margin:8px 0}ol.list li{margin:6px 0}
 .hide{display:none}
 @media (min-width:1000px){.two{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:24px;align-items:start}.two>.side{position:sticky;top:150px}}
 @media (max-width:700px){body{font-size:17px}.wrap{padding:8px 12px 32px}h1{font-size:25px}h2{font-size:21px}.nav{grid-template-columns:repeat(3,1fr)}.nav button{font-size:15px}.grid{grid-template-columns:1fr}.opt{flex:1 1 100%;font-size:17px}.tile .v{font-size:20px}table{font-size:16px}th,td{padding:8px}.stepper{flex:1 1 100%}.pt{font-size:17px;line-height:27px}.big{font-size:44px;line-height:52px}}
+.mascot{display:flex;gap:10px;align-items:flex-start;margin:8px 0}.mface{font-size:40px;line-height:48px;flex:0 0 48px;text-align:center;animation:bob 2.4s ease-in-out infinite}
+.mbub{position:relative;flex:1;background:#fff;border:2px solid var(--line);border-radius:16px;padding:8px 14px;font-size:17px}.mbub:before{content:"";position:absolute;left:-9px;top:16px;border:8px solid transparent;border-right-color:var(--line);border-left:0}
+.pill.sm{min-height:0;padding:0 10px;font-size:15px}button.pill{cursor:pointer}
+.scene{position:relative;height:150px;border-radius:18px;overflow:hidden;background:linear-gradient(#CDEBFF,#FFF7E6 70%);border:2px solid var(--line);margin:8px 0}
+.scene.rain{background:linear-gradient(#B8C4D6,#EEF1F6 70%)}.scene.hot{background:linear-gradient(#FFE2A8,#FFF7E6 70%)}
+.scene .sky{position:absolute;right:14px;top:6px;font-size:34px}
+.scene .front{position:absolute;left:12px;bottom:10px;width:min(52%,300px);height:110px;background:#fff;border:2px solid #E8CFA6;border-radius:12px;text-align:center}
+.scene .awn{height:22px;border-radius:10px 10px 0 0;background:repeating-linear-gradient(90deg,#FFB74D 0 18px,#fff 18px 36px)}.scene .lv2 .awn,.scene .lv3 .awn{background:repeating-linear-gradient(90deg,#FF7A59 0 18px,#FFE08A 18px 36px)}.scene .lv3{box-shadow:0 0 0 3px #F2A900}
+.scene .sgn{font-weight:700;font-size:15px;line-height:1.3;padding:4px 6px}.scene .ctr{font-size:26px}
+.scene .queue{position:absolute;left:56%;right:8px;bottom:8px;display:flex;flex-wrap:wrap-reverse;gap:2px;font-size:26px;line-height:30px}
+.scene.go .queue span{display:inline-block;animation:walk .6s ease-out both}
+.scene .coin{position:absolute;bottom:40px;font-style:normal;font-size:24px;opacity:0;animation:fly 1.4s ease-out forwards}
+@keyframes walk{from{transform:translateX(120px);opacity:0}to{transform:none;opacity:1}}@keyframes fly{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-90px)}}@keyframes bob{50%{transform:translateY(-4px)}}
+.mini{margin:12px 0;border-color:#F3D9A4;background:#FFFCF3}.order{display:flex;gap:10px;align-items:center;margin:8px 0}.order .cust{font-size:40px}.order .bub{background:#fff;border:2px solid var(--line);border-radius:14px;padding:8px 12px}
+.evc{border-color:#BFD5F7;background:#F7FAFF}.evt{display:flex;gap:10px;align-items:center;margin:8px 0;font-size:18px}.evi{font-size:40px;line-height:48px}.tag2{display:inline-block;background:var(--accentSoft);color:var(--accent);border-radius:8px;padding:0 8px;font-size:14px;font-weight:700}
+.achs{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px}.ach{background:#F6F0E4;border:2px dashed var(--line);border-radius:16px;padding:10px;text-align:center;color:var(--ink3)}.ach.on{background:#fff;border:2px solid #F3D9A4;color:var(--ink)}.ach .ai{font-size:36px;line-height:44px}
+#toasts{position:fixed;top:calc(10px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:50;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}.toast{background:#2B2D42;color:#fff;padding:10px 18px;border-radius:14px;font-size:17px;max-width:92vw;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,.2);animation:tin .25s ease-out}.toast .tiny{color:#D9DCE6}
+@keyframes tin{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:40;overflow:hidden}.confetti i{position:absolute;top:-12px;width:10px;height:14px;border-radius:2px;animation:fall 2.2s linear forwards}@keyframes fall{to{transform:translateY(105vh) rotate(540deg)}}
+textarea.code{min-height:96px;font-size:14px;font-family:ui-monospace,Menlo,Consolas,monospace;word-break:break-all;margin-top:8px}
+.newscard{background:#fff;border:2px solid #F5C2C2;border-radius:16px;margin:10px 0;overflow:hidden}.newscard .nhd{background:#FFE9E9;color:#B42318;font-weight:700;padding:4px 14px;font-size:16px}.newscard .nbd{padding:10px 14px;font-size:19px}
+.stocks{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin:10px 0}.stk{background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px 12px}.stk .sn{font-weight:700}.stk .sp{font-size:28px;font-weight:800;line-height:1.2;font-variant-numeric:tabular-nums}.stk .sp.tick{transform:scale(1.06)}.stk .btn{padding:6px 12px;font-size:16px;flex:1}
+.recap{margin:10px 0;border-color:#BFD5F7}.reveal{font-size:22px;font-weight:700;margin:10px 0}.reveal .arrow{display:inline-block;font-size:34px}.reveal .arrow.pop{animation:pop .6s ease-out}@keyframes pop{0%{transform:scale(.3)}70%{transform:scale(1.3)}100%{transform:scale(1)}}
+svg.candle{display:block;width:100%;max-width:300px;height:auto;margin:0 auto}.kbuild{display:flex;flex-wrap:wrap;gap:14px;align-items:center}.kprev{flex:1 1 220px;max-width:300px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:6px}
+.kst{display:flex;align-items:center;gap:8px;margin:6px 0}.kst span{width:48px;color:var(--ink2)}.kst b{min-width:40px;text-align:center;font-size:22px}.kst button{width:52px;font-size:26px;font-weight:700;border-radius:14px;border:2px solid var(--line);background:#fff}
+.fins{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:10px 0}.fin b{display:block;margin-bottom:6px}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none !important;transition:none !important}.scene .coin{display:none}}
 #lesson{scroll-margin-top:170px}
 @media (max-width:700px){.top{position:static}#lesson{scroll-margin-top:10px}}
 @media (max-height:500px){.top{position:static}.two>.side{position:static}}
@@ -204,9 +231,24 @@ kline2:{ico:"📉",title:"K 线里的趋势",concept:"K 线趋势",ch:"g8-4",bad
 rules:{ico:"📏",title:"交易规则小考",concept:"交易规则（T+1、涨跌停）",ch:"g8-8",badge:"📏 规则明白人",
  story:function(){return["不同的市场有不同的交易规则，规则也可能调整。","这里只讲几条基础知识，一切以交易所最新规定为准。","记住：开证券账户一般要年满 18 岁，孩子的真实交易由家长决定。"]},
  m:function(){return{vis:'<div class="warn">以下规则以交易所最新规定为准。</div>',ask:"A 股今天买入的股票，最早什么时候可以卖？",o:["当天","下一个交易日"],a:1,e:"A 股实行 T+1：今天买，最早下一个交易日能卖（以交易所最新规定为准）。"}},
- qs:function(){return[Q("港股用什么货币交易？",["人民币","港元","美元"],1,"港股以港元交易。"),Q("A 股主板股票的每日涨跌幅限制一般是？",["10%","20%","没有限制"],0,"主板一般 10%，创业板、科创板一般 20%（以交易所最新规定为准）。"),Q("小学生、初中生能自己开证券账户吗？",["能","不能，一般要年满 18 岁"],1,"开户一般要年满 18 岁本人办理，真实交易由家长决定。")]}}
+ qs:function(){return[Q("港股用什么货币交易？",["人民币","港元","美元"],1,"港股以港元交易。"),Q("A 股主板股票的每日涨跌幅限制一般是？",["10%","20%","没有限制"],0,"主板一般 10%，创业板、科创板一般 20%（以交易所最新规定为准）。"),Q("小学生、初中生能自己开证券账户吗？",["能","不能，一般要年满 18 岁"],1,"开户一般要年满 18 岁本人办理，真实交易由家长决定。")]}},
+market:{ico:"📈",title:"模拟股市日",concept:"新闻、基本面和情绪",ch:"g4-2",ch8:"g8-6",badge:"📈 股市小记者",game:"market",
+ story:function(g){return["欢迎来到虚构的「小小股市」！每天早上开盘，会有一条新闻。","你用 1000 元虚拟钱买卖股票，收盘后一起复盘：价格为什么动？","有的涨跌是因为公司真的变好变差（基本面），有的只是大家一时激动或害怕（情绪）。"]},
+ qs:function(g){return g==="g4"?[Q("公司真的多赚钱了，股价更可能？",["长期站得住","第二天一定跌回去"],0,"公司变好是基本面，更可能站得住。"),Q("大家因为传言抢着买，这种上涨是？",["情绪带来的，可能很快回落","公司一定变好了"],0,"情绪来得快去得快。")]:[Q("「基本面」指的是？",["公司本身赚钱的能力和经营情况","今天网上谁喊得响"],0,"基本面就是公司本身的情况。"),Q("一条谣言让股价大跌，澄清后价格常常会？",["慢慢回来","永远回不来"],0,"恐慌过去，价格常会回到和公司价值更接近的地方。"),Q("模拟交易里赚了钱，说明？",["不一定是你判断对了，短期运气也很重要","你已经是投资高手了"],0,"短期结果有很多运气成分，要看道理对不对。")]}},
+guess:{ico:"🔮",title:"猜涨跌挑战",concept:"短期涨跌难以预测",ch:"g4-2",ch8:"g8-6",badge:"🔮 讲理小达人",game:"guess",
+ story:function(g){return["看一条虚构新闻，猜猜股价会涨还是跌。","猜中了不加分！选对「为什么」才加分。","你会发现：有时好消息也会跌，没消息也会涨——短期没人能一直猜对。"]},
+ qs:function(g){return[Q("有人说他「每次都能猜中明天涨跌」，你怎么看？",["不可信，短期涨跌没人能一直猜对","太厉害了，跟着他买"],0,"短期价格受太多因素影响，没人能一直猜对。"),Q("利润增长了，股价却跌了，可能是因为？",["结果不如大家之前的期待","股市坏掉了"],0,"价格里已经包含了期待，结果不如预期就可能跌。")].concat(g==="g8"?[Q("「消息已经反映在价格里」是什么意思？",["大家早就知道了，价格早已变化过","消息是假的"],0,"人人都知道的消息，往往已经体现在价格里。")]:[])}},
+klgame:{ico:"🕯️",title:"K 线小画家",concept:"K 线和均线",ch:"g8-4",badge:"🕯️ K 线小画家",game:"klgame",
+ story:function(g){return["一根 K 线像一根蜡烛，画出一天的 4 个价格：开盘、收盘、最高、最低。","收盘比开盘高 = 阳线（红）；收盘比开盘低 = 阴线（绿）。上下的细线是最高价和最低价。"].concat(g==="g4"?[]:["把最近几天的收盘价平均一下，连成线，就是「均线」，它能帮你看大方向。"])},
+ qs:function(g){return[Q("阳线表示这一天？",["收盘价比开盘价高","收盘价比开盘价低"],0,"阳线：收盘 > 开盘，通常画红色。"),Q("K 线上下细线的最顶端是？",["最高价","开盘价"],0,"上影线顶端是当天最高价。")].concat(g==="g4"?[]:[Q("均线能准确预测明天的价格吗？",["不能，它是过去价格的平均","能"],0,"均线记录过去，帮你看趋势，不能预言。")])}},
+detect:{ico:"🕵️",title:"财报侦探",concept:"财报：营收、利润、市值、市盈率、负债",ch:"g8-2",badge:"🕵️ 财报侦探",game:"detect",
+ story:function(g){return["两家虚构公司交来了简版财报，请你当侦探！","营收是卖东西收到的钱，净利润是减掉所有成本后真正剩下的钱。"].concat(g==="g8"?["市值 = 股价 × 总股数；市盈率 = 市值 ÷ 净利润；负债是公司欠别人的钱。"]:["卖得多不一定赚得多，要看成本。"])},
+ qs:function(g){return[Q("营收多的公司一定更赚钱吗？",["不一定，还要减掉成本看利润","一定"],0,"利润 = 营收 − 成本。")].concat(g==="g8"?[Q("市盈率 20 倍，大概意思是？",["按现在的利润，大约 20 年赚回市值","股价是 20 元"],0,"市盈率 = 市值 ÷ 净利润。"),Q("负债很高的公司，风险通常？",["更高","更低"],0,"欠钱多，生意一差就有还钱压力。")]:[Q("看财报，最想知道公司的？",["赚不赚钱、赚多少","老板的名字"],0,"财报帮我们看公司赚钱的本事。")])}},
+contest:{ico:"🏁",title:"组合比赛",concept:"资产配置、回撤和分散",ch:"g4-4",ch8:"g8-5",badge:"🏁 稳健高手",game:"contest",
+ story:function(g){return["兄弟姐妹来一场比赛！同一年级的人，面对同一段 10 天的模拟行情。","把 10 份钱分给几家虚构公司、指数基金或现金。","排行榜不只比谁赚得多，也比谁更稳：「最大回撤」是最惨的时候比最高点跌了多少。"]},
+ qs:function(g){return[Q("「最大回撤」小，说明？",["一路上跌得不深，比较稳","赚得一定最多"],0,"回撤小说明过程更稳。"),Q("为什么分散的组合更容易在「稳健收益分」里赢？",["一家出事，其他篮子还在，回撤更小","因为分散一定收益最高"],0,"分散不保证收益最高，但能让过程更稳。")].concat(g==="g8"?[Q("指数基金为什么算「自动分散」？",["它一次买进很多家公司","它只买一家公司"],0,"指数基金一次买一篮子公司。")]:[])}}
 };
-var GL={g4:["share","updown","safe","diversify","dividend","compound"],g5:["share","updown","pct","diversify","dividend","index","compound","revenue","emotion"],g8:["share","pct","diversify","dividend","compound","index","mcap","report","pe","kline1","kline2","emotion","rules"]};
+var GL={g4:["share","updown","market","safe","guess","diversify","klgame","contest","dividend","compound"],g5:["share","updown","market","pct","guess","diversify","klgame","dividend","index","contest","compound","revenue","detect","emotion"],g8:["share","pct","market","diversify","dividend","compound","index","guess","mcap","report","detect","pe","kline1","klgame","kline2","emotion","contest","rules"]};
 var WEATHER=[{id:"sun",ico:"☀️",name:"晴天",base:60,tip:"天气不错，客人和平时差不多。"},{id:"hot",ico:"🥵",name:"大热天",base:90,tip:"超级热！想喝冷饮的人特别多。"},{id:"cloud",ico:"⛅",name:"多云",base:45,tip:"凉快一点，客人会少一些。"},{id:"rain",ico:"🌧️",name:"下雨",base:25,tip:"下雨了，出门的人很少。"}];
 var WSEQ=[0,1,2,0,3,1,2,0,1,3];
 var UPS=[{id:"sign",ico:"🪧",name:"闪亮招牌",eff:"每级：所有天气客人 +10%"},{id:"ice",ico:"🧊",name:"制冰机",eff:"每级：大热天客人 +15%"},{id:"shade",ico:"⛱️",name:"遮雨棚",eff:"每级：下雨天客人 +25%"},{id:"recipe",ico:"🍓",name:"新配方",eff:"每级：客人愿意多付 1 元"}];
@@ -249,7 +291,9 @@ var DB={v:2,cur:null,profiles:[],scr:"home",back:null,bt:null,bch:null,wl:"mine"
 var canSave=true;
 try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);if(o&&o.v===2&&Array.isArray(o.profiles)){for(var k in o)DB[k]=o[k]}}}catch(e){canSave=false}
 DB.gate=false;if(!DB.form)DB.form={name:"",av:"🐼",grade:""};
-function save(){try{localStorage.setItem(KEY,JSON.stringify(DB));canSave=true}catch(e){canSave=false}}
+var TRANSIENT={pcode:1,pin:1,pmsg:1,justOpen:1};
+function saveRaw(){try{localStorage.setItem(KEY,JSON.stringify(DB,function(k,v){return this===DB&&TRANSIENT[k]?undefined:v}));canSave=true}catch(e){canSave=false}}
+function save(){var p=P();if(p)p.upd=Date.now();saveRaw();if(typeof cSoon==='function')cSoon()}
 function P(){for(var i=0;i<DB.profiles.length;i++)if(DB.profiles[i].id===DB.cur)return DB.profiles[i];return null}
 function newShop(){return{days:0,avail:1,price:"10",cups:"60",up:{sign:0,ice:0,shade:0,recipe:0},last:null,hist:[]}}
 function newProfile(name,av,grade){return{id:"p"+Date.now().toString(36)+Math.floor(Math.random()*1000),name:name,av:av,grade:grade,coins:0,earned:0,badges:[],lv:{},ans:{},done:{},shop:newShop(),run:null,sim:null,created:Date.now()}}
@@ -260,10 +304,10 @@ function allClear(p){return clearedN(p)===levels(p).length}
 function chOf(L,g){return g==="g8"&&L.ch8?L.ch8:L.ch}
 function findCh(id){for(var g in LESSONS)for(var i=0;i<LESSONS[g].length;i++)if(LESSONS[g][i].id===id)return{g:g,i:i,c:LESSONS[g][i]};return null}
 function weatherOf(p){return WEATHER[WSEQ[p.shop.days%WSEQ.length]]}
-function unlocked(p,i){if(i===0)return p.shop.days>0;var prev=levels(p)[i-1];return !!(p.lv[prev]&&p.lv[prev].stars>0)}
+function unlocked(p,i){if(i===0)return p.shop.days>0;if(p.lv[levels(p)[i]]&&p.lv[levels(p)[i]].stars>0)return true;var prev=levels(p)[i-1];return !!(p.lv[prev]&&p.lv[prev].stars>0)}
 /* 数字输入：键名 → 读写 */
-function getK(k){var p=P();if(k==="price"||k==="cups")return p.shop[k];if(k==="P"||k==="R"||k==="N")return DB.ui[k];if(k==="qty")return p.sim.qty;if(k.indexOf("a_")===0)return String(p.run.alloc[k.slice(2)]);return ""}
-function setK(k,v){var p=P();if(k==="price"||k==="cups")p.shop[k]=String(v);else if(k==="P"||k==="R"||k==="N")DB.ui[k]=String(v);else if(k==="qty")p.sim.qty=String(v);else if(k.indexOf("a_")===0)p.run.alloc[k.slice(2)]=Number(v)||0}
+function getK(k){var p=P();if(k==="price"||k==="cups")return p.shop[k];if(k==="P"||k==="R"||k==="N")return DB.ui[k];if(k==="qty")return p.sim.qty;if(k.indexOf("a_")===0)return String(p.run.alloc[k.slice(2)]);if(k.indexOf("c_")===0)return String(p.run.gm.al[k.slice(2)]);return ""}
+function setK(k,v){var p=P();if(k==="price"||k==="cups")p.shop[k]=String(v);else if(k==="P"||k==="R"||k==="N")DB.ui[k]=String(v);else if(k==="qty")p.sim.qty=String(v);else if(k.indexOf("a_")===0)p.run.alloc[k.slice(2)]=Number(v)||0;else if(k.indexOf("c_")===0)p.run.gm.al[k.slice(2)]=Number(v)||0}
 function stepper(label,key,step,min,max,dec){return '<div class="stepper"><div class="lab">'+label+'</div><div class="in"><button data-a="step" data-v="'+key+'|'+(-step)+'|'+min+'|'+max+'" aria-label="减少">−</button><input data-k="'+key+'" data-min="'+min+'" data-max="'+max+'" value="'+esc(getK(key))+'" inputmode="'+(dec?'decimal':'numeric')+'"'+(dec?'':' pattern="[0-9]*"')+' enterkeyhint="done" aria-label="'+esc(label)+'"><button data-a="step" data-v="'+key+'|'+step+'|'+min+'|'+max+'" aria-label="增加">+</button></div></div>'}
 function btn(label,a,v,c,dis){return '<button class="btn '+(c||'')+'" data-a="'+a+'" data-v="'+esc(v==null?"":v)+'"'+(dis?' disabled':'')+'>'+label+'</button>'}
 function chip(label,on,a,v){return '<button class="chip'+(on?' on':'')+'" data-a="'+a+'" data-v="'+esc(v)+'">'+label+'</button>'}
@@ -271,8 +315,8 @@ function disc(){return '<div class="disc">🧪 本游戏里的公司全部是<b>
 /* ---------- 视图 ---------- */
 function topBar(p){
   var items=[["map","🗺️","闯关地图"],["shop","🧋","我的店"],["book","📜","秘籍"],["rank","🏆","排行榜"],["parent","👪","家长区"],["home","👤","换人"]];
-  var cur=DB.scr==="level"?"map":DB.scr==="sim"?"map":DB.scr;
-  return '<div class="top"><div class="who"><div style="display:flex;align-items:center;gap:10px;min-width:0"><span class="av">'+p.av+'</span><div style="min-width:0"><b>'+esc(p.name)+'</b> <span class="tiny">'+GNAME[p.grade]+' · 奶茶小老板</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill" title="金币">💰 '+p.coins+'</span><span class="pill" title="星星">⭐ '+starsOf(p)+'</span><span class="pill" title="徽章">🏅 '+p.badges.length+'</span></div></div>'+
+  var cur=DB.scr==="level"||DB.scr==="sim"||DB.scr==="ach"?"map":DB.scr;
+  return '<div class="top"><div class="who"><div style="display:flex;align-items:center;gap:10px;min-width:0"><span class="av">'+p.av+'</span><div style="min-width:0"><b>'+esc(p.name)+'</b> <span class="tiny">'+GNAME[p.grade]+' · '+titleOf(p)+'</span></div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill" title="金币">💰 '+p.coins+'</span><span class="pill" title="星星">⭐ '+starsOf(p)+'</span><button class="pill" data-a="go" data-v="ach" title="成就墙">🏆 '+Object.keys(fx(p).ach).length+'</button><button class="pill" data-a="mute" title="声音开关" aria-label="'+(DB.mute?'打开声音':'关闭声音')+'">'+(DB.mute?'🔇':'🔊')+'</button></div></div>'+
   '<div class="nav">'+items.map(function(it){return '<button class="'+(cur===it[0]?'on':'')+'" data-a="go" data-v="'+it[0]+'"><span class="i">'+it[1]+'</span>'+it[2]+'</button>'}).join('')+'</div></div>';
 }
 function viewHome(){
@@ -289,14 +333,15 @@ function viewHome(){
   h+='<div class="small muted">选你的年级（关卡数量和难度不一样）</div><div class="grid" style="margin-top:8px">';
   GRADES.forEach(function(g){h+='<button class="card'+(f.grade===g.id?' on':'')+'" data-a="gr" data-v="'+g.id+'"><div style="font-size:36px;line-height:44px">'+g.icon+'</div><b>'+g.name+'</b><div class="small muted">'+GL[g.id].length+' 关 · '+(g.id==="g4"?"认识股份、涨跌、分散":g.id==="g5"?"算涨跌幅、分红、复利、指数":"看财报、市盈率、K 线")+'</div></button>'});
   h+='</div><div class="row">'+btn("开始当老板 🚀","create","","pri")+'</div>'+(DB.msg?'<div class="msg">'+esc(DB.msg)+'</div>':'')+'</div>';
-  h+='<p class="tiny">进度保存在这台设备的浏览器里，不联网、不上传。几个兄弟姐妹可以各建一个档案，在排行榜上比一比。</p>';
+  h+='<div class="row">'+btn(cloudOn()?"💾 换了设备？用家庭云账号或进度码取回存档":"💾 换了设备？用进度码取回存档","go","parent")+'</div>';
+  h+='<p class="tiny">'+(cloudOn()?'进度保存在这台设备上；登录家庭云账号后，会把昵称和游戏进度同步到云端。':'进度保存在这台设备的浏览器里，不联网、不上传。')+'几个兄弟姐妹可以各建一个档案，在排行榜上比一比。</p>';
   return h;
 }
 function viewMap(p){
-  var ls=levels(p),c=clearedN(p),h='<div class="two"><div class="side">';
+  var ls=levels(p),c=clearedN(p),h=mascot(p,"map")+'<div class="two"><div class="side">';
   h+='<div class="card"><div style="display:flex;gap:12px;align-items:center"><div class="big">🧋</div><div><b>'+esc(p.name)+'的奶茶店</b><div class="small muted">已营业 '+p.shop.days+' 天 · 可营业 '+p.shop.avail+' 天</div><div class="small muted">升级：'+UPS.map(function(u){return u.ico+p.shop.up[u.id]}).join(' ')+'</div></div></div><div class="row">'+btn(p.shop.avail>0?"去开店营业 ☀️":"去店里看看","go","shop",p.shop.days===0?"pri":"")+'</div></div>';
   h+='<div class="card" style="margin-top:12px"><b>闯关进度</b><div class="small muted">过关 '+c+' / '+ls.length+'　⭐ '+starsOf(p)+' / '+ls.length*3+'</div><div class="bar"><i style="width:'+(c/ls.length*100)+'%"></i></div></div>';
-  h+='<div class="card" style="margin-top:12px"><b>🏅 我的徽章</b>'+(p.badges.length?'<div class="badges" style="margin-top:6px">'+p.badges.map(function(b){return '<span>'+b+'</span>'}).join('')+'</div>':'<div class="small muted">过关就能拿到徽章哦。</div>')+'</div>';
+  h+='<div class="card" style="margin-top:12px"><b>🏆 成就墙 '+Object.keys(fx(p).ach).length+' / '+ACH.length+'</b><div class="small muted">称号：'+titleOf(p)+' · 徽章 '+p.badges.length+' 枚 · 最高连对 🔥'+fx(p).best+'</div><div class="row">'+btn("看成就墙 🏆","go","ach")+'</div></div>';
   h+='</div><div><h2 style="margin-top:8px">🗺️ '+GNAME[p.grade]+'闯关地图（'+ls.length+' 关）</h2>';
   if(p.shop.days===0)h+='<div class="warn"><b>先去奶茶店营业一天</b>，赚到第一桶金，第 1 关就会打开！</div>';
   h+='<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr));margin-top:12px">';
@@ -307,13 +352,15 @@ function viewMap(p){
 }
 function viewShop(p){
   var s=p.shop,w=weatherOf(p),h='<h2 style="margin-top:8px">🧋 '+esc(p.name)+'的奶茶店 · 第 '+(s.days+1)+' 天</h2>';
+  h+=mascot(p,"shop")+shopScene(p,DB.justOpen);DB.justOpen=false;
   if(s.days===0&&!s.last)h+='<div class="tip">👋 欢迎当老板！先定价格、准备杯数，然后开门营业。卖得好就能赚金币，金币可以升级小店。</div>';
   h+='<div class="two"><div class="side">';
-  if(s.last){var L=s.last;h+='<div class="card"><b>📋 第 '+L.day+' 天的结果（'+L.w+'）</b>'+tbl(["项目","数字"],[["想买的客人",L.demand+" 位"],["卖出",L.sold+" 杯"],["剩下倒掉",(L.cups-L.sold)+" 杯"],["营收（卖出 × 价格）",L.rev+" 元"],["成本（进货 + 房租）",L.cost+" 元"],["利润（营收 − 成本）",'<b class="'+(L.profit>=0?'up':'down')+'">'+L.profit+' 元</b>'],["赚到金币","💰 +"+L.coins]])+L.tips.map(function(t){return '<div class="tip">'+t+'</div>'}).join('')+'</div>'}
+  if(s.last){var L=s.last;h+='<div class="card"><b>📋 第 '+L.day+' 天的结果（'+L.w+'）</b>'+tbl(["项目","数字"],[["想买的客人",L.demand+" 位"],["卖出",L.sold+" 杯"],["剩下倒掉",(L.cups-L.sold)+" 杯"],["营收（卖出 × 价格）",L.rev+" 元"],["成本（进货 + 房租）",L.cost+" 元"],["利润（营收 − 成本）",'<b class="'+(L.profit>=0?'up':'down')+'">'+L.profit+' 元</b>'],["每杯毛利（价格 − 每杯成本 "+CUPCOST+" 元）",L.price?(Math.round((L.price-CUPCOST)*100)/100)+' 元，毛利率 '+Math.round((L.price-CUPCOST)/L.price*100)+'%':'—'],["赚到金币","💰 +"+L.coins]])+L.tips.map(function(t){return '<div class="tip">'+t+'</div>'}).join('')+'</div>'}
   else h+='<div class="card"><b>📒 老板小知识</b><div class="eq" style="font-size:18px">营收 = 卖出杯数 × 价格<br>成本 = 准备杯数 × '+CUPCOST+' 元 + 房租 '+RENT+' 元<br>利润 = 营收 − 成本</div><p class="small muted">价格太高客人会走掉，杯数备多了卖不完会浪费。</p></div>';
   h+='</div><div>';
   if(s.avail>0){
     h+='<div class="card"><div style="display:flex;gap:12px;align-items:center"><div class="big">'+w.ico+'</div><div><b>今天天气：'+w.name+'</b><div class="small muted">'+w.tip+'</div></div></div>';
+    h+=(p.mini&&p.mini.day===s.days?viewMini(p):'<div class="card mini"><b>🎮 营业前热身：接单小游戏</b><div class="small muted">照客人的订单做奶茶，算一算每杯的<b>收入、成本、利润和毛利率</b>。做得好有口碑，今天会多来客人。</div><div class="row">'+btn("开始接单 🧋","mstart","","gold")+'</div></div>');
     h+='<div class="row">'+stepper("每杯卖多少钱（元）","price",1,3,25)+stepper("准备多少杯","cups",10,10,200)+'</div>';
     var cups=clampN(s.cups,10,200);
     h+='<p class="small muted">进货要花 '+cups+' × '+CUPCOST+' = '+(cups*CUPCOST)+' 元，房租 '+RENT+' 元。</p><div class="row">'+btn("开门营业！☀️","open","","pri")+'</div></div>';
@@ -327,12 +374,13 @@ function viewShop(p){
 }
 function viewLevel(p){
   var r=p.run,L=LV[r.id],g=p.grade,i=levels(p).indexOf(r.id),h='';
-  h+='<div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:4px 0">'+L.ico+' 第 '+(i+1)+' 关：'+L.title+'</h2>'+btn("📜 翻秘籍","book",chOf(L,g))+'</div>';
+  h+=mascot(p,"level")+'<div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:4px 0">'+L.ico+' 第 '+(i+1)+' 关：'+L.title+'</h2>'+btn("📜 翻秘籍","book",chOf(L,g))+'</div>';
   var steps=["故事","任务","小测验","结果"];h+='<div class="small muted">'+steps.map(function(s,k){return k===r.step?'<b style="color:var(--accent)">'+s+'</b>':s}).join(' → ')+'</div>';
   if(r.step===0){
-    h+='<div class="lesson" style="margin-top:12px"><div class="ico">'+L.ico+'</div>'+L.story(g).map(function(t,k){return '<div class="pt"><b>'+(k+1)+'</b><span>'+esc(t)+'</span></div>'}).join('')+'<div class="tip">💡 这一关学：<b>'+L.concept+'</b></div></div><div class="row">'+btn("接任务 ➡","nx","","pri")+btn("回地图","go","map")+'</div>';
+    h+='<div class="lesson" style="margin-top:12px"><div class="ico">'+L.ico+'</div>'+L.story(g).map(function(t,k){return '<div class="pt"><b>'+(k+1)+'</b><span>'+esc(t)+'</span></div>'}).join('')+'<div class="tip">💡 这一关学：<b>'+L.concept+'</b></div></div>'+viewEv(p)+'<div class="row">'+btn(r.ev&&r.ev.pick==null?"先答上面的情境卡":"接任务 ➡","nx","","pri",!!(r.ev&&r.ev.pick==null))+btn("回地图","go","map")+'</div>';
   }else if(r.step===1){
     if(L.alloc)h+=viewAlloc(p);
+    else if(L.game)h+=gameView(p);
     else{var m=L.m(g),ans=r.m!=null;
       h+='<h3 style="margin-top:12px">🎯 任务</h3>'+m.vis+'<div class="q"><h3>'+esc(m.ask)+'</h3><div class="row">'+m.o.map(function(o,k){return '<button class="opt'+(ans&&k===m.a?' right':ans&&k===r.m?' wrong':'')+'" data-a="mans" data-v="'+k+'"'+(ans?' disabled':'')+'>'+String.fromCharCode(65+k)+'. '+esc(o)+(ans&&k===m.a?' ✅':ans&&k===r.m?' ❌':'')+'</button>'}).join('')+'</div>'+(ans?'<div class="exp"><b class="'+(r.m===m.a?'ok':'no')+'">'+(r.m===m.a?'做得好！':'差一点！')+'</b>'+esc(m.e)+'</div>':'')+'</div>'+(ans&&m.after?m.after:'');
       if(ans)h+='<div class="row">'+btn("去答小测验 ➡","nx","","pri")+'</div>'}
@@ -343,7 +391,7 @@ function viewLevel(p){
     h+='<div class="row">'+btn("看结果 🏁","finish","","pri",!all)+'</div>';
   }else{
     var res=r.res;
-    if(res.pass){h+='<div class="good" style="margin-top:12px;text-align:center"><div class="big">'+'⭐'.repeat(res.stars)+'</div><h2 style="margin:6px 0">过关啦！答对 '+res.correct+' / '+res.total+'</h2>'+(res.coins?'<div>💰 获得 '+res.coins+' 金币</div>':'<div class="small">（这关之前拿过奖励了，星星更多才会再加金币）</div>')+(res.badge?'<div>🏅 新徽章：<b>'+res.badge+'</b></div>':'')+(res.day?'<div>🧋 小店可以再营业一天啦！</div>':'')+'</div>';
+    if(res.pass){h+='<div class="good" style="margin-top:12px;text-align:center"><div class="big">'+'⭐'.repeat(res.stars)+'</div><h2 style="margin:6px 0">过关啦！答对 '+res.correct+' / '+res.total+'</h2>'+(res.coins?'<div>💰 获得 '+res.coins+' 金币</div>':'<div class="small">（这关之前拿过奖励了，星星更多才会再加金币）</div>')+(res.badge?'<div>🏅 新徽章：<b>'+res.badge+'</b></div>':'')+(res.day?'<div>🧋 小店可以再营业一天啦！</div>':'')+'<div class="small">🔥 现在连对 '+fx(p).combo+' 题 · 称号：'+titleOf(p)+'</div></div>';
       h+='<div class="row">'+(i<levels(p).length-1?btn("下一关 ➡","lv",levels(p)[i+1],"pri"):btn("全部通关！去模拟交易 🎮","go","sim","pri"))+btn("去我的店 🧋","go","shop")+btn("再玩一次","lv",r.id)+'</div>';}
     else h+='<div class="bad" style="margin-top:12px;text-align:center"><h2 style="margin:6px 0">答对 '+res.correct+' / '+res.total+'，还差一点点！</h2><div>答对 60% 以上就能过关。先翻翻秘籍，再来一次吧。</div></div><div class="row">'+btn("再试一次","lv",r.id,"pri")+btn("📜 翻秘籍","book",chOf(L,g))+btn("回地图","go","map")+'</div>';
   }
@@ -401,7 +449,7 @@ function rankList(){return DB.profiles.slice().sort(function(a,b){return starsOf
 function viewRank(){
   var medal=["🥇","🥈","🥉"],h='<h2 style="margin-top:8px">🏆 家庭排行榜（只在这台设备上）</h2><p class="small muted">先比⭐星星，再比🏅徽章，最后比💰累计赚到的金币。不同年级关卡数不一样，进步最重要！</p>';
   h+='<div class="tablewrap"><table><tr><th>名次</th><th>小老板</th><th>年级</th><th>⭐</th><th>🏅</th><th>💰 累计</th><th>过关</th></tr>'+rankList().map(function(p,i){return '<tr'+(p.id===DB.cur?' style="background:#E3EEFF"':'')+'><td>'+(medal[i]||(i+1))+'</td><td>'+p.av+' '+esc(p.name)+'</td><td>'+GNAME[p.grade]+'</td><td>'+starsOf(p)+'</td><td>'+p.badges.length+'</td><td>'+p.earned+'</td><td>'+clearedN(p)+' / '+levels(p).length+'</td></tr>'}).join('')+'</table></div>';
-  return h+'<div class="row">'+btn("➕ 添加兄弟姐妹的档案","go","home")+'</div>';
+  return h+contestBoard()+'<div class="row">'+btn("➕ 添加兄弟姐妹的档案","go","home")+'</div>';
 }
 function viewParent(){
   var h='<h2 style="margin-top:8px">👪 家长区</h2>';
@@ -416,7 +464,8 @@ function viewParent(){
   });
   h+='<h2>陪玩建议</h2><div class="steps"><div class="s"><b>每次 15 到 20 分钟</b>一次闯一到两关，答完再聊一聊。</div><div class="s"><b>让孩子说出理由</b>奶茶店为什么这样定价？为什么这样分金蛋？说出「为什么」比赚多少更重要。</div><div class="s"><b>把亏钱当作好机会</b>小店亏了、模拟交易亏了，正好聊成本、风险、分散和情绪。</div><div class="s"><b>用生活里的例子</b>楼下的奶茶店、超市里的品牌，都可以聊「它怎么赚钱」，只讲概念，不谈买卖。</div><div class="s"><b>保持一致的规矩</b>不借钱投资、不赌博、不懂不碰，这三条家里统一说法。</div></div>';
   h+='<h2>可以一起讨论的问题</h2><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))"><div class="card"><b>四年级</b><ol class="list"><li>如果你开一家店，会想找人一起出钱吗？为什么？</li><li>限量玩具为什么会变贵？</li><li>零花钱里，哪些要马上用，哪些可以存起来？</li></ol></div><div class="card"><b>五年级</b><ol class="list"><li>涨 10% 再跌 10%，为什么回不到原价？</li><li>复利计算器里，把年数改长，结果有什么变化？</li><li>如果一家公司不分红，它可能把钱用在哪里？</li></ol></div><div class="card"><b>初二</b><ol class="list"><li>股价高的公司，就一定是大公司吗？</li><li>游戏里有没有追涨杀跌的时候？当时怎么想的？</li><li>A 股的 T+1 和涨跌停，你觉得有什么好处和坏处？</li></ol></div></div>';
-  h+='<h2>关于进度和数据</h2><p>所有档案、金币和进度都保存在这台设备的浏览器里（本机，不联网、不上传）。'+(canSave?'':'<b class="up">当前浏览器不允许保存（可能是无痕模式），关掉后进度会丢失。</b>')+'清除浏览器的网站数据会清空进度。游戏里没有充值、抽奖、盲盒或转盘。</p>';
+  h+=viewData();
+  h+='<h2>关于进度和数据</h2><p>所有档案、金币和进度都保存在这台设备的浏览器里。'+(cloudOn()?'只有登录了家庭云账号，才会把昵称和游戏进度同步到云端。':'不联网、不上传。')+''+(canSave?'':'<b class="up">当前浏览器不允许保存（可能是无痕模式），关掉后进度会丢失。</b>')+'清除浏览器的网站数据会清空进度。游戏里没有充值、抽奖、盲盒或转盘。</p>';
   return h+'<div class="row">'+btn("退出家长区","gateoff","")+'</div>';
 }
 /* ---------- 模拟交易（原版保留） ---------- */
@@ -457,12 +506,315 @@ function simTrade(S,buy,all){
     g.cash=Math.round((g.cash+money)*100)/100;g.log.unshift("第 "+g.day+" 天：卖出 "+s.name+" "+n+" 股，每股 "+yuan(s.price)+" 元，"+(gain>=0?"赚":"亏")+" "+yuan(Math.abs(gain))+" 元");S.msg="卖掉了！收回 "+yuan(money)+" 元，"+(gain>=0?"赚了 ":"亏了 ")+yuan(Math.abs(gain))+" 元。"}
   g.log=g.log.slice(0,12);
 }
+/* ---------- 趣味玩法（每个都绑一个知识点） ---------- */
+var RM=false;try{RM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)}catch(e){}
+function fx(p){if(!p.fx)p.fx={combo:0,best:0,ach:{},evOk:0,evDone:{},evSeen:[],mini:{plays:0,perfect:0,qOk:0}};return p.fx}
+DB.profiles.forEach(fx);
+/* 音效：WebAudio 现场合成，不用音频文件；只在点击后发声（iOS 要求） */
+var AC=null;
+function snd(t){if(DB.mute)return;try{if(!AC){var C=window.AudioContext||window.webkitAudioContext;if(!C)return;AC=new C()}if(AC.state==="suspended")AC.resume();
+  var seq={ok:[[660,.08],[880,.14]],no:[[330,.12],[262,.16]],coin:[[988,.06],[1319,.12]],win:[[523,.1],[659,.1],[784,.1],[1047,.22]],up:[[440,.07],[554,.07],[659,.14]]}[t]||[],t0=AC.currentTime+0.01;
+  seq.forEach(function(n){var o=AC.createOscillator(),g=AC.createGain();o.type="triangle";o.frequency.value=n[0];g.gain.setValueAtTime(0.0001,t0);g.gain.exponentialRampToValueAtTime(0.05,t0+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t0+n[1]);o.connect(g);g.connect(AC.destination);o.start(t0);o.stop(t0+n[1]+0.03);t0+=n[1]*0.85})}catch(e){}}
+var FXQ=[];
+function toast(h){FXQ.push(h)}
+function flushFx(){var box=document.getElementById("toasts");if(!box){box=document.createElement("div");box.id="toasts";box.setAttribute("role","status");box.setAttribute("aria-live","polite");document.body.appendChild(box)}FXQ.splice(0).forEach(function(h){var d=document.createElement("div");d.className="toast";d.innerHTML=h;box.appendChild(d);while(box.children.length>3)box.removeChild(box.firstChild);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d)},2800)})}
+function confetti(){if(RM)return;var w=document.createElement("div");w.className="confetti";w.setAttribute("aria-hidden","true");var cs=["#FFB74D","#2F80ED","#E5383B","#2A9D55","#F2A900"];for(var i=0;i<40;i++){var s=document.createElement("i");s.style.left=(Math.random()*100)+"%";s.style.background=cs[i%5];s.style.animationDelay=(Math.random()*0.6)+"s";w.appendChild(s)}document.body.appendChild(w);setTimeout(function(){if(w.parentNode)w.parentNode.removeChild(w)},2800)}
+/* 连对 combo：只算知识题（任务题、小测验、情境卡、小游戏结算题） */
+function knowAns(p,ok,fresh){var f=fx(p);
+  if(ok){f.combo++;if(f.combo>f.best)f.best=f.combo;snd("ok");
+    if(f.combo%5===0&&fresh){p.coins+=5;p.earned+=5;toast("🔥 知识连对 "+f.combo+" 题！奖励 💰+5")}else if(f.combo>=2)toast("🔥 连对 ×"+f.combo)}
+  else{if(f.combo>=3)toast("连对断在 "+f.combo+" 题，看看解析，下次更稳！");f.combo=0;snd("no")}}
+/* 店长称号：只看学到的（星星 + 成就） */
+var TITLES=[[0,"见习店员"],[3,"奶茶小店长"],[8,"金牌店长"],[15,"连锁小老板"],[24,"投资小学者"],[34,"小小投资家"]];
+function titleOf(p){var sc=starsOf(p)+Object.keys(fx(p).ach).length,t=TITLES[0][1];TITLES.forEach(function(x){if(sc>=x[0])t=x[1]});return t}
+/* 吉祥物喵掌柜：每次一句知识小贴士（来自小词典 26 词 + 场景提示） */
+function mascot(p,scr){var f=fx(p),w=WORDS[(p.shop.days*7+starsOf(p)*3+(scr==="shop"?1:0))%WORDS.length],t;
+  if(scr==="shop")t=p.shop.avail>0?"看看天气再备货：备多了卖不完是<b>成本</b>，备少了客人买不到是少了<b>营收</b>。":"今天打烊啦！复习一下：<b>利润 = 营收 − 成本</b>。去闯关还能多营业一天哦！";
+  else if(scr==="level"){var L=LV[p.run.id];t="这一关学「<b>"+L.concept+"</b>」。看不懂就点「📜 翻秘籍」，我帮你记着呢！"}
+  else t="今日一词：<b>"+esc(w[0])+"</b>——"+esc(w[1]);
+  return '<div class="mascot"><div class="mface" aria-hidden="true">🐱</div><div class="mbub"><b>喵掌柜：</b>'+t+(f.combo>=2?'　<span class="pill sm">🔥 连对 '+f.combo+'</span>':'')+'</div></div>'}
+/* 奶茶店场景：客人数量 = 需求（价格、天气、口碑一起决定） */
+function shopScene(p,anim){var s=p.shop,w=weatherOf(p),L=s.last,n=anim&&L?Math.min(12,Math.max(1,Math.round(L.sold/8))):3,ppl=["🧒","👧","👦","👩","🧑","👴","👵","👨"],h='<div class="scene'+(w.id==="rain"?' rain':w.id==="hot"?' hot':'')+(anim?' go':'')+'" aria-hidden="true">';
+  h+='<div class="sky">'+w.ico+'</div><div class="front lv'+Math.min(3,s.up.sign)+'"><div class="awn"></div><div class="sgn">🧋 '+esc(p.name)+'的奶茶店'+(s.up.sign?' '+'✨'.repeat(s.up.sign):'')+'</div><div class="ctr">🧑‍🍳'+(s.up.ice?' 🧊':'')+(s.up.recipe?' 📜':'')+(s.up.shade?' ⛱️':'')+'</div></div><div class="queue">';
+  for(var i=0;i<n;i++)h+='<span style="animation-delay:'+(i*0.25)+'s">'+ppl[(i+s.days)%ppl.length]+'</span>';
+  h+='</div>';if(anim&&L&&L.coins>0){for(var j=0;j<Math.min(8,Math.ceil(L.coins/3));j++)h+='<em class="coin" style="left:'+(30+j*7)+'%;animation-delay:'+(0.6+j*0.15)+'s">🪙</em>'}
+  return h+'</div>'+(anim&&L?'<div class="tiny">今天想买的客人 '+L.demand+' 位。价格越高、天气越差，愿意买的人越少——这就是<b>需求</b>。</div>':'')}
+/* ---------- 接单小游戏：照单做奶茶，学成本、收入、利润、毛利率 ---------- */
+var MB=[{id:"milk",ico:"🥛",name:"原味奶茶",c:2,p:8},{id:"matcha",ico:"🍵",name:"抹茶奶茶",c:3,p:10},{id:"straw",ico:"🍓",name:"草莓奶茶",c:3,p:11}];
+var MT=[{id:"boba",ico:"⚫",name:"珍珠",c:1,p:2},{id:"coco",ico:"🥥",name:"椰果",c:1,p:2},{id:"pud",ico:"🍮",name:"布丁",c:2,p:3},{id:"ice",ico:"🧊",name:"加冰",c:0,p:0}];
+var CUP=1,MNAMES=["小雨","阿杰","朵朵","大熊","乐乐","米粒","豆豆","安安"];
+function mById(a,id){for(var i=0;i<a.length;i++)if(a[i].id===id)return a[i]}
+function ordPrice(o){return mById(MB,o.b).p+o.t.reduce(function(s,t){return s+mById(MT,t).p},0)}
+function ordCost(o){return CUP+mById(MB,o.b).c+o.t.reduce(function(s,t){return s+mById(MT,t).c},0)}
+function ordName(o){return mById(MB,o.b).ico+mById(MB,o.b).name+(o.t.length?" + "+o.t.map(function(t){return mById(MT,t).ico+mById(MT,t).name}).join(" + "):"")}
+function newMini(p){var g=p.grade,n=g==="g4"?4:g==="g5"?5:6,orders=[];
+  for(var i=0;i<n;i++){var k=g==="g4"?1:g==="g5"?1+(i%2):2+(i%2),pool=MT.map(function(t){return t.id}),t=[];while(t.length<k){var x=pool.splice(Math.floor(Math.random()*pool.length),1)[0];t.push(x)}t.sort(function(a,b){return MT.indexOf(mById(MT,a))-MT.indexOf(mById(MT,b))});orders.push({b:MB[Math.floor(Math.random()*MB.length)].id,t:t,who:MNAMES[(i+p.shop.days)%MNAMES.length]})}
+  return{day:p.shop.days,i:0,orders:orders,pb:null,pt:[],rev:0,cost:0,good:0,bad:0,log:[],q:null,done:false}}
+function miniServe(p){var m=p.mini,o=m.orders[m.i],mine={b:m.pb,t:m.pt.slice().sort(function(a,b){return MT.indexOf(mById(MT,a))-MT.indexOf(mById(MT,b))})};
+  if(!m.pb)return;var c=ordCost(mine);m.cost+=c;
+  if(mine.b===o.b&&mine.t.join()===o.t.join()){var pr=ordPrice(o);m.rev+=pr;m.good++;m.log.push({ok:true,txt:o.who+"：收入 "+pr+" 元 − 成本 "+c+" 元 = 利润 "+(pr-c)+" 元，毛利率 "+Math.round((pr-c)/pr*100)+"%"});m.i++;snd("coin")}
+  else{m.bad++;m.log.push({ok:false,txt:o.who+"：做错啦！这杯的成本 "+c+" 元白花了，重做一杯。"});snd("no")}
+  m.pb=null;m.pt=[];if(m.i>=m.orders.length){m.done=true;var f=fx(p);f.mini.plays++;if(!m.bad)f.mini.perfect++}}
+function miniQ(p){var m=p.mini,g=p.grade,pr=m.rev-m.cost;
+  if(g==="g4")return{q:"今天小游戏一共收入 "+m.rev+" 元，成本 "+m.cost+" 元。利润是多少？",o:[(pr)+" 元",(m.rev+m.cost)+" 元",m.rev+" 元"],a:0,e:"利润 = 收入 − 成本 = "+m.rev+" − "+m.cost+" = "+pr+" 元。"};
+  if(g==="g5"){var best=MB.slice().sort(function(a,b){return(b.p-b.c)-(a.p-a.c)})[0];return{q:"不加配料的话，哪种奶茶每杯赚得最多（售价 − 原料成本）？",o:MB.map(function(b){return b.name+"（卖 "+b.p+" 元，原料 "+b.c+" 元）"}),a:MB.indexOf(best),e:best.name+"：每杯赚 "+best.p+" − "+best.c+" = "+(best.p-best.c)+" 元，最多。卖得贵不一定赚得多，要减掉成本看。"}}
+  var gm=m.rev?Math.round(pr/m.rev*100):0,wr=[gm,Math.min(99,gm+15),Math.max(1,gm-20)];return{q:"今天收入 "+m.rev+" 元，成本 "+m.cost+" 元。毛利率（利润 ÷ 收入）大约是多少？",o:wr.map(function(x){return x+"%"}),a:0,e:"毛利率 = （"+m.rev+" − "+m.cost+"）÷ "+m.rev+" ≈ "+gm+"%。毛利率越高，每卖 100 元留下的钱越多。看公司财报时也会看毛利率。"}}
+function viewMini(p){var m=p.mini,h='<div class="card mini"><b>🎮 接单小游戏：照订单做奶茶</b> <span class="tiny">学：成本、收入、利润、毛利率</span>';
+  if(!m.done){var o=m.orders[m.i];
+    h+='<div class="small muted">第 '+(m.i+1)+' / '+m.orders.length+' 单 · 不限时，慢慢来</div><div class="order"><span class="cust">'+["🧒","👧","👦","👩","🧑","👵"][m.i%6]+'</span><div class="bub">'+esc(o.who)+'：我要 <b>'+ordName(o)+'</b>，卖 '+ordPrice(o)+' 元</div></div>';
+    h+='<div class="small muted">① 选奶茶底（原料成本）</div><div class="row">'+MB.map(function(b){return '<button class="chip'+(m.pb===b.id?' on':'')+'" data-a="mb" data-v="'+b.id+'">'+b.ico+' '+b.name+' <span class="tiny">'+b.c+'元</span></button>'}).join('')+'</div>';
+    h+='<div class="small muted">② 加配料（可多选，再点一次取消）</div><div class="row">'+MT.map(function(t){return '<button class="chip'+(m.pt.indexOf(t.id)>=0?' on':'')+'" data-a="mt" data-v="'+t.id+'">'+t.ico+' '+t.name+' <span class="tiny">'+t.c+'元</span></button>'}).join('')+'</div>';
+    h+='<div class="small">杯子 '+CUP+' 元。这杯成本：<b>'+(m.pb?ordCost({b:m.pb,t:m.pt}):'—')+' 元</b></div><div class="row">'+btn("做好了，递给客人 🧋","mserve","","pri",!m.pb)+'</div>';
+  }else{var pr=m.rev-m.cost;h+='<div class="good" style="margin-top:8px">做完 '+m.orders.length+' 单！'+(m.bad?'做错 '+m.bad+' 杯。':'一杯都没做错 👍')+'<br>收入 <b>'+m.rev+'</b> 元 − 成本 <b>'+m.cost+'</b> 元 = 利润 <b>'+pr+'</b> 元'+(m.rev?'，毛利率约 <b>'+Math.round(pr/m.rev*100)+'%</b>':'')+'</div>';
+    var q=miniQ(p),ans=m.q!=null;h+='<div class="q"><h3>🧠 '+esc(q.q)+'</h3><div class="row">'+q.o.map(function(o,k){return '<button class="opt'+(ans&&k===q.a?' right':ans&&k===m.q?' wrong':'')+'" data-a="mq" data-v="'+k+'"'+(ans?' disabled':'')+'>'+String.fromCharCode(65+k)+'. '+esc(o)+'</button>'}).join('')+'</div>'+(ans?'<div class="exp"><b class="'+(m.q===q.a?'ok':'no')+'">'+(m.q===q.a?'算对啦！':'再想想！')+'</b>'+esc(q.e)+'</div>':'')+'</div>';
+    if(ans)h+='<div class="tip">⭐ 答对的好评变成<b>口碑</b>：今天营业会多来 '+Math.round((p.shop.buzz||0)*100)+'% 的客人。好口碑就像公司的「品牌」，也是一种价值。</div>';}
+  if(m.log.length)h+='<div class="tiny" style="margin-top:8px">'+m.log.slice(-3).reverse().map(function(l){return(l.ok?'✅ ':'❌ ')+esc(l.txt)}).join('<br>')+'</div>';
+  return h+'</div>'}
+/* ---------- 情境卡：每关一张，教新闻、情绪、风险、成本等 ---------- */
+var EVC=[
+{id:"rain",g:"g4 g5",ico:"🌧️",k:"需求和成本",t:"天气预报说明天下大雨。",q:"明天你的奶茶店准备多少杯？",o:["跟平时一样多","比平时少准备一些","准备双倍"],a:1,e:"下雨天出门的人少，想买的人（需求）会变少。备太多卖不完，进货的钱就白花了。"},
+{id:"hotnews",g:"g4 g5 g8",ico:"📰",k:"新闻与情绪",t:"新闻说虚构公司「快乐奶茶」新品大卖，股价一早就涨了 8%，同学们都喊「快买！」",q:"你会怎么做？",o:["马上把零花钱全买了","先看看公司是不是一直赚钱、现在价格贵不贵","借钱也要买"],a:1,e:"好消息常常很快就涨进价格里了，跟着大家抢容易买贵。做决定要看公司本身，不能只看热闹。"},
+{id:"panic",g:"g4 g5 g8",ico:"⛈️",k:"杀跌与理性",t:"虚构公司「阳光农场」遇到暴雨，股价一天跌了 9%，有人吓得全卖了。",q:"如果你有它的股票，第一步该做什么？",o:["立刻全部卖掉","先弄清楚：暴雨的影响是一时的还是长久的","借钱再买很多"],a:1,e:"害怕时一下子全卖，常常卖在低点（杀跌）。先弄清楚坏消息会影响多久，再冷静决定。"},
+{id:"basket",g:"g4 g5 g8",ico:"🧺",k:"风险分散",t:"你有 10 个金蛋，四家虚构公司看起来都不错。",q:"哪种放法风险更小？",o:["全部放进一家","分开放进几家","全放进最近涨得最多的那家"],a:1,e:"谁也不能保证哪家一定好。分开放，一家出事，其他篮子还在，这就是「分散风险」。"},
+{id:"div",g:"g4 g5 g8",ico:"🎁",k:"分红",t:"虚构公司「绿叶书店」宣布：每股分红 0.5 元。",q:"你有 100 股，能分到多少钱？",o:["0.5 元","50 元","500 元"],a:1,e:"分红 = 每股分红 × 股数 = 0.5 × 100 = 50 元。公司赚了钱，拿出一部分分给股东。"},
+{id:"save",g:"g4 g5",ico:"🐷",k:"先储蓄，再用闲钱投资",t:"你有 50 元零花钱，下周要买 30 元的文具。",q:"想试试投资，应该先怎么做？",o:["先留出要用的 30 元，只考虑剩下的","50 元全拿去投资","全部花掉"],a:0,e:"投资可能亏钱，所以只能用短时间内用不到的「闲钱」。要用的钱先留好。"},
+{id:"rumor",g:"g4 g5 g8",ico:"🗣️",k:"没有稳赚的消息",t:"群里有人说：「内部消息！某公司明天一定涨！」",q:"你怎么看？",o:["赶紧买","「一定涨」的消息基本不靠谱，不能当真","转发给更多人"],a:1,e:"没有人能保证股票一定涨。说「稳赚」「一定涨」的，常常是骗局或瞎说。"},
+{id:"rival",g:"g4 g5",ico:"🏪",k:"竞争与利润",t:"对面新开了一家奶茶店，每杯便宜 2 元。",q:"你会怎么办？",o:["降价到比成本还低","想办法：稍微降一点价，或者把奶茶做得更好喝","马上关门"],a:1,e:"卖得比成本还低，卖越多亏越多。比竞争对手更好，才能长久赚钱。"},
+{id:"costup",g:"g5 g8",ico:"🥛",k:"成本与利润",t:"牛奶涨价了，每杯成本从 3 元变成 4 元，售价还是 10 元。",q:"每杯的利润会怎样？",o:["变多","少了 1 元","不变"],a:1,e:"利润 = 售价 − 成本。成本多 1 元，利润就少 1 元：从 7 元变成 6 元。"},
+{id:"idx",g:"g5 g8",ico:"📊",k:"指数基金",t:"你不知道选哪家公司，但想跟着很多公司一起成长。",q:"可以了解哪种办法？",o:["指数基金：一次买一篮子公司","只买名字最好听的","只买昨天涨得最多的"],a:0,e:"指数基金一次买进一大篮子公司，自动分散，适合不想挑公司的人。"},
+{id:"cmp",g:"g5 g8",ico:"📈",k:"复利",t:"存钱罐每年多 10%，赚到的钱也继续生钱（利滚利）。",q:"100 元放 2 年后大约是多少？",o:["120 元","121 元","110 元"],a:1,e:"第一年 100 → 110，第二年 110 → 121。多出来的 1 元，就是「利息的利息」。"},
+{id:"pe",g:"g8",ico:"🔍",k:"市盈率",t:"A 公司每股赚 2 元，股价 20 元；B 公司每股赚 1 元，股价 30 元。（虚构）",q:"只看市盈率，谁更便宜？",o:["A 公司（市盈率 10）","B 公司（市盈率 30）","一样"],a:0,e:"市盈率 = 股价 ÷ 每股盈利。A 是 20 ÷ 2 = 10，B 是 30 ÷ 1 = 30。数字越小，相对越便宜（但还要看公司前景）。"},
+{id:"mcap",g:"g8",ico:"🏢",k:"市值",t:"某虚构公司股价 10 元，一共有 1 亿股。",q:"它的市值是多少？",o:["10 亿元","1 亿元","10 元"],a:0,e:"市值 = 股价 × 总股数 = 10 × 1 亿 = 10 亿元。股价高不一定公司大，要乘上股数。"},
+{id:"rep",g:"g8",ico:"📑",k:"财报：营收和利润",t:"虚构公司今年营收涨了 20%，但净利润反而下降了。",q:"最可能的原因是？",o:["成本或费用涨得比营收还快","东西卖得更少了","这不可能发生"],a:0,e:"营收是卖出去的钱，净利润要减掉所有成本和费用。成本涨太快，卖得多也可能赚得少。"},
+{id:"fomo",g:"g5 g8",ico:"😱",k:"追涨的风险",t:"某虚构公司连涨 5 天，大家都很兴奋，说「再不买就晚了」。",q:"这时更该注意什么？",o:["价格可能已经很贵，风险变大了","只会继续涨","借钱全买"],a:0,e:"大家都很兴奋时，价格常常已经涨了很多。越热闹越要冷静，想想买贵了怎么办。"},
+{id:"wave",g:"g4 g5 g8",ico:"🌊",k:"正常波动",t:"你的虚构公司股票今天跌了 2%，但这家公司一直稳稳赚钱。",q:"你觉得呢？",o:["一天涨涨跌跌很正常，要看长期","天塌了","马上全卖"],a:0,e:"股价每天都会上下波动，就像海浪。好公司也会有下跌的日子，要看长期，不被一天吓到。"}];
+function pickEv(p){var f=fx(p),pool=EVC.filter(function(e){return e.g.indexOf(p.grade)>=0}),fresh=pool.filter(function(e){return f.evSeen.indexOf(e.id)<0});if(!fresh.length){f.evSeen=[];fresh=pool}var e=fresh[Math.floor(Math.random()*fresh.length)];f.evSeen.push(e.id);return{id:e.id,pick:null}}
+function evById(id){for(var i=0;i<EVC.length;i++)if(EVC[i].id===id)return EVC[i]}
+function viewEv(p){var r=p.run,ev=r.ev&&evById(r.ev.id);if(!ev)return'';var ans=r.ev.pick!=null;
+  var h='<div class="q evc"><div class="small"><b>🃏 情境卡</b> <span class="tag2">学：'+ev.k+'</span> '+TAG+'</div><div class="evt"><span class="evi">'+ev.ico+'</span><span>'+esc(ev.t)+'</span></div><h3>'+esc(ev.q)+'</h3><div class="row">'+ev.o.map(function(o,k){return '<button class="opt'+(ans&&k===ev.a?' right':ans&&k===r.ev.pick?' wrong':'')+'" data-a="evans" data-v="'+k+'"'+(ans?' disabled':'')+'>'+String.fromCharCode(65+k)+'. '+esc(o)+(ans&&k===ev.a?' ✅':ans&&k===r.ev.pick?' ❌':'')+'</button>'}).join('')+'</div>';
+  if(ans)h+='<div class="exp"><b class="'+(r.ev.pick===ev.a?'ok':'no')+'">'+(r.ev.pick===ev.a?'想得对！':'换个角度想想：')+'</b>'+esc(ev.e)+(r.ev.coin?' <b>💰+3</b>':'')+'</div>';
+  return h+'</div>'}
+/* ---------- 成就墙：每个成就写明学到了什么 ---------- */
+function quizRight(p){return Object.keys(p.ans).filter(function(k){var c=findCh(k.replace(/-\d+$/,""));return c&&c.c.qs[Number(k.split("-").pop())]&&c.c.qs[Number(k.split("-").pop())].a===p.ans[k]}).length}
+var ACH=[
+["shop1","🧋","开张大吉","营收、成本、利润",function(p){return p.shop.days>=1}],
+["profit3","📈","三天都赚钱","利润为正才是真赚钱",function(p){return p.shop.hist.filter(function(x){return x.profit>0}).length>=3}],
+["upgrade","🔧","投资自己的店","花钱升级，换来更多收入＝投资回报",function(p){var u=p.shop.up;return u.sign+u.ice+u.shade+u.recipe>=1}],
+["mini1","🎮","接单小能手","每杯的收入、成本、利润",function(p){return fx(p).mini.plays>=1}],
+["mini0","🎯","一杯不浪费","做错一杯，成本就白花了",function(p){return fx(p).mini.perfect>=1}],
+["margin","🧮","会算账的店长","毛利率 / 利润的计算",function(p){return fx(p).mini.qOk>=2}],
+["combo5","🔥","连对 5 题","知识点掌握扎实",function(p){return fx(p).best>=5}],
+["combo10","💥","连对 10 题","知识点掌握非常扎实",function(p){return fx(p).best>=10}],
+["ev3","🃏","冷静判断","新闻和情绪不等于价值",function(p){return fx(p).evOk>=3}],
+["ev8","🧠","情境达人","答对 8 张情境卡：风险、分散、成本",function(p){return fx(p).evOk>=8}],
+["share","🧩","小小股东","股份：买股票就是买公司的一小块",function(p){return !!(p.lv.share&&p.lv.share.stars)}],
+["div","🧺","不放一个篮子","风险分散",function(p){return !!(p.lv.diversify&&p.lv.diversify.stars)}],
+["cmp","🐷","利滚利","复利：时间让钱生钱",function(p){return !!(p.lv.compound&&p.lv.compound.stars)}],
+["star3","⭐","三星学霸","有一关全部答对",function(p){for(var k in p.lv)if(p.lv[k].stars===3)return true;return false}],
+["read5","📜","秘籍读书郎","读完 5 章秘籍",function(p){return Object.keys(p.done).length>=5}],
+["quiz10","📝","秘籍测验 10 题","答对 10 道秘籍测验题",function(p){return quizRight(p)>=10}],
+["mkt","📈","股市小记者","分清基本面和情绪",function(p){return !!(p.lv.market&&p.lv.market.stars)}],
+["guess","🔮","不靠猜","短期涨跌没人能一直猜对",function(p){return !!(p.lv.guess&&p.lv.guess.stars)}],
+["kl","🕯️","K 线小画家","阳线、阴线、开收高低",function(p){return !!(p.lv.klgame&&p.lv.klgame.stars)}],
+["det","🕵️","财报侦探","营收、利润、市盈率、负债",function(p){return !!(p.lv.detect&&p.lv.detect.stars)}],
+["cont","🏁","稳健高手","分散让回撤更小",function(p){return !!(p.contest&&p.contest.dd<10)}],
+["all","🎓","本年级毕业","全部关卡通关",function(p){return allClear(p)}],
+["trade","🎮","第一次模拟交易","买入、卖出和持仓",function(p){return !!(p.sim&&p.sim.game&&p.sim.game.log&&p.sim.game.log.length)}]];
+function checkAch(p){if(!p)return;var f=fx(p);ACH.forEach(function(a){if(!f.ach[a[0]]&&a[4](p)){f.ach[a[0]]=Date.now();toast("🏆 新成就：<b>"+a[1]+" "+a[2]+"</b><br><span class='tiny'>学到：「"+a[3]+"」</span>");snd("up")}})}
+function viewAch(p){var f=fx(p),n=Object.keys(f.ach).length,h='<h2 style="margin-top:8px">🏆 '+esc(p.name)+'的成就墙（'+n+' / '+ACH.length+'）</h2><p class="small muted">每个成就背后都是一个学到的知识点。称号：<b>'+titleOf(p)+'</b>（星星 + 成就越多，称号越高）　最高连对：🔥 '+f.best+'</p><div class="achs">';
+  ACH.forEach(function(a){var on=!!f.ach[a[0]];h+='<div class="ach'+(on?' on':'')+'"><div class="ai">'+(on?a[1]:'🔒')+'</div><b>'+a[2]+'</b><div class="tiny">学到：'+a[3]+'</div></div>'});
+  h+='</div><h2>🏅 关卡徽章</h2>'+(p.badges.length?'<div class="badges">'+p.badges.map(function(b){return '<span>'+b+'</span>'}).join('')+'</div>':'<p class="small muted">过关就能拿到徽章。</p>');
+  h+='<h2>👑 称号怎么升级</h2><div class="tablewrap"><table><tr><th>称号</th><th>星星 + 成就 达到</th></tr>'+TITLES.map(function(t){return '<tr><td>'+t[1]+'</td><td>'+t[0]+'</td></tr>'}).join('')+'</table></div>';
+  return h+'<div class="row">'+btn("回地图","go","map","pri")+'</div>'}
+/* ---------- 进度码 + 云同步 ---------- */
+var CLOUD={"url": "", "key": ""};/* build.py 从 cloud/config.json 注入；url/key 为空时隐藏云登录 */
+function cloudOn(){return !!(CLOUD&&CLOUD.url&&CLOUD.key)}
+function progOf(p){var f=fx(p);return starsOf(p)*100+p.badges.length*40+Object.keys(f.ach).length*30+p.shop.days*5+Object.keys(p.done).length*10+Object.keys(p.ans).length*5+Math.floor((p.earned||0)/10)}
+/* 进度码：去掉临时状态 → JSON → UTF-8 → base64，带校验 */
+function slim(p){var o=JSON.parse(JSON.stringify(p));o.run=null;o.mini=null;if(o.sim&&o.sim.game){o.sim.game.news=(o.sim.game.news||[]).slice(-3);o.sim.game.log=(o.sim.game.log||[]).slice(-5);(o.sim.game.stocks||[]).forEach(function(s){s.hist=(s.hist||[]).slice(-10)})}return o}
+function b64e(s){var b=new TextEncoder().encode(s),t="";for(var i=0;i<b.length;i+=0x8000)t+=String.fromCharCode.apply(null,b.subarray(i,i+0x8000));return btoa(t)}
+function b64d(s){var t=atob(s),b=new Uint8Array(t.length);for(var i=0;i<t.length;i++)b[i]=t.charCodeAt(i);return new TextDecoder().decode(b)}
+function sum8(s){var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return("0000000"+h.toString(16)).slice(-8)}
+function makeCode(list){var body=b64e(JSON.stringify({v:2,t:Date.now(),profiles:list.map(slim)}));return "XXTZ2-"+sum8(body)+"-"+body}
+function readCode(code){code=String(code||"").replace(/\s+/g,"");var m=/^XXTZ2-([0-9a-f]{8})-(.+)$/.exec(code);if(!m)throw new Error("这不是小小投资家的进度码（应以 XXTZ2- 开头）。");if(sum8(m[2])!==m[1])throw new Error("进度码不完整或被改动了，请重新复制一遍。");var o=JSON.parse(b64d(m[2]));if(!o||!Array.isArray(o.profiles))throw new Error("进度码里没有档案。");return o.profiles.filter(function(p){return p&&p.id&&p.name&&GL[p.grade]})}
+function normP(p){var d=newProfile(p.name,p.av||"🐼",p.grade);for(var k in d)if(p[k]===undefined)p[k]=d[k];var s=newShop();for(var k2 in s)if(p.shop[k2]===undefined)p.shop[k2]=s[k2];fx(p);return p}
+/* 合并：同一档案取进度更多的；进度一样取更新的。返回提示文字 */
+function mergeIn(list,src){var msgs=[];list.forEach(function(r){r=normP(r);var i=-1;DB.profiles.forEach(function(p,k){if(p.id===r.id)i=k});
+  if(i<0){DB.profiles.push(r);msgs.push("新增档案「"+r.name+"」")}
+  else{var l=DB.profiles[i],pl=progOf(l),pr=progOf(r),ul=l.upd||0,ur=r.upd||0;
+    if(pr>pl||(pr===pl&&ur>ul)){if(ul>ur&&pr>pl)msgs.push("「"+r.name+"」两边都有改动，已保留进度更多的"+src+"版本");else msgs.push("「"+r.name+"」已更新为"+src+"的进度");r.run=null;DB.profiles[i]=r}
+    else if(ur>ul&&pl>pr)msgs.push("「"+l.name+"」"+src+"的版本更新但进度更少，已保留本机进度更多的版本")}});return msgs}
+function copyText(t){try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t);return true}}catch(e){}var a=document.getElementById("pcode");if(a){a.removeAttribute("readonly");a.select();try{document.execCommand("copy")}catch(e){}a.setAttribute("readonly","");return true}return false}
+/* ---------- 云同步（Supabase Auth + REST，用 fetch 手写） ---------- */
+var CKEY="kid-tycoon-cloud",CS={busy:false,msg:"",last:0};
+function cTok(){try{return JSON.parse(localStorage.getItem(CKEY)||"null")}catch(e){return null}}
+function cSetTok(t){try{if(t)localStorage.setItem(CKEY,JSON.stringify(t));else localStorage.removeItem(CKEY)}catch(e){}}
+function famEmail(id){id=String(id||"").trim().toLowerCase();if(id.indexOf("@")>0)return id;if(!/^[a-z0-9_-]{4,30}$/.test(id))throw new Error("家庭号只能用 4～30 位英文字母、数字、- 或 _，或者直接填邮箱。");return "family-"+id+"@kids-tycoon.example"}
+function cFetch(path,opt){opt=opt||{};var h={"apikey":CLOUD.key,"Content-Type":"application/json"};var t=cTok();if(opt.auth!==false&&t&&t.access_token)h["Authorization"]="Bearer "+t.access_token;else h["Authorization"]="Bearer "+CLOUD.key;for(var k in(opt.h||{}))h[k]=opt.h[k];
+  return fetch(CLOUD.url.replace(/\/+$/,"")+path,{method:opt.m||"GET",headers:h,body:opt.b?JSON.stringify(opt.b):undefined}).then(function(r){return r.text().then(function(x){var j=null;try{j=x?JSON.parse(x):null}catch(e){}if(!r.ok){var e=new Error((j&&(j.error_description||j.msg||j.message||j.error))||("HTTP "+r.status));e.status=r.status;throw e}return j})})}
+function cSaveSession(j){if(!j||!j.access_token)throw new Error("登录没有成功，请检查账号设置（是否需要先确认邮箱）。");cSetTok({access_token:j.access_token,refresh_token:j.refresh_token,exp:Date.now()+(j.expires_in||3600)*1000-60000,uid:j.user&&j.user.id,who:j.user&&j.user.email})}
+function cLogin(id,pw,signup){var em=famEmail(id);return cFetch(signup?"/auth/v1/signup":"/auth/v1/token?grant_type=password",{m:"POST",auth:false,b:{email:em,password:pw}}).then(function(j){if(signup&&!j.access_token)throw new Error("注册成功，但需要先到邮箱点确认链接，再回来登录。（用家庭号的话，请家长在 Supabase 里关闭邮箱确认）");cSaveSession(j)})}
+function cEnsure(){var t=cTok();if(!t)return Promise.reject(new Error("还没有登录"));if(Date.now()<t.exp)return Promise.resolve(t);return cFetch("/auth/v1/token?grant_type=refresh_token",{m:"POST",auth:false,b:{refresh_token:t.refresh_token}}).then(function(j){cSaveSession(j);return cTok()})}
+function cSync(manual){if(!cloudOn()||!cTok()||CS.busy)return Promise.resolve();if(navigator.onLine===false){CS.msg="现在没联网，先在本机玩，联网后会自动同步。";return Promise.resolve()}
+  CS.busy=true;var tk;return cEnsure().then(function(t){tk=t;var dels=(DB.cdel||[]).slice();return Promise.all(dels.map(function(id){return cFetch("/rest/v1/kids_saves?profile_id=eq."+encodeURIComponent(id),{m:"DELETE"})})).then(function(){DB.cdel=[]})})
+  .then(function(){return cFetch("/rest/v1/kids_saves?select=profile_id,data,progress,updated_at")})
+  .then(function(rows){var msgs=mergeIn((rows||[]).map(function(r){var d=r.data||{};d.upd=d.upd||Date.parse(r.updated_at)||0;return d}),"云端");
+    var body=DB.profiles.map(function(p){var s=slim(p);return{owner:tk.uid,profile_id:p.id,nickname:p.name,grade:p.grade,progress:progOf(p),data:s,updated_at:new Date(p.upd||Date.now()).toISOString()}});
+    return(body.length?cFetch("/rest/v1/kids_saves?on_conflict=owner,profile_id",{m:"POST",b:body,h:{"Prefer":"resolution=merge-duplicates,return=minimal"}}):Promise.resolve()).then(function(){return msgs})})
+  .then(function(msgs){CS.last=Date.now();CS.msg="✅ 已同步（"+new Date().toLocaleTimeString("zh-CN",{hour:"2-digit",minute:"2-digit"})+"）"+(msgs.length?"："+msgs.join("；"):"");if(msgs.length)toast("☁️ "+esc(msgs.join("；")));saveRaw()})
+  .catch(function(e){CS.msg="同步没成功："+e.message+(e.status===401?"（请重新登录）":"")+"。本机进度不受影响。";if(e.status===401)cSetTok(null)})
+  .then(function(){CS.busy=false;if(manual||DB.scr==="parent"){render();flushFx()}})}
+var cTimer=null;function cSoon(){if(!cloudOn()||!cTok())return;clearTimeout(cTimer);cTimer=setTimeout(function(){cSync(false)},Date.now()-CS.last>60000?3000:30000)}
+window.addEventListener("online",function(){cSync(false)});
+function viewData(){var h='<h2>💾 换设备也能接着玩</h2><div class="card"><b>方法一：进度码（不用联网、不用账号）</b><p class="small muted">点「生成进度码」，复制这一串文字，用微信/备忘录发到另一台设备，在那边的家长区粘贴、点「导入」。同一个孩子的档案会保留进度更多的那份。</p><div class="row">'+btn("生成全部孩子的进度码","pcode","","pri")+'</div>';
+  if(DB.pcode)h+='<textarea id="pcode" class="txt code" readonly aria-label="进度码">'+esc(DB.pcode)+'</textarea><div class="row">'+btn("📋 复制进度码","pcopy","")+'</div>';
+  h+='<div class="small muted" style="margin-top:8px">在这里粘贴别处的进度码：</div><textarea id="pin" class="txt code" data-pin="1" aria-label="粘贴进度码" placeholder="XXTZ2-……">'+esc(DB.pin||"")+'</textarea><div class="row">'+btn("导入进度码","pimport","")+'</div>'+(DB.pmsg?'<div class="msg">'+esc(DB.pmsg)+'</div>':'')+'</div>';
+  if(cloudOn()){var t=cTok();h+='<div class="card" style="margin-top:12px"><b>方法二：家庭云账号（自动同步）</b><p class="small muted">一个家庭账号下可以放几个孩子的档案。云端只保存昵称和游戏进度。没网时照常在本机玩，联网后自动合并；两边冲突时保留进度更多的，并提示。</p>';
+    if(t)h+='<p>已登录：<b>'+esc(String(t.who||"").replace(/^family-(.*)@kids-tycoon\.example$/,"家庭号 $1"))+'</b></p><div class="row">'+btn(CS.busy?"同步中…":"☁️ 立即同步","csync","","pri",CS.busy)+btn("退出云账号","cout","")+'</div>';
+    else h+='<input class="txt" id="cid" data-cf="id" placeholder="家庭号（如 qiu-home）或邮箱" autocomplete="username" value="'+esc(DB.cid||"")+'"><input class="txt" id="cpw" type="password" data-cf="pw" placeholder="密码（至少 6 位）" autocomplete="current-password" style="margin-top:8px"><div class="row">'+btn("登录","cin","","pri")+btn("第一次用：注册家庭账号","cup","")+'</div>';
+    h+=(CS.msg?'<div class="msg">'+esc(CS.msg)+'</div>':'')+'</div>'}
+  return h}
+/* ---------- v2.2 股票乐园：每个小游戏都接在关卡里 ---------- */
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function r2(v){return Math.round(v*100)/100}
+function coOf(id){for(var i=0;i<COMPANIES.length;i++)if(COMPANIES[i].id===id)return COMPANIES[i];return{id:id,name:"指数基金",icon:"🧺"}}
+function gq(q,ans,key){/* 通用选择题渲染：q={q,o,a,e} */return '<div class="q"><h3>'+esc(q.q)+'</h3><div class="row">'+q.o.map(function(o,k){var rt=ans!=null&&k===q.a,wr=ans!=null&&k===ans&&k!==q.a;return '<button class="opt'+(rt?' right':wr?' wrong':'')+'" data-a="g_ans" data-v="'+key+'|'+k+'"'+(ans!=null?' disabled':'')+'>'+String.fromCharCode(65+k)+'. '+esc(o)+(rt?' ✅':wr?' ❌':'')+'</button>'}).join('')+'</div>'+(ans!=null?'<div class="exp"><b class="'+(ans===q.a?'ok':'no')+'">'+(ans===q.a?'讲得对！':'再想想：')+'</b>'+esc(q.e)+'</div>':'')+'</div>'}
+var GAMES={};
+/* ===== 1. 模拟股市日：新闻 → 买卖 → 收盘动画 → 复盘（基本面 vs 情绪） ===== */
+var MNEWS=[
+{c:"tea",t:"快乐奶茶新品「芒果冰冰」大卖，这个月营收大涨 30%。",f:.07,s:.03,k:"基本面",w:"公司真的多卖了奶茶、多赚了钱，这是基本面变好，涨得比较扎实。"},
+{c:"rocket",t:"网上有人喊「小火箭要翻倍！」大家都在抢，可公司没有发布任何新消息。",f:0,s:.10,k:"情绪",w:"公司本身没有变化，只是大家情绪激动。情绪来得快、去得也快，之后很可能回落。"},
+{c:"book",t:"绿叶书店新开 5 家分店，每家都开始赚钱。",f:.05,s:.01,k:"基本面",w:"分店多了、赚的钱多了，公司变得更值钱。"},
+{c:"farm",t:"阳光农场遇到冰雹，今年的菜少收了一半。",f:-.10,s:-.04,k:"基本面",w:"收成少了，公司今年真的少赚钱，这是基本面变差。"},
+{c:"tea",t:"有人造谣说快乐奶茶的老板要离职，后来公司说是谣言。",f:0,s:-.08,k:"情绪",w:"只是谣言，公司没变。恐慌让价格先跌，澄清后常常慢慢回来。"},
+{c:"rocket",t:"小火箭电动车的新电池通过检测，一次充电能多跑一倍。",f:.08,s:.04,k:"基本面",w:"产品真的变好了，以后可能卖得更多，属于基本面。"},
+{c:"book",t:"某网红说「现在没人看书了」，绿叶书店被大量卖出。",f:0,s:-.06,k:"情绪",w:"一句话改变不了书店真实的生意，这是情绪带来的下跌。"},
+{c:"farm",t:"阳光农场的蔬菜签下超市大订单，三年内稳定供货。",f:.06,s:.02,k:"基本面",w:"大订单带来稳定收入，基本面变好。"}];
+GAMES.market={
+ init:function(p){var g=p.grade,cos=g==="g4"?["tea","farm"]:g==="g5"?["tea","rocket","book"]:["tea","rocket","book","farm"],R=rng(7+(p.lv.market?p.lv.market.tries:0)*13+(g==="g8"?100:g==="g5"?50:0)),pool=[];
+  MNEWS.forEach(function(n,i){if(cos.indexOf(n.c)>=0)pool.push(i)});pool.sort(function(){return R()-0.5});
+  var price={};cos.forEach(function(c){price[c]=coOf(c).price});
+  return{cos:cos,days:g==="g4"?3:g==="g5"?4:5,day:0,ph:"open",cash:1000,hold:{},price:price,open:JSON.parse(JSON.stringify(price)),chg:{},ticks:{},news:pool,fade:{},rec:[],q:null,done:false,seed:Math.floor(R()*1e6)}},
+ val:function(m){var v=m.cash;for(var c in m.hold)v+=m.hold[c]*m.price[c];return r2(v)},
+ act:function(p,a,v){var m=p.run.gm,lot=10;
+  if(a==="g_buy"&&m.ph==="open"){var cost=m.price[v]*lot;if(m.cash>=cost){m.cash=r2(m.cash-cost);m.hold[v]=(m.hold[v]||0)+lot;snd("coin")}else toast("虚拟钱不够啦")}
+  else if(a==="g_sell"&&m.ph==="open"){if((m.hold[v]||0)>=lot){m.hold[v]-=lot;m.cash=r2(m.cash+m.price[v]*lot);snd("coin")}}
+  else if(a==="g_close"&&m.ph==="open"){var n=MNEWS[m.news[m.day%m.news.length]],R=rng(m.seed+m.day*97),rec=[];
+   m.cos.forEach(function(c){var o=m.price[c],ch=(R()-0.5)*0.03,why="",kind="";
+    if(c===n.c){ch=n.f+n.s+(R()-0.5)*0.01;why=n.w;kind=n.k}
+    else if(m.fade[c]){ch+=-m.fade[c]*0.7;why=(m.fade[c]>0?"前面的情绪上涨退潮了，价格回落。":"恐慌过去了，价格慢慢回来。");kind="情绪退潮"}
+    else why="没有新闻，只是买的人和卖的人多少不一样，小小波动很正常。";
+    var cl=r2(Math.max(1,o*(1+ch))),tk=[];for(var i=1;i<=8;i++)tk.push(r2(o+(cl-o)*i/8+(i<8?(R()-0.5)*o*0.02:0)));
+    m.ticks[c]=tk;m.open[c]=o;m.chg[c]=r2((cl-o)/o*100);m.price[c]=cl;rec.push({c:c,chg:m.chg[c],why:why,kind:kind})});
+   m.fade={};if(n.s)m.fade[n.c]=n.s;m.rec=rec;m.ph="closed";DB.anim=true}
+  else if(a==="g_next"&&m.ph==="closed"){m.day++;m.ph=m.day>=m.days?"sum":"open";m.cos.forEach(function(c){m.open[c]=m.price[c]});m.rec=[]}
+  else if(a==="g_ans"&&m.ph==="sum"&&m.q==null){m.q=Number(v.split("|")[1]);var q=this.q(p);p.run.gok=m.q===q.a;m.done=true;knowAns(p,p.run.gok,p.run.fresh)}},
+ q:function(p){return p.grade==="g8"?{q:"复盘：股价短期跳动常受什么影响？长期主要看什么？",o:["短期常受情绪和新闻影响，长期主要看公司能不能持续赚钱（基本面）","短期长期都只看谁喊得响","长期看每天的新闻热度"],a:0,e:"情绪能让价格一天涨跌很多，但会退潮；公司真的多赚钱，价格才更可能长期站得住。"}:{q:"哪种消息带来的上涨，更可能长久？",o:["公司真的多赚钱了（基本面变好）","大家一时激动抢着买（情绪）"],a:0,e:"情绪来得快去得快；公司真的变好，价格才更可能站得住。"}},
+ view:function(p){var m=p.run.gm,self=this,h='<h3 style="margin-top:12px">📈 模拟股市日 · 第 '+Math.min(m.day+1,m.days)+' / '+m.days+' 天 '+TAG+'</h3><div class="small muted">你有 <b>1000 元虚拟钱</b>，每次买卖 10 股。<b>赚亏不计分</b>，复盘时讲对道理才计分。</div>';
+  if(m.ph!=="sum"){var n=MNEWS[m.news[m.day%m.news.length]];
+   h+='<div class="newscard"><div class="nhd">📰 今日新闻 · 第 '+(m.day+1)+' 天</div><div class="nbd">'+coOf(n.c).icon+' '+esc(n.t)+'</div></div>';
+   h+='<div class="stocks">'+m.cos.map(function(c){var co=coOf(c),cl=m.ph==="closed",chg=m.chg[c]||0;return '<div class="stk"><div class="sn">'+co.icon+' '+co.name+'</div><div class="sp '+(cl?cls(chg):'')+'" data-tick="'+(cl?esc(JSON.stringify(m.ticks[c])):'')+'" data-open="'+m.open[c]+'">'+(cl?yuan(m.price[c]):yuan(m.price[c]))+'</div><div class="tiny">'+(cl?'<span class="'+cls(chg)+'">'+pctStr(chg)+'</span>':'开盘价')+' · 持有 '+(m.hold[c]||0)+' 股</div>'+(m.ph==="open"?'<div class="row" style="margin:6px 0 0">'+btn("买 10 股","g_buy",c,"",m.cash<m.price[c]*10)+btn("卖 10 股","g_sell",c,"",(m.hold[c]||0)<10)+'</div>':'')+'</div>'}).join('')+'</div>';
+   h+='<div class="small">现金 '+yuan(m.cash)+' 元 · 总资产 <b>'+yuan(self.val(m))+'</b> 元</div>';
+   if(m.ph==="open")h+='<div class="row">'+btn("想好了（不买不卖也可以），收盘 🔔","g_close","","pri")+'</div>';
+   else{h+='<div class="card recap"><b>🧐 收盘复盘</b>'+m.rec.map(function(r){var co=coOf(r.c);return '<div class="pt"><b>'+co.icon+'</b><span><b class="'+cls(r.chg)+'">'+co.name+' '+pctStr(r.chg)+'</b>'+(r.kind?' <span class="tag2">'+r.kind+'</span>':'')+'<br>'+esc(r.why)+'</span></div>'}).join('')+(p.grade==="g8"?'<div class="tiny">小知识：真实 A 股是 T+1（今天买，最早下一个交易日卖），以交易所最新规定为准。</div>':'')+'</div><div class="row">'+btn(m.day+1>=m.days?"看总复盘 ➡":"下一天开盘 ➡","g_next","","pri")+'</div>'}
+  }else{var v=self.val(m),d=r2(v-1000);h+='<div class="good">'+m.days+' 天结束！总资产 <b>'+yuan(v)+'</b> 元（'+(d>=0?'+':'')+yuan(d)+' 元）。赚了亏了都不要紧，下面这题才算分。</div>'+gq(self.q(p),m.q,"m")}
+  return h}};
+/* ===== 2. 猜涨跌：只奖励讲对道理 ===== */
+var GUESS=[
+{t:"「快乐奶茶」发布消息：今年利润比去年多了一倍。",r:5,o:["公司更赚钱了，大家愿意出更高的价","因为今天是星期一","股价只是随便跳的"],a:0,e:"利润大增说明公司更值钱，所以价格上涨。"},
+{t:"「小火箭」的利润增长了，但比大家之前期待的少很多。",r:-4,o:["好消息就一定涨","大家早就期待更多，结果不如预期，价格反而跌了","公司要倒闭了"],a:1,e:"价格里早就包含了大家的期待。结果比期待差，好消息也可能下跌。"},
+{t:"「阳光农场」遇到大旱。",r:-6,o:["收成减少，利润可能变少","农场老板心情不好","因为下雨了"],a:0,e:"大旱让收成变少，公司赚得少，价格下跌。"},
+{t:"这一天什么新闻都没有，「绿叶书店」还是涨了 1%。",r:1,o:["一定有内幕消息","短期价格会因为买卖的人多少而波动，不一定有原因","明天一定会再涨"],a:1,e:"短期涨跌常常没有明确原因，所以没人能一直猜对。"},
+{t:"「绿叶书店」被评为「最受欢迎书店」，可大家早就知道它很受欢迎。",r:0,o:["消息大家早知道了，价格里已经反映，所以几乎没变","评奖一点用都没有","一定会大涨"],a:0,e:"大家早已知道的消息，往往已经体现在价格里了。"},
+{t:"「小火箭」召回一批电动车，要免费维修。",r:-7,o:["维修要花钱、口碑受损，利润可能下降","召回是好事所以跌","跟公司没关系"],a:0,e:"召回要花钱，还会影响口碑，所以价格下跌。"},
+{t:"全市场大涨日：几乎所有虚构公司都涨了 2%，没有新闻的「阳光农场」也涨了。",r:2,o:["整个市场情绪好时，很多股票会一起涨","阳光农场偷偷发财了","涨了就要马上买"],a:0,e:"市场整体的情绪和资金，会让很多股票一起涨跌。"}];
+GAMES.guess={
+ init:function(p){var ids=p.grade==="g4"?[0,2,5]:p.grade==="g5"?[0,2,3,6]:[0,1,3,4,6];return{ids:ids,i:0,dir:null,why:null,hit:0,ok:0,done:false}},
+ act:function(p,a,v){var m=p.run.gm,it=GUESS[m.ids[m.i]];if(!it)return;
+  if(a==="g_dir"&&m.dir==null){m.dir=v;var real=it.r>0?"up":it.r<0?"down":"flat";if(v===real)m.hit++;DB.anim=true}
+  else if(a==="g_ans"&&m.dir!=null&&m.why==null){m.why=Number(v.split("|")[1]);var ok=m.why===it.a;if(ok)m.ok++;knowAns(p,ok,p.run.fresh)}
+  else if(a==="g_next"&&m.why!=null){m.i++;m.dir=null;m.why=null;if(m.i>=m.ids.length){m.done=true;p.run.gok=m.ok>=Math.ceil(m.ids.length*0.6)}}},
+ view:function(p){var m=p.run.gm,n=m.ids.length,h='<h3 style="margin-top:12px">🔮 猜涨跌挑战 '+TAG+'</h3><div class="small muted">先猜方向（<b>猜中不加分</b>），再选「为什么」（<b>讲对道理才加分</b>）。</div>';
+  if(!m.done){var it=GUESS[m.ids[m.i]];h+='<div class="small muted">第 '+(m.i+1)+' / '+n+' 条</div><div class="newscard"><div class="nhd">📰 虚构新闻</div><div class="nbd">'+esc(it.t)+'</div></div>';
+   if(m.dir==null)h+='<div class="row">'+btn("📈 会涨","g_dir","up")+btn("📉 会跌","g_dir","down")+btn("➖ 说不准 / 差不多","g_dir","flat")+'</div>';
+   else{var real=it.r>0?"up":it.r<0?"down":"flat";h+='<div class="reveal '+(it.r>0?'up':it.r<0?'down':'muted')+'"><span class="arrow">'+(it.r>0?'⬆':it.r<0?'⬇':'➡')+'</span> 模拟结果：'+(it.r>0?'涨了 '+it.r+'%':it.r<0?'跌了 '+(-it.r)+'%':'几乎没变')+'　<span class="small">（你猜：'+({up:"涨",down:"跌",flat:"说不准"})[m.dir]+(m.dir===real?'，猜中了，但这不加分':'')+'）</span></div>'+gq({q:"为什么会这样？",o:it.o,a:it.a,e:it.e},m.why,"g");
+    if(m.why!=null)h+='<div class="row">'+btn(m.i+1>=n?"看总结 ➡":"下一条 ➡","g_next","","pri")+'</div>'}}
+  else h+='<div class="good">你猜中方向 <b>'+m.hit+' / '+n+'</b> 次（不加分），讲对道理 <b>'+m.ok+' / '+n+'</b> 次（这才加分）。</div><div class="tip">💡 <b>短期涨跌没有人能一直猜对</b>，连专业的人也做不到。所以投资看长期、看公司本身，而不是猜明天涨不涨。'+(m.ok>=Math.ceil(n*0.6)?'':'（道理讲对 60% 以上才算完成任务，可以再来一次）')+'</div>';
+  return h}};
+/* ===== 3. K 线小游戏 ===== */
+function candleSVG(o,h,l,c,gray,lab){var lo=Math.floor(l-2),hi=Math.ceil(h+2),W=260,H=220,T=12,B=12,ys=function(v){return T+(H-T-B)*(1-(v-lo)/(hi-lo))},col=gray?"#9AA0AE":c>=o?"#E5383B":"#2A9D55",g='<svg viewBox="0 0 '+W+' '+H+'" class="candle" role="img" aria-label="模拟单根 K 线">';
+ var step=Math.max(1,Math.round((hi-lo)/6));for(var v=lo;v<=hi;v+=step)g+='<line x1="44" x2="'+(W-8)+'" y1="'+ys(v)+'" y2="'+ys(v)+'" stroke="#EFE5D3"/><text x="38" y="'+(ys(v)+5)+'" font-size="14" text-anchor="end" fill="#8A8FA0">'+v+'</text>';
+ var top=ys(Math.max(o,c)),bh=Math.max(3,Math.abs(ys(o)-ys(c)));g+='<line x1="150" x2="150" y1="'+ys(h)+'" y2="'+ys(l)+'" stroke="'+col+'" stroke-width="3"/><rect x="128" y="'+top+'" width="44" height="'+bh+'" rx="3" fill="'+col+'"/>';
+ if(lab)g+='<text x="182" y="'+(ys(o)+5)+'" font-size="14" fill="#2B2D42">开 '+o+'</text><text x="182" y="'+(ys(c)+5)+'" font-size="14" fill="#2B2D42">收 '+c+'</text>';
+ return g+'</svg>'}
+GAMES.klgame={
+ init:function(p){var g=p.grade,R=rng(31+(p.lv.klgame?p.lv.klgame.tries:0)),mk=function(up){var o=12+Math.floor(R()*10),c=up?o+2+Math.floor(R()*4):o-2-Math.floor(R()*4);return{o:o,c:c,h:Math.max(o,c)+1+Math.floor(R()*3),l:Math.min(o,c)-1-Math.floor(R()*3)}};
+  var t=g==="g4"?["color","color","high","close"]:g==="g5"?["color","high","low","open","ma"]:["color","low","build","ma","build"];
+  return{rs:t.map(function(k,i){var cd=mk(i%2===0),cl=[];for(var j=0;j<5;j++)cl.push(10+Math.floor(R()*10));return{k:k,cd:cd,cl:cl}}),i:0,ans:null,ok:0,b:{o:15,h:15,l:15,c:15},done:false}},
+ q:function(r){var cd=r.cd;if(r.k==="color")return{q:"灰色这根还没上色。看「开」和「收」，它是阳线还是阴线？",o:["阳线（收盘比开盘高，画红色）","阴线（收盘比开盘低，画绿色）"],a:cd.c>=cd.o?0:1,e:"开盘 "+cd.o+"，收盘 "+cd.c+"："+(cd.c>=cd.o?"收盘更高，是阳线（红）。":"收盘更低，是阴线（绿）。")};
+  var opt=function(x){var s=[x,x+2,x-2];return s},map={high:["最高价","h","细线（上影线）的最顶端"],low:["最低价","l","细线（下影线）的最底端"],open:["开盘价","o",cd.c>=cd.o?"阳线实体的下边":"阴线实体的上边"],close:["收盘价","c",cd.c>=cd.o?"阳线实体的上边":"阴线实体的下边"]};
+  if(map[r.k]){var mm=map[r.k],x=cd[mm[1]];return{q:"看左边的刻度，这一天的"+mm[0]+"大约是多少？",o:opt(x).map(function(v){return v+" 元"}),a:0,e:mm[0]+"看"+mm[2]+"，是 "+x+" 元。"}}
+  if(r.k==="ma"){var s=r.cl.reduce(function(a,b){return a+b},0),avg=r2(s/5);return{q:"最近 5 天的收盘价是 "+r.cl.join("、")+" 元。「5 日均线」在今天的值是多少？",o:[avg,r2(avg+1.5),Math.max.apply(null,r.cl)].map(function(v){return v+" 元"}),a:0,e:"5 日均线 = 最近 5 天收盘价的平均 = "+s+" ÷ 5 = "+avg+" 元。均线把价格「抹平」，帮你看大方向，但它记录的是过去，不能预测明天。"}}},
+ act:function(p,a,v){var m=p.run.gm,r=m.rs[m.i];if(!r||m.done)return;
+  if(a==="g_ans"&&m.ans==null&&r.k!=="build"){m.ans=Number(v.split("|")[1]);var ok=m.ans===this.q(r).a;if(ok)m.ok++;knowAns(p,ok,p.run.fresh)}
+  else if(a==="g_kb"&&m.ans==null){var s=v.split("|");m.b[s[0]]=Math.max(5,Math.min(30,m.b[s[0]]+Number(s[1])))}
+  else if(a==="g_kdone"&&m.ans==null&&r.k==="build"){var b=m.b,cd=r.cd,ok2=b.o===cd.o&&b.c===cd.c&&b.h===cd.h&&b.l===cd.l;m.ans=ok2?1:0;if(ok2)m.ok++;knowAns(p,ok2,p.run.fresh)}
+  else if(a==="g_next"&&m.ans!=null){m.i++;m.ans=null;m.b={o:15,h:15,l:15,c:15};if(m.i>=m.rs.length){m.done=true;p.run.gok=m.ok>=Math.ceil(m.rs.length*0.6)}}},
+ view:function(p){var m=p.run.gm,n=m.rs.length,h='<h3 style="margin-top:12px">🕯️ K 线小游戏 '+TAG+'</h3>';
+  if(m.done)return h+'<div class="good">答对 <b>'+m.ok+' / '+n+'</b> 轮。'+(p.run.gok?'你已经会看 K 线啦！':'答对 60% 以上才算完成，再来一次吧。')+'</div><div class="tip">记住：K 线记录的是过去的价格，帮你看懂发生了什么，但不能预言明天。</div>';
+  var r=m.rs[m.i],cd=r.cd;h+='<div class="small muted">第 '+(m.i+1)+' / '+n+' 轮</div>';
+  if(r.k==="build"){var b=m.b,bad=b.h<Math.max(b.o,b.c)||b.l>Math.min(b.o,b.c);h+='<p>请画出这一天的 K 线：<b>开盘 '+cd.o+'，最高 '+cd.h+'，最低 '+cd.l+'，收盘 '+cd.c+'</b>（元，模拟数据）</p><div class="kbuild"><div class="kprev">'+candleSVG(b.o,Math.max(b.h,b.o,b.c),Math.min(b.l,b.o,b.c),b.c,false,true)+'</div><div>'+[["o","开盘"],["h","最高"],["l","最低"],["c","收盘"]].map(function(f){return '<div class="kst"><span>'+f[1]+'</span>'+(m.ans==null?'<button data-a="g_kb" data-v="'+f[0]+'|-1" aria-label="'+f[1]+'减 1">−</button>':'')+'<b>'+b[f[0]]+'</b>'+(m.ans==null?'<button data-a="g_kb" data-v="'+f[0]+'|1" aria-label="'+f[1]+'加 1">+</button>':'')+'</div>'}).join('')+'</div></div>'+(bad?'<div class="tiny no">最高价不能比开盘、收盘低；最低价不能比它们高哦。</div>':'');
+   if(m.ans==null)h+='<div class="row">'+btn("画好了 ✅","g_kdone","","pri")+'</div>';else h+='<div class="exp"><b class="'+(m.ans?'ok':'no')+'">'+(m.ans?'画对啦！':'还差一点：')+'</b>正确答案是：开 '+cd.o+'、高 '+cd.h+'、低 '+cd.l+'、收 '+cd.c+'。'+(cd.c>=cd.o?'收盘比开盘高，是红色阳线。':'收盘比开盘低，是绿色阴线。')+'</div>'+(m.ans?'':candleSVG(cd.o,cd.h,cd.l,cd.c,false,true))}
+  else{var q=this.q(r);if(r.k!=="ma")h+='<div class="chart" style="max-width:340px">'+candleSVG(cd.o,cd.h,cd.l,cd.c,r.k==="color"&&m.ans==null,r.k==="color")+'</div>';else h+='<div class="chart">'+lineSVG([{v:r.cl,c:"#3A8EDB"},{v:r.cl.map(function(x,i,a){var s=a.slice(0,i+1);return r2(s.reduce(function(q,w){return q+w},0)/s.length)}),c:"#E09A2C",dash:true}],["1","2","3","4","5"].map(function(x){return "第"+x+"天"}))+'<div class="tiny">蓝线：每天收盘价；橙色虚线：到当天为止的平均价（像均线一样更平滑）</div></div>';h+=gq(q,m.ans,"k")}
+  if(m.ans!=null)h+='<div class="row">'+btn(m.i+1>=n?"看结果 ➡":"下一轮 ➡","g_next","","pri")+'</div>';
+  return h}};
+/* ===== 4. 财报侦探 ===== */
+var FIN=[{n:"🥤 泡泡汽水",rev:100,np:20,sh:10,px:40,debt:30},{n:"🍞 彩虹面包",rev:150,np:10,sh:10,px:30,debt:120}];
+GAMES.detect={
+ qs:function(g){var A=FIN[0],B=FIN[1];var base=[{q:"线索 1：谁的营收（卖东西收到的钱）更多？",o:[A.n,B.n],a:1,e:B.n+" 营收 150 万元，比 100 万元多。可是营收多不等于更赚钱，继续查！"},{q:"线索 2：谁的净利润（减掉所有成本后剩下的钱）更多？",o:[A.n,B.n],a:0,e:A.n+" 净利润 20 万元，"+B.n+" 只有 10 万元。卖得多的反而赚得少，说明它的成本很高。"}];
+  if(g==="g5")return base.concat([{q:"线索 3：每收入 100 元，谁留下的利润更多？",o:[A.n+"（约 20 元）",B.n+"（约 7 元）"],a:0,e:"20 ÷ 100 = 20%，10 ÷ 150 ≈ 7%。泡泡汽水更会赚钱。"}]);
+  return base.concat([{q:"线索 3：泡泡汽水的市值是多少？（市值 = 股价 × 总股数）",o:["400 万元","40 万元","200 万元"],a:0,e:"40 元 × 10 万股 = 400 万元。"},{q:"线索 4：按市盈率（市值 ÷ 净利润）看，谁更「便宜」？",o:[A.n+"（400 ÷ 20 = 20 倍）",B.n+"（300 ÷ 10 = 30 倍）"],a:0,e:"市盈率越低，相对越便宜。泡泡汽水 20 倍，彩虹面包 30 倍。"},{q:"线索 5：彩虹面包欠了 120 万元的债，这说明什么？",o:["负债很高，万一生意变差，还钱压力大，风险更高","欠钱越多公司越厉害","负债和风险没关系"],a:0,e:"负债高，要按时还本付息，生意一差就危险。看财报一定要看负债。"},{q:"结案：综合来看，下面哪句话最合适？",o:["泡泡汽水赚得多、市盈率低、负债少，看起来更健康；但这只是练习，不是买入建议","彩虹面包营收多，所以一定更好","只要看股价高低就够了"],a:0,e:"要一起看营收、利润、市值、市盈率和负债。真实投资还要看未来，而且由家长决定。"}])},
+ init:function(p){return{i:0,ans:[],ok:0,done:false}},
+ act:function(p,a,v){var m=p.run.gm,qs=this.qs(p.grade);if(a==="g_ans"&&m.ans[m.i]==null){m.ans[m.i]=Number(v.split("|")[1]);var ok=m.ans[m.i]===qs[m.i].a;if(ok)m.ok++;knowAns(p,ok,p.run.fresh)}
+  else if(a==="g_next"&&m.ans[m.i]!=null){m.i++;if(m.i>=qs.length){m.done=true;p.run.gok=m.ok>=Math.ceil(qs.length*0.6)}}},
+ view:function(p){var m=p.run.gm,qs=this.qs(p.grade),g8=p.grade==="g8",h='<h3 style="margin-top:12px">🕵️ 财报侦探 '+TAG+'</h3><div class="small muted">两家虚构公司的简版财报（单位：万元；股数：万股）。一条一条查线索！</div><div class="fins">';
+  FIN.forEach(function(f){h+='<div class="fin"><b>'+f.n+'</b>'+tbl(["项目","数字"],[["营收",f.rev],["净利润",f.np]].concat(g8?[["总股数",f.sh],["股价（元）",f.px],["负债",f.debt]]:[]))+'</div>'});h+='</div>';
+  if(!m.done){h+='<div class="small muted">🔍 线索 '+(m.i+1)+' / '+qs.length+'</div>'+gq(qs[m.i],m.ans[m.i],"d");if(m.ans[m.i]!=null)h+='<div class="row">'+btn(m.i+1>=qs.length?"结案 ➡":"下一条线索 ➡","g_next","","pri")+'</div>'}
+  else h+='<div class="good">🕵️ 结案！查对 <b>'+m.ok+' / '+qs.length+'</b> 条线索。'+(p.run.gok?'':'查对 60% 以上才算完成，再来一次吧。')+'</div><div class="tip">侦探口诀：<b>营收看规模，利润看本事'+(g8?'，市盈率看贵不贵，负债看风险':'')+'</b>。</div>';
+  return h}};
+/* ===== 5. 组合比赛：同一段行情，比收益也比稳 ===== */
+var CASSETS=["tea","rocket","book","farm","idx","cash"];
+function contestPath(g){var R=rng(g==="g8"?808:g==="g5"?505:404),days=10,px={tea:[1],rocket:[1],book:[1],farm:[1]};
+ for(var d=1;d<=days;d++){var t=px.tea[d-1]*(1+0.02+(R()-0.5)*0.02),r=px.rocket[d-1]*(1+0.035+(R()-0.5)*0.08),b=px.book[d-1]*(1+0.008+(R()-0.5)*0.012),f=px.farm[d-1]*(1+0.025+(R()-0.5)*0.03);if(d===3)t=px.tea[d-1]*0.93;if(d===6)f=px.farm[d-1]*0.85;if(d===8)r=px.rocket[d-1]*0.82;px.tea.push(t);px.rocket.push(r);px.book.push(b);px.farm.push(f)}
+ px.idx=px.tea.map(function(_,i){return(px.tea[i]+px.rocket[i]+px.book[i]+px.farm[i])/4});px.cash=px.tea.map(function(){return 1});return px}
+function contestRun(g,al){var px=contestPath(g),tot=0,k;for(k in al)tot+=al[k];var v=px.tea.map(function(_,i){var s=0;CASSETS.forEach(function(a){s+=(al[a]||0)/tot*px[a][i]});return s}),peak=v[0],dd=0;v.forEach(function(x){if(x>peak)peak=x;dd=Math.max(dd,(peak-x)/peak)});
+ var used=CASSETS.filter(function(a){return al[a]>0&&a!=="cash"}).length+(al.idx>0?3:0),mx=0;CASSETS.forEach(function(a){if(a!=="cash"&&al[a]/tot>mx)mx=al[a]/tot});
+ return{v:v,ret:r2((v[v.length-1]-1)*100),dd:r2(dd*100),used:Math.min(4,used),mx:mx,score:r2((v[v.length-1]-1)*100-dd*100+(used>=3?4:used===2?2:0))}}
+GAMES.contest={
+ init:function(p){return{al:{tea:0,rocket:0,book:0,farm:0,idx:0,cash:0},res:null,done:false}},
+ act:function(p,a,v){var m=p.run.gm;if(a==="g_go"&&!m.res){var s=0;for(var k in m.al)s+=m.al[k];if(s!==10)return;m.res=contestRun(p.grade,m.al);p.run.gok=m.res.mx<=0.5;m.done=true;var R=m.res;p.contest={g:p.grade,ret:R.ret,dd:R.dd,used:R.used,score:R.score,al:JSON.parse(JSON.stringify(m.al)),at:Date.now()};knowAns(p,p.run.gok,p.run.fresh);DB.anim=true}},
+ view:function(p){var m=p.run.gm,al=m.al,s=0;for(var k in al)s+=al[k];var h='<h3 style="margin-top:12px">🏁 组合比赛 '+TAG+'</h3><div class="small muted">同一年级的兄弟姐妹面对<b>同一段 10 天模拟行情</b>。把 10 份钱分给下面几个篮子。排行榜比两样：<b>收益</b>，也比<b>稳</b>（最大回撤小、分散好）。</div>';
+  if(!m.res){h+='<div class="row">'+CASSETS.map(function(a){var co=a==="cash"?{icon:"💵",name:"现金（不涨不跌）"}:a==="idx"?{icon:"🧺",name:"指数基金（四家都买一点）"}:coOf(a);return stepper(co.icon+' '+co.name,"c_"+a,1,0,10)}).join('')+'</div><p class="'+(s===10?'ok':'no')+'"><b>已经分了 '+s+' / 10 份</b></p><div class="row">'+btn("开始 10 天行情 ▶","g_go","","pri",s!==10)+'</div>'}
+  else{var R=m.res,px=contestPath(p.grade);h+=chartBox(lineSVG([{v:R.v.map(function(x){return r2(x*100)}),c:"#2F80ED"},{v:px.idx.map(function(x){return r2(x*100)}),c:"#E09A2C",dash:true}],R.v.map(function(_,i){return i?"第"+i+"天":"开始"})),"蓝线：我的组合；橙色虚线：指数基金（起点 = 100）");
+   h+='<div class="stocks">'+[["收益",pctStr(R.ret)],["最大回撤（最惨时比高点跌了多少）",R.dd+"%"],["分散度",R.used+" / 4"],["稳健收益分 = 收益 − 回撤 + 分散加分（3 个以上篮子 +4，2 个 +2）",R.score]].map(function(x){return '<div class="stk"><div class="tiny">'+x[0]+'</div><div class="sp">'+x[1]+'</div></div>'}).join('')+'</div>';
+   h+='<div class="exp"><b class="'+(p.run.gok?'ok':'no')+'">'+(p.run.gok?'分散得好！':'有一个篮子超过了一半：')+'</b>这段行情里，快乐奶茶第 3 天被谣言吓跌，阳光农场第 6 天遇到冰雹，小火箭第 8 天召回大跌——全押一家的人回撤会很大。分散的组合不一定收益最高，但更稳，在「稳健收益分」里更容易赢。</div><div class="tip">去 🏆 排行榜看看兄弟姐妹的组合比赛成绩！</div>'}
+  return h}};
+/* 关卡流程挂钩 */
+function gameView(p){var L=LV[p.run.id],G=GAMES[L.game],r=p.run;if(!r.gm)r.gm=G.init(p);return G.view(p)+(r.gm.done?'<div class="row">'+btn("去答小测验 ➡","nx","","pri")+'</div>':'')}
+function gameAct(p,a,v){var r=p.run;if(!r||!LV[r.id]||!LV[r.id].game)return;var G=GAMES[LV[r.id].game];if(!r.gm)r.gm=G.init(p);G.act(p,a,v)}
+/* 收盘动画：只改显示的数字，状态已经是最终值 */
+function postRender(){if(!DB.anim)return;DB.anim=false;if(RM)return;var els=document.querySelectorAll("[data-tick]");Array.prototype.forEach.call(els,function(el){var t;try{t=JSON.parse(el.getAttribute("data-tick")||"null")}catch(e){t=null}if(!t||!t.length)return;var fin=el.textContent,i=0;el.textContent=yuan(Number(el.getAttribute("data-open")));var iv=setInterval(function(){if(i>=t.length){clearInterval(iv);el.textContent=fin;return}el.textContent=yuan(t[i]);el.classList.add("tick");setTimeout(function(){el.classList.remove("tick")},120);i++},160)});
+ var rv=document.querySelector(".reveal .arrow");if(rv)rv.classList.add("pop")}
+function contestBoard(){var list=DB.profiles.filter(function(p){return p.contest});if(!list.length)return '<h2>🏁 组合比赛榜</h2><p class="small muted">闯到「组合比赛」关就能上榜。同一年级面对同一段模拟行情。</p>';
+ var h='<h2>🏁 组合比赛榜（比收益，也比稳）</h2><p class="small muted">「稳健收益分」= 收益 − 最大回撤 + 分散加分。分散的人也能赢！'+TAG+'</p>';
+ h+='<div class="tablewrap"><table><tr><th>小老板</th><th>年级</th><th>收益</th><th>最大回撤</th><th>分散度</th><th>稳健收益分</th></tr>'+list.slice().sort(function(a,b){return b.contest.score-a.contest.score}).map(function(p,i){return '<tr><td>'+(["🥇","🥈","🥉"][i]||"")+' '+p.av+' '+esc(p.name)+'</td><td>'+GNAME[p.contest.g]+'</td><td class="'+cls(p.contest.ret)+'">'+pctStr(p.contest.ret)+'</td><td>'+p.contest.dd+'%</td><td>'+p.contest.used+'/4</td><td><b>'+p.contest.score+'</b></td></tr>'}).join('')+'</table></div>';
+ return h}
 /* ---------- 逻辑 ---------- */
 function openShop(p){
   var s=p.shop;if(s.avail<=0)return;
   var w=weatherOf(p),price=clampN(s.price,3,25),cups=Math.round(clampN(s.cups,10,200)),sweet=8+s.up.recipe;
   var pf=price<=sweet?1+(sweet-price)*0.03:Math.max(0,1-(price-sweet)/12),base=w.base*(1+0.1*s.up.sign);
-  if(w.id==="hot")base*=1+0.15*s.up.ice;if(w.id==="rain")base*=1+0.25*s.up.shade;
+  base*=1+(s.buzz||0);if(w.id==="hot")base*=1+0.15*s.up.ice;if(w.id==="rain")base*=1+0.25*s.up.shade;
   var demand=Math.round(base*pf),sold=Math.min(demand,cups),rev=Math.round(sold*price*100)/100,cost=cups*CUPCOST+RENT,profit=Math.round((rev-cost)*100)/100,coins=Math.max(0,Math.round(profit/10));
   var tips=[];
   if(demand>cups)tips.push("🎉 卖光啦！还有 "+(demand-cups)+" 位客人没买到，下次可以多准备一些。");
@@ -470,15 +822,16 @@ function openShop(p){
   if(price>sweet+4)tips.push("💸 价格有点高，不少客人嫌贵走掉了。");
   if(price<sweet-3)tips.push("🪙 价格很便宜，客人多，但每杯赚得少。");
   if(profit<0)tips.push("📉 今天亏钱了：成本比营收还多。当老板也会亏，想想哪里可以改。");
+  if(s.buzz)tips.push("⭐ 接单小游戏的好口碑，让今天多来了约 "+Math.round(s.buzz*100)+"% 的客人。");s.buzz=0;
   if(!tips.length)tips.push("👍 价格和杯数都挺合适，继续保持！");
   s.days++;s.avail--;p.coins+=coins;p.earned+=coins;
-  s.last={day:s.days,w:w.ico+w.name,demand:demand,sold:sold,cups:cups,rev:rev,cost:cost,profit:profit,coins:coins,tips:tips};
+  s.last={day:s.days,price:price,w:w.ico+w.name,demand:demand,sold:sold,cups:cups,rev:rev,cost:cost,profit:profit,coins:coins,tips:tips};
   s.hist.push({day:s.days,profit:profit});s.hist=s.hist.slice(-20);
 }
-function startLevel(p,id){p.run={id:id,step:0,m:null,q:[],alloc:{tea:0,rocket:0,book:0,farm:0},rev:false,res:null};DB.scr="level"}
+function startLevel(p,id){p.run={id:id,step:0,m:null,q:[],alloc:{tea:0,rocket:0,book:0,farm:0},rev:false,res:null,ev:pickEv(p),fresh:!(p.lv[id]&&p.lv[id].stars)};if(LV[id].game)p.run.gm=GAMES[LV[id].game].init(p);DB.scr="level"}
 function finishLevel(p){
   var r=p.run,L=LV[r.id],g=p.grade,qs=L.qs(g),c=0,total=1+qs.length;
-  if(L.alloc){var a=r.alloc,tot=g==="g8"?20:10;if(Math.max(a.tea,a.rocket,a.book,a.farm)<=tot/2)c++}else if(r.m===L.m(g).a)c++;
+  if(L.alloc){var a=r.alloc,tot=g==="g8"?20:10;if(Math.max(a.tea,a.rocket,a.book,a.farm)<=tot/2)c++}else if(L.game){if(r.gok)c++}else if(r.m===L.m(g).a)c++;
   qs.forEach(function(q,i){if(r.q[i]===q.a)c++});
   var pass=c/total>=0.6,stars=!pass?0:c===total?3:total-c===1?2:1,old=p.lv[r.id]||{stars:0,tries:0},res={pass:pass,correct:c,total:total,stars:stars,coins:0,badge:null,day:false};
   old.tries++;
@@ -490,11 +843,12 @@ function finishLevel(p){
 /* ---------- 渲染 ---------- */
 function render(){
   var p=P(),h='';
-  if(!p&&DB.scr!=="home")DB.scr="home";
+  if(!p&&DB.scr!=="home"&&DB.scr!=="parent")DB.scr="home";
   if(DB.scr==="level"&&(!p||!p.run))DB.scr="map";
   if(DB.scr==="sim"&&p&&!allClear(p))DB.scr="map";
-  if(DB.scr==="home"||!p){h=viewHome()}
-  else{h=topBar(p);var s=DB.scr;h+=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):viewMap(p)}
+  if(!p&&DB.scr==="parent"){h='<div class="row">'+btn("⬅ 回首页","go","home")+'</div>'+viewParent()}
+  else if(DB.scr==="home"||!p){h=viewHome()}
+  else{h=topBar(p);var s=DB.scr;h+=s==="map"?viewMap(p):s==="shop"?viewShop(p):s==="level"?viewLevel(p):s==="book"?viewBook(p):s==="rank"?viewRank():s==="parent"?viewParent():s==="sim"?viewSim(p):s==="ach"?viewAch(p):viewMap(p)}
   h+=disc();
   document.getElementById("app").innerHTML=h;
 }
@@ -508,38 +862,54 @@ document.addEventListener("click",function(e){
   else if(a==="gr"){DB.form.grade=v}
   else if(a==="create"){var f=DB.form,nm=(f.name||"").trim();if(!nm){DB.msg="请先写上你的名字。"}else if(!f.grade){DB.msg="请选你的年级。"}else{var np=newProfile(nm.slice(0,10),f.av,f.grade);DB.profiles.push(np);DB.cur=np.id;DB.form={name:"",av:"🐼",grade:""};go("shop")}}
   else if(a==="step"){var s=v.split("|"),k=s[0];setK(k,clampN((Number(getK(k))||0)+Number(s[1]),Number(s[2]),Number(s[3])))}
-  else if(a==="open"){openShop(p);top=true}
-  else if(a==="up"){var lv=p.shop.up[v],cost=UPCOST[lv];if(lv<3&&p.coins>=cost){p.coins-=cost;p.shop.up[v]=lv+1}}
+  else if(a==="open"){var d0=p.shop.days;openShop(p);if(p.shop.days>d0){DB.justOpen=true;snd(p.shop.last.profit>0?"coin":"no")}top=true}
+  else if(a==="mute"){DB.mute=!DB.mute;if(!DB.mute)snd("ok")}
+  else if(a==="mstart"){if(p.shop.avail>0&&!(p.mini&&p.mini.day===p.shop.days))p.mini=newMini(p)}
+  else if(a==="mb"){if(p.mini&&!p.mini.done)p.mini.pb=v}
+  else if(a==="mt"){if(p.mini&&!p.mini.done){var ix=p.mini.pt.indexOf(v);if(ix>=0)p.mini.pt.splice(ix,1);else p.mini.pt.push(v)}}
+  else if(a==="mserve"){if(p.mini&&!p.mini.done)miniServe(p)}
+  else if(a==="mq"){var mm=p.mini;if(mm&&mm.done&&mm.q==null){mm.q=Number(v);var okq=mm.q===miniQ(p).a;if(okq)fx(p).mini.qOk++;knowAns(p,okq,true);p.shop.buzz=Math.min(0.15,0.02*mm.good+(okq?0.05:0))}}
+  else if(a==="evans"){var r0=p.run,ev=r0&&r0.ev&&evById(r0.ev.id);if(ev&&r0.ev.pick==null){r0.ev.pick=Number(v);var oke=r0.ev.pick===ev.a,f0=fx(p);if(oke){f0.evOk++;if(!f0.evDone[ev.id]){f0.evDone[ev.id]=1;p.coins+=3;p.earned+=3;r0.ev.coin=true}}knowAns(p,oke,true)}}
+  else if(a==="pcode"){DB.pcode=makeCode(DB.profiles);DB.pmsg="进度码已生成（"+DB.profiles.length+" 个档案）。"}
+  else if(a==="pcopy"){DB.pmsg=copyText(DB.pcode||"")?"已复制。如果没复制上，请长按上面的文字全选复制。":"请长按上面的文字全选复制。"}
+  else if(a==="pimport"){try{var lst=readCode(DB.pin);var ms=mergeIn(lst,"进度码");DB.pmsg="导入完成："+(ms.length?ms.join("；"):"本机进度已经是最新的，没有变化。");DB.pin=""}catch(err){DB.pmsg=err.message}}
+  else if(a==="cin"||a==="cup"){var cid=(document.getElementById("cid")||{}).value,cpw=(document.getElementById("cpw")||{}).value;DB.cid=cid;if(!cid||!cpw||cpw.length<6){CS.msg="请填写家庭号（或邮箱）和至少 6 位密码。"}else{CS.busy=true;CS.msg="正在连接云端…";try{cLogin(cid,cpw,a==="cup").then(function(){CS.busy=false;CS.msg="登录成功，正在同步…";return cSync(true)}).catch(function(e){CS.busy=false;CS.msg="没成功："+e.message;render()})}catch(e){CS.busy=false;CS.msg=e.message}}}
+  else if(a==="csync"){cSync(true)}
+  else if(a==="cout"){cSetTok(null);CS.msg="已退出云账号。本机进度还在。"}
+  else if(a==="up"){var lv=p.shop.up[v],cost=UPCOST[lv];if(lv<3&&p.coins>=cost){p.coins-=cost;p.shop.up[v]=lv+1;snd("up");toast("🔧 升级成功！花金币升级，是为了以后赚更多——这就是<b>投资</b>。")}}
   else if(a==="lv"){var i=levels(p).indexOf(v);if(i>=0&&unlocked(p,i)){startLevel(p,v);top=true}}
   else if(a==="nx"){p.run.step++;top=true}
-  else if(a==="mans"){if(p.run.m==null)p.run.m=Number(v)}
+  else if(a==="mans"){if(p.run.m==null){p.run.m=Number(v);knowAns(p,p.run.m===LV[p.run.id].m(p.grade).a,p.run.fresh)}}
   else if(a==="reveal"){p.run.rev=true}
-  else if(a==="qans"){var qq=v.split("|");if(p.run.q[qq[0]]==null)p.run.q[qq[0]]=Number(qq[1])}
-  else if(a==="finish"){finishLevel(p);top=true}
+  else if(a==="qans"){var qq=v.split("|");if(p.run.q[qq[0]]==null){p.run.q[qq[0]]=Number(qq[1]);knowAns(p,Number(qq[1])===LV[p.run.id].qs(p.grade)[qq[0]].a,p.run.fresh)}}
+  else if(a==="finish"){finishLevel(p);if(p.run.res.pass){snd("win");setTimeout(confetti,50)}else snd("no");top=true}
   else if(a==="book"){if(DB.scr==="level")DB.back="level";var c=findCh(v);if(c){DB.bt=c.g;DB.bch=c.c.id}go("book")}
   else if(a==="back"){DB.back=null;go("level")}
   else if(a==="bt"){DB.bt=v;DB.bch=null}
   else if(a==="bch"){DB.bch=v;setTimeout(function(){var el=document.getElementById("lesson");if(el)el.scrollIntoView({behavior:"smooth"})},0)}
   else if(a==="bdone"){p.done[v]=true}
-  else if(a==="bans"){var bb=v.split("|");if(p.ans[bb[0]]===undefined)p.ans[bb[0]]=Number(bb[1])}
+  else if(a==="bans"){var bb=v.split("|");if(p.ans[bb[0]]===undefined){p.ans[bb[0]]=Number(bb[1]);var cq=findCh(bb[0].replace(/-\d+$/,""));if(cq&&cq.c.qs[Number(bb[0].split("-").pop())])knowAns(p,cq.c.qs[Number(bb[0].split("-").pop())].a===Number(bb[1]),true)}}
   else if(a==="wl"){DB.wl=v}
   else if(a==="gate"){if(v==="156"){DB.gate=true;DB.msg=""}else DB.msg="再算一算哦～（这里是给家长看的）"}
   else if(a==="gateoff"){DB.gate=false;go("map")}
-  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;DB.profiles[DB.profiles.indexOf(t)]=fresh}}
-  else if(a==="del"){var t2=DB.profiles.filter(function(x){return x.id===v})[0];if(t2&&confirm("确定删除「"+t2.name+"」的档案吗？删除后不能恢复。")){DB.profiles.splice(DB.profiles.indexOf(t2),1);if(DB.cur===v){DB.cur=null;DB.gate=false;DB.scr="home"}}}
+  else if(a==="reset"){var t=DB.profiles.filter(function(x){return x.id===v})[0];if(t&&confirm("确定重置「"+t.name+"」的全部进度吗？金币、徽章、小店都会清零。")){var fresh=newProfile(t.name,t.av,t.grade);fresh.id=t.id;if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(t.id)}DB.profiles[DB.profiles.indexOf(t)]=fresh}}
+  else if(a==="del"){var t2=DB.profiles.filter(function(x){return x.id===v})[0];if(t2&&confirm("确定删除「"+t2.name+"」的档案吗？删除后不能恢复。")){if(cloudOn()&&cTok()){DB.cdel=DB.cdel||[];DB.cdel.push(v)}DB.profiles.splice(DB.profiles.indexOf(t2),1);if(DB.cur===v){DB.cur=null;DB.gate=false;DB.scr="home"}}}
   else if(a==="snext"){simNext(p.sim)}
   else if(a==="sreset"){if(confirm("确定重新开始吗？会回到 10000 元。"))p.sim=newSim()}
   else if(a==="ssel"){p.sim.sel=v}
   else if(a==="sqty"){p.sim.qty=v}
   else if(a==="sbuy"){simTrade(p.sim,true,false)}else if(a==="ssell"){simTrade(p.sim,false,false)}else if(a==="ssellall"){simTrade(p.sim,false,true)}
-  save();render();if(top)window.scrollTo(0,0);
+  if(a.indexOf("g_")===0&&p)gameAct(p,a,v);
+  checkAch(P());save();render();flushFx();postRender();if(top)window.scrollTo(0,0);
 });
 document.addEventListener("input",function(e){var t=e.target;if(!t||!t.getAttribute)return;
   if(t.getAttribute("data-name")){DB.form.name=t.value;save();return}
+  if(t.getAttribute("data-pin")){DB.pin=t.value;return}
   var k=t.getAttribute("data-k");if(k){var clean=t.value.replace(/[^0-9.]/g,"");if(clean!==t.value)t.value=clean;setK(k,clean);save()}});
 document.addEventListener("change",function(e){var t=e.target;if(t&&t.getAttribute&&t.getAttribute("data-k")){var k=t.getAttribute("data-k");setK(k,clampN(t.value,Number(t.getAttribute("data-min")),Number(t.getAttribute("data-max"))));save();render()}});
 document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target&&e.target.tagName==="INPUT"){e.target.blur()}});
 render();
+setTimeout(function(){cSync(false)},1500);
 /* 网页版离线缓存：只在 http(s) 网址下注册；file://、exe、apk 里自动跳过 */
 (function(){try{if((location.protocol==="https:"||location.protocol==="http:")&&"serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}}catch(e){}})();
 </script>

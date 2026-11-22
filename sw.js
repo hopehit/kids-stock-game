@@ -1,5 +1,5 @@
 /* 小小投资家 · 离线缓存（cache-first）。更新游戏时版本号会变，旧缓存自动清掉。 */
-var VERSION = "783c8b3d31";
+var VERSION = "4eb2272d77";
 var CACHE = "kids-tycoon-" + VERSION;
 var FILES = ["./", "./index.html", "./manifest.webmanifest", "./apple-touch-icon.png", "./icon-192.png", "./icon-512.png"];
 self.addEventListener("install", function (e) {
